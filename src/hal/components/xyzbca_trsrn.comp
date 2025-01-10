@@ -23,7 +23,7 @@ static struct haldata {
   // Example pin pointers:
   hal_u32_t *in;
   hal_u32_t *out;
-  // thise should be parameters really but we want to be able to
+  // these should be parameters really but we want to be able to
   // change them for demonstration purposes
   hal_float_t *x_pivot;
   hal_float_t *z_pivot;

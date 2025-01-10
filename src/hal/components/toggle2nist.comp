@@ -70,7 +70,7 @@ FUNCTION(_)  {
             state = 0;
             debounce_cntr = 0;
         }
-    } else if ((!is_on && off) || (is_on && on)) { /* reset ouputs once device has switched*/
+    } else if ((!is_on && off) || (is_on && on)) { /* reset outputs once device has switched*/
         on = 0;
         off = 0;
         debounce_cntr = 0;

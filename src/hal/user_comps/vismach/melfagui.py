@@ -114,7 +114,7 @@ link3 = HalRotate([link3],c,"joint2",1,0,1,0)
 link2 = Color([0.9,0.9,0.9,1],[link2])
 # combine the upper-arm-assembly to the shoulder = shoulder-assembly
 link2 = Collection([link3, link2])
-# translate the shoulder-assembly so joint1 rotaton is in the origin
+# translate the shoulder-assembly so joint1 rotation is in the origin
 link2 = Translate([link2], 85,0,111)
 # create HAL-link for Joint1 "Waist rotation"
 link2 = HalRotate([link2],c,"joint1",1,0,0,1)
