@@ -2523,6 +2523,7 @@ class gmoccapy(object):
                 return
             self.reload_tool()
             self.command.mode(linuxcnc.MODE_MANUAL)
+            LOG.debug("MODE MANUAL was activated by all_homed")
 
     def on_hal_status_not_all_homed(self, widget, joints):
         LOG.debug("Hal Status not all homed {0}".format(joints))
@@ -2536,6 +2537,7 @@ class gmoccapy(object):
         self._set_motion_mode(0)
 
     def on_hal_status_file_loaded(self, widget, filename):
+        LOG.debug("file loaded")
         widgetlist = ["btn_use_current" ]
         # this test is only necessary, because of remap and toolchange, it will emit a file loaded signal
         if filename:
@@ -2609,6 +2611,7 @@ class gmoccapy(object):
         if self.tool_change:
             self.command.mode(linuxcnc.MODE_MANUAL)
             self.command.wait_complete()
+            LOG.debug("MODE MANUAL was activated by IDLE")
             self.tool_change = False
 
         self.halcomp["program.current-line"] = 0
@@ -2640,6 +2643,7 @@ class gmoccapy(object):
         self._update_toolinfo(new_tool_no)
 
     def on_hal_status_state_estop(self, widget=None):
+        LOG.debug("state estop")
         self.widgets.tbtn_estop.set_active(True)
         self.widgets.tbtn_estop.set_image(self.widgets.img_emergency)
         self.widgets.tbtn_on.set_image(self.widgets.img_machine_off)
@@ -2648,6 +2652,7 @@ class gmoccapy(object):
         self.command.mode(linuxcnc.MODE_MANUAL)
 
     def on_hal_status_state_estop_reset(self, widget=None):
+        LOG.debug("state estop reset")
         self.widgets.tbtn_estop.set_active(False)
         self.widgets.tbtn_estop.set_image(self.widgets.img_emergency_off)
         self.widgets.tbtn_on.set_image(self.widgets.img_machine_off)
@@ -2664,6 +2669,7 @@ class gmoccapy(object):
             self.widgets.chk_ignore_limits.set_sensitive(False)
 
     def on_hal_status_state_off(self, widget):
+        LOG.debug("state off")
         widgetlist = ["rbt_manual", "rbt_mdi", "rbt_auto", "btn_homing", "btn_touch", "btn_tool",
                       "hbox_jog_vel", "ntb_jog_JA", "vbtb_jog_incr", "spc_feed", "btn_feed_100", "rbt_forward", "btn_index_tool",
                       "rbt_reverse", "rbt_stop", "tbtn_flood", "tbtn_mist", "btn_change_tool", "btn_select_tool_by_no",
@@ -2681,6 +2687,7 @@ class gmoccapy(object):
         self.widgets.ntb_jog.set_current_page(0)
 
     def on_hal_status_state_on(self, widget):
+        LOG.debug("state on")
         widgetlist = ["rbt_manual", "btn_homing", "btn_touch", "btn_tool",
                       "ntb_jog", "spc_feed", "btn_feed_100", "rbt_forward",
                       "rbt_reverse", "rbt_stop", "tbtn_flood", "tbtn_mist",
@@ -3539,6 +3546,7 @@ class gmoccapy(object):
             self.command.wait_complete()
             self.command.mdi("G43")
             self.command.wait_complete()
+            LOG.debug("AUTOMATIC G43 was executed")
 
     def _set_enable_tooltips(self, value):
         LOG.debug("_set_enable_tooltips = {0}".format(value))
@@ -4867,6 +4875,7 @@ class gmoccapy(object):
     # This is used to reload the tool in spindle after starting the GUI
     # This is called from the all_homed_signal
     def reload_tool(self):
+        LOG.debug("reload tool")
         tool_to_load = self.prefs.getpref("tool_in_spindle", 0, int)
         if tool_to_load == 0:
             return
