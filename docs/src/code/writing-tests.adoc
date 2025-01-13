@@ -79,6 +79,11 @@ checkresult::
    At the moment, the use of _sudo_ can be flagged, and tests requiring sudo can be skipped when using `runtests -u`.
    To flag such requirements, add a line with `Restrictions: sudo` to this file.
 
+ musthave::
+   This file can contain a list of prerequisites from config.h (one per line). If it's not met, the test will be skipped.
+   e.g. if your test depends on config.h having `#define HAVE_TK_H 1` and `#define HAVE_LIBMODBUS3 yes`, add a line with
+   `TK_H` and a line with `LIBMODBUS3` to this file.
+
 == Some testing approaches
 
 There are various ways to structure a test, depending on what one wants to test.

@@ -126,6 +126,18 @@ run_tests () {
 
     while read testname; do
 	testdir=$(dirname $testname)
+        # check if there's a "musthave" file with prerequisites from config.h
+        if [ -e $testdir/musthave ] ; then
+            # one prerequisite per line
+            while IFS= read -r prereq ; do
+                if ! grep --quiet --regexp "^#define HAVE_$prereq.*" "$TOPDIR/src/config.h" ; then
+                    echo "Skipping test for missing prerequisite \"$prereq\": $testdir" 1>&2
+                    SKIP=$(($SKIP+1))
+                    continue 3
+                fi
+            done < $testdir/musthave
+        fi
+        # skip test if there's a "skip" file
 	if [ -e $testdir/skip ]; then
 	    if ! [ -x $testdir/skip ] || ! $testdir/skip; then
 		echo "Skipping disabled test: $testdir" 1>&2
