@@ -395,7 +395,7 @@ int PythonPlugin::configure(const char *iniFilename,
 	log_level = atoi(*inistring);
     else log_level = 0;
 
-    char pycmd[PATH_MAX];
+    char pycmd[PATH_MAX + 64];
     int n = 1;
     int lineno;
     while ((inistring = inifile.Find("PATH_PREPEND", "PYTHON",
