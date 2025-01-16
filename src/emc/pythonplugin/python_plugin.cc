@@ -326,8 +326,9 @@ PythonPlugin::PythonPlugin(struct _inittab *inittab) :
         }
       }
   }
-  Py_UnbufferedStdioFlag = 1;
-  Py_Initialize();
+  config.buffered_stdio = 0;
+  Py_InitializeFromConfig(&config);
+  PyConfig_Clear(&config);
   initialize();
 }
 
