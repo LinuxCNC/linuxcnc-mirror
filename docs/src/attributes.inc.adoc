@@ -1,0 +1,31 @@
+:lversion: {sys: cat ../VERSION}
+:lbranch: {sys: git rev-parse --abbrev-ref HEAD}
+
+:date: {sys: LANG=C date --date="@$(dpkg-parsechangelog --file ../debian/changelog -S timestamp)" '+%d %b %Y'}
+:revdate: {docdate}
+:builddate: {localdate}
+
+:experimental:
+:masterdir: {indir}
+:doctype: book
+:ascii-ids:
+:toc:
+:lang: en
+
+// Custom lang highlight
+// must come after the doc title, to work around a bug in asciidoc 8.6.6
+:ini: {basebackend@docbook:'':ini}
+:hal: {basebackend@docbook:'':hal}
+:ngc: {basebackend@docbook:'':ngc}
+:css: {basebackend@docbook:'':css}
+
+:wlo-url: https://www.linuxcnc.org
+:wlo: {wlo-url}[LinuxCNC website]
+:ldocs-url: {wlo-url}/documents
+:ldocs: {ldocs-url}[LinuxCNC documentation]
+:ldocs-base-html: {docs-base}/{branch}/{lang}/html/
+:ldocs-base-pdf: {docs-base}/{branch}/{lang}/pdf/
+:lrepo-url: https://github.com/LinuxCNC/linuxcnc.git
+:lrepo: {lrepo-url}[LinuxCNC repository]
+:lbbot-url: http://buildbot.linuxcnc.org/
+:lbbot: {lbbot-url}[LinuxCNC Builbot]

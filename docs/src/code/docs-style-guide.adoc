@@ -1,0 +1,1882 @@
+include::../attributes.inc.adoc[]
+:description: Writing styles, markup, formatting, and other standards for LinuxCNC Documentation.
+//:group: unassigned
+//:info: For assistance with this Style Guide page, see https://about.gitlab.com/handbook/engineering/ux/technical-writing/#assignments-to-other-projects-and-subjects.
+//:stage: none
+
+[[docs:style-guide]]
+= Documentation Style Guide
+
+// Preamble Start
+This document defines the standards for LinuxCNC documentation, including
+grammar, formatting, word use, and more.
+
+////
+FIXME Communication channels for docs style guide and with docs team in general
+TODO Automatic labelling of issues and PRs
+For style questions, mention `@docs-style` in an issue or pull request.
+If you have access to one of the LinuxCNC chat platforms, use the
+`#linuxcnc-docs` channel.
+////
+
+////
+TODO Other docs 
+In addition to this page, the following resources can help you craft and
+contribute to documentation:
+
+* xref:../index.adoc[Doc contribution guidelines]
+* xref:word_list.adoc[Recommended word list]
+* xref:../testing.adoc[Doc style and consistency testing]
+* https://design.gitlab.com/content/error-messages/[UI text guidelines]
+* https://about.gitlab.com/handbook/communication/#writing-style-guidelines[LinuxCNC Handbook style guidelines]
+* https://docs.microsoft.com/en-us/style-guide/welcome/[Microsoft Style Guide]
+* https://developers.google.com/style[Google Developer Documentation Style Guide]
+* https://gitlab.com/dashboard/merge_requests?scope=all&state=merged&label_name[]=tw-style&not[label_name][]=docs%3A%3Afix[Recent updates to this guide]
+////
+// Preamble End
+
+[[docs:style:ssot]]
+== Single Source Of Truth (SSOT)
+
+The {ldocs} is the SSOT for all information related to LinuxCNC implementation,
+usage, and troubleshooting.
+
+It evolves continuously, in keeping with new features, and with improvements
+for clarity, accuracy, and completeness.
+
+This policy prevents information silos, making it easier to find information
+about LinuxCNC applications.
+
+It also informs decisions about the kinds of content we include in our
+documentation.
+
+=== Include all information
+
+Include problem-solving actions that may address rare cases or be considered
+risky, but provide proper context through fully detailed warnings and
+caveats.
+
+This kind of content should be included as it could be helpful to others
+and, when properly explained, its benefits outweigh the risks. If you
+think you have found an exception to this rule, contact the
+Technical Writing team.
+
+LinuxCNC adds all troubleshooting information to the documentation, no
+matter how unlikely a user is to encounter a situation.
+
+////
+FIXME Add Troubleshooting documentation
+LinuxCNC Support maintains their own
+link:../../../administration/index.md#support-team-documentation[troubleshooting content]
+in the LinuxCNC documentation.
+////
+
+[[docs:style:media]]
+=== Include all media types
+
+Include any media types/sources if the content is relevant to readers.
+
+You can freely include or link presentations, diagrams, and videos. No
+matter who it was originally composed for, if it is helpful to any of
+our audiences, we can include it.
+
+* If you use an image that has a separate source file (for example, a
+  vector or diagram format), link the image to the source file so that
+  anyone can update or reuse it.
+* Do not copy and paste content from other sources unless it is a limited
+  quotation with the source cited. Typically it is better to either rephrase
+  relevant information in your own words or link out to the other source.
+
+////
+=== Documentation structure
+
+TODO Revise documentation structure
+  @silopolis: Structure documentation in parts targeted at user personas:
+    * Administrator
+    * Integrator
+    * User
+    * Contributor
+
+FIXME Sync Web and PDF documentation structure
+////
+
+////
+TODO Define LinuxCNC topic types
+=== Topic types
+
+In the software industry, it is a best practice to organize documentation
+in different types:
+
+* Concepts / Explanations (Understanding-oriented)
+* Tasks / Tutorials (Learning-oriented)
+* Reference (Information-oriented)
+* Troubleshooting / How-to guides (Problem-oriented)
+
+See:
+
+* https://documentation.divio.com/
+* https://gitlab.com/gitlab-org/gitlab/-/tree/master/doc/development/documentation/topic_types
+
+Ideally, every significant matter should be present in the target part(s)
+of the documentation and should offer content in each relevant topic.
+
+LinuxCNC has not traditionally used topic types. However, we are starting
+to move in this direction, so we can address these issues:
+
+* *Content is hard to find.* +
+  Our docs are comprehensive and include a large amount of useful information.
+  Topic types create repeatable patterns that make our content easier to
+  scan and parse.
+* *Content is often written from the contributor's point of view.* +
+  Our docs are written by contributors. Topic types (tasks specifically)
+  help put information into a format that is geared toward helping others,
+  rather than documenting how a feature was implemented.
+
+LinuxCNC uses these xref:../structure.adoc[topic types].
+////
+
+=== Link instead of repeating text
+
+Rather than repeating information from another topic, link to the single
+source of truth and explain why it is important.
+
+////
+FIXME Could we adopt a documentation first methodology ?
+=== Docs-first methodology
+
+We employ a documentation-first methodology. This method ensures the
+documentation remains a complete and trusted resource, and makes
+communicating about the use of LinuxCNC more efficient.
+
+* If the answer to a question exists in documentation, share the link to
+  the documentation instead of rephrasing the information.
+* When you encounter new information not available in LinuxCNC documentation
+  (for example, when solving an issue, helping another user, or testing
+  a feature), your first step should be to 
+  https://github.com/LinuxCNC/linuxcnc/issues[create a pull request (PR)]
+  to add this information to the documentation. You can then share the PR
+  to communicate this information.
+
+New information that would be useful toward the future usage or troubleshooting
+of LinuxCNC should not be written directly in a forum or other messaging
+system, but added to a documentation PR and then referenced, as described
+above.
+
+The more we reflexively add information to the documentation, the more
+the documentation helps others efficiently accomplish tasks and solve problems.
+
+If you have questions when considering, authoring, or editing documentation,
+ask the Technical Writing team. They're available in `#linuxcnc-docs` rooms
+on messaging platforms or in
+https://forum.linuxcnc.org/32-documents[LinuxCNC forum Documents category].
+// FIXME Do we need/want assignments ?
+//by mentioning https://about.gitlab.com/handbook/engineering/ux/technical-writing/#assignments[the writer for]
+// FIXME Do we need/want a more formal workflow ?
+//the applicable https://about.gitlab.com/handbook/product/categories/#devops-stages[DevOps stage or group].
+Otherwise, forge ahead with your best effort. It does not need to be perfect;
+the team is happy to review and improve upon your content. Review the
+// TODO Development development front page
+xref:index.adoc[Documentation guidelines] before you begin your first
+documentation PR.
+
+Maintaining a knowledge base separate from the documentation would be against
+the documentation-first methodology, because the content would overlap with
+the documentation.
+////
+
+[[docs:style:asciidoc]]
+== AsciiDoc
+
+All LinuxCNC documentation is written using
+https://en.wikipedia.org/wiki/AsciiDoc[AsciiDoc].
+
+=== HTML in AsciiDoc
+
+Hard-coded HTML is valid, although it's discouraged from being used. +
+HTML is permitted if:
+
+* There's no equivalent markup in AsciiDoc.
+* Advanced tables are necessary.
+* Special styling is required.
+* Reviewed and approved by a technical writer.
+
+=== Headings in AsciiDoc
+
+Each documentation page begins with a level 1 heading (`=`). +
+This becomes the `h1` element when the page is rendered to HTML. +
+There can be only *one* level 1 heading per page.
+
+* For each subsection, increment the heading level.
+  In other words, increment the number of `=` characters in front of the
+  heading.
+* Avoid headings greater than `H5` (`=====`). If you need more than five
+  heading levels, move the topics to a new page instead. +
+//  Headings greater than `H5` do not display in the right sidebar navigation.
+* Do not skip a level. For example: `==` > `====`.
+* Leave one blank line before and after the heading.
+
+// FIXME Title anchoring
+When you change heading text, the anchor link changes. +
+To avoid broken links:
+
+* Do not use step numbers in headings.
+* When possible, do not use words that might change in the future.
+
+Also, do not use links as part of heading text.
+
+// TODO See also xref:../structure.adoc[heading guidelines for specific topic types].
+
+=== Backticks in AsciiDoc
+
+Use backticks for things that are either typed into the system or read in
+the system:
+
+* Commands, options, parameters names.
+* Packages, modules, classes, functions, arguments names.
+* <<code-blocks,Code blocks>>.
+* Error messages.
+
+////
+TODO Documentation testing and AsciiDoc linting
+IDEA Use po4a as linter ? Pre-commit hook ?
+
+=== AsciiDoc Rules
+
+LinuxCNC ensures that the AsciiDoc used across all documentation is consistent, as
+well as easy to review and maintain, by xref:../testing.adoc[testing documentation changes]
+with link:../testing.md#markdownlint[markdownlint]. This lint test fails when any
+document has an issue with AsciiDoc formatting that may cause the page to render
+incorrectly in LinuxCNC. It also fails when a document has
+non-standard AsciiDoc (which may render correctly, but is not the current
+standard for LinuxCNC documentation).
+
+==== AsciiDoc rule `MD044/proper-names` (capitalization)
+
+A rule that could cause confusion is `MD044/proper-names`, as it might not be
+immediately clear what caused markdownlint to fail, or how to correct the
+failure. This rule checks a list of known words, listed in the `.markdownlint.yml`
+file in each project, to verify proper use of capitalization and backticks.
+Words in backticks are ignored by markdownlint.
+
+In general, product names should follow the exact capitalization of the official
+names of the products, protocols, and so on.
+
+Some examples fail if incorrect capitalization is used:
+
+* MinIO (needs capital `IO`)
+* NGINX (needs all capitals)
+* runit (needs lowercase `r`)
+
+Additionally, commands, parameters, values, filenames, and so on must be
+included in backticks. For example:
+
+* "Change the `needs` keyword in your `.gitlab-ci.yml`..."
+ ** `needs` is a parameter, and `.gitlab-ci.yml` is a file, so both need backticks.
+Additionally, `.gitlab-ci.yml` without backticks fails markdownlint because it
+does not have capital G or L.
+* "Run `git clone` to clone a Git repository..."
+ ** `git clone` is a command, so it must be lowercase, while Git is the product,
+so it must have a capital G.
+////
+
+[[docs:style:language]]
+== Language
+
+LinuxCNC documentation should be clear and easy to understand.
+
+* Avoid unnecessary words.
+* Be clear, concise, and stick to the goal of the topic.
+* Write in US English with US grammar.
+
+////
+TODO grammar and spell checking
+  https://gitlab.com/gitlab-org/gitlab/-/blob/master/doc/.vale/gitlab/British.yml[`British.yml`]
+  https://vale.sh/
+  https://github.com/errata-ai/vale-action
+  https://github.com/errata-ai/packages
+////
+
+=== Capitalization
+
+As a project, we tend toward lowercase.
+
+==== Headings
+
+////
+FIXME Choose titles capitalization style: sentence or headline
+https://github.com/nofluffjuststuff/nfjsmag-docs/blob/master/author-writing-style-and-syntax-guide.adoc#headline
+////
+
+Use sentence case. For example:
+
+* `= Use variables to configure pipelines`
+* `== Use the To-Do List`
+
+==== User interfaces text
+
+When referring to specific user interface (UI) text, like a button label
+or menu item, use the same capitalization that's displayed in the user
+interface.
+
+////
+TODO Standards for this content are listed in the
+https://design.gitlab.com/content/punctuation/[Pajamas Design System Content section]
+and typically match what's mentioned in this Documentation Style Guide.
+////
+
+If you think the UI text contains style mistakes, create an issue or a PR
+to propose a change to the user interface text.
+
+==== Feature names
+
+* Feature names are typically lowercase.
+* Some features require title case, typically nouns that name LinuxCNC-specific
+  capabilities or tools. +
+  Features requiring title case should be added to the
+  xref:word_list.adoc[word list].
+////
+FIXME No equivalent linter to markdownlint to use a config file like
+  https://gitlab.com/gitlab-org/gitlab/-/blob/master/.markdownlint.yml
+  so that it can be consistently applied across all documentation.
+////
+
+If the term is not in the word list, ask a LinuxCNC Technical Writer for
+advice.
+
+==== Other terms
+
+Capitalize names of:
+
+* Third-party organizations, software, and products. For example, FreeCAD,
+  MachineKit, Git, and The Linux Foundation.
+* Methods or methodologies. For example, Continuous Integration,
+  Continuous Deployment, Unit Testing, and Agile.
+
+Follow the capitalization style listed at the authoritative source for the
+entity, which may use non-standard case styles. For example: LinuxCNC and
+npm.
+
+[[docs:style:fake]]
+=== Fake data
+
+==== Fake user informations
+
+Do not use real user informations or email addresses in LinuxCNC documentation.
+For email addresses and names, use:
+
+* Email addresses: Use an email address ending in `example.com`.
+* Names: Use strings like `example_username`. Alternatively, use diverse
+  or non-gendered names with common surnames, such as `Sidney Jones`,
+  `Zhang Wei`, or `Alex Garcia`.
+
+==== Fake URLs
+
+When including sample URLs in the documentation, use `example.com` when
+the domain name is generic.
+
+=== Contractions
+
+Contractions are encouraged to make writing simpler and easier to read.
+They can create a friendly and informal tone, especially in tutorials,
+instructional documentation, and user interfaces.
+
+However, don’t make a sentence harder to understand just to follow this
+rule.
+
+|===
+| Do | Don’t
+
+| it’s, can’t, wouldn’t, you’re, you’ve, haven’t, don’t
+| it is, cannot, would not, it’ll, should’ve
+|===
+
+Some contractions, however, should be avoided:
+
+// vale gitlab.Possessive = NO
+
+|===
+| Do not use a contraction | Example | Use instead
+
+| With a proper noun and a verb
+| The *Container Registry's* a powerful feature.
+| The *Container Registry* is a powerful feature.
+
+| To emphasize a negative
+| *Don't* install X with Y.
+| *Do not* install X with Y.
+
+| In reference documentation
+| *Don't* set a limit.
+| *Do not* set a limit.
+
+| In error messages
+| Requests to localhost *aren't* allowed.
+| Requests to localhost *are not* allowed.
+|===
+
+// vale gitlab.Possessive = YES
+
+=== Acronyms
+
+If you use an acronym, spell it out on first use on a page. +
+You do not need to spell it out more than once on a page.
+
+When possible, try to avoid acronyms in headings.
+
+=== Numbers
+
+When using numbers in text:
+
+* spell out zero through nine
+* use numbers for 10 and greater
+
+For details, see the https://docs.microsoft.com/en-us/style-guide/numbers[Microsoft Style Guide].
+
+== Text
+
+* Write in <<docs:style:asciidoc,AsciiDoc>>.
+// FIXME Decide on fixed line width.
+//   @silopolis: 100 seems to correspond more or less to the number of
+//               characters in a line on a printed page
+* Splitting long lines (preferably up to 100 characters) can make it easier
+  to provide feedback on small chunks of text.
+* Insert an empty line for new paragraphs.
+* Insert an empty line between different markups (for example, after every
+  paragraph, header, list, and so on). Example:
++
+```markdown
+== Header
+
+Paragraph.
+
+* List item 1
+* List item 2
+```
+
+* Use forced line breaks `+` to structure paragraphs and create clarity.
+
+=== Comments
+
+// FIXME Comments
+
+To embed comments within AsciiDoc, use standard HTML comments that are not
+rendered when published. +
+Example:
+
+`+html
+<!-- This is a comment that is not rendered -->
++`
+
+=== Emphasis
+
+Use _italic_ to provide _emphasis_ or when you are introducing a term for
+the first time. +
+Use *bold* to provide *strong emphasis*.
+
+////
+FIXME Could we switch to sans-serif fonts, please ?!
+LinuxCNC uses a sans-serif font and italic text does not stand out as much
+as it would in a serif font. +
+For details, see https://practicaltypography.com/bold-or-italic.html[Butterick's Practical Typography guide on bold or italic].
+////
+
+* Use asterisks (`\*`) to mark a word or text in bold (`*bold*`).
+* Use underscore (`\_`) for text in italics (`_italic_`).
+* Use backticks (```) for blockquotes.
+
+=== Punctuation
+
+Follow these guidelines for punctuation:
+
+// vale gitlab.Repetition = NO
+
+* End full sentences with a period.
+* Use one space between sentences.
+* Do not use semicolons. Use two sentences instead.
+* Do not use double spaces.
+// TODO Test with https://gitlab.com/gitlab-org/gitlab/-/blob/master/doc/.vale/gitlab/SentenceSpacing.yml[`SentenceSpacing.yml`].
+* Do not use non-breaking spaces. Use standard spaces instead.
+// TODO Test with https://gitlab.com/gitlab-org/gitlab/-/blob/master/scripts/lint-doc.sh[`lint-doc.sh`].
+* Do not use tabs for indentation. Use spaces instead. +
+  You can configure your code editor to output spaces instead of tabs
+  when pressing the tab key.
+* Use serial (Oxford) commas before the final *and* or *or* in a list of
+  three or more items.
+// TODO Test with https://gitlab.com/gitlab-org/gitlab/-/blob/master/doc/.vale/gitlab/OxfordComma.yml[`OxfordComma.yml`].
+* Avoid dashes. Use separate sentences, or commas, instead.
+* Do not use typographer's ("curly") quotes. Use straight quotes instead.
+// TODO Test with https://gitlab.com/gitlab-org/gitlab/-/blob/master/doc/.vale/gitlab/NonStandardQuotes.yml[`NonStandardQuotes.yml`].
+
+// vale gitlab.Repetition = YES
+
+=== Placeholder text
+
+// TODO Extend with complete usage message syntax
+
+You might want to provide a command or configuration that uses specific
+values.
+
+In these cases, use https://en.wikipedia.org/wiki/Usage_message#Pattern[`<` and `>`]
+to call out where a reader must replace text with their own value.
+
+For example:
+
+[source,sh]
+cp <your_source_directory> <your_destination_directory>
+
+=== Keyboard commands
+
+Use the keyboard macro with the `+kbd:[key(+key)*]+` syntax when referring
+to keystroke presses.
+
+Multiple keys are separated by a plus, and alpha keys should be represented
+in uppercase.
+
+For example:
+
+[source]
+To stop the command, press kbd:[Control+C].
+
+When the docs are generated, the output is:
+
+====
+To stop the command, press kbd:[Control+C].
+====
+
+// TODO Add escaped characters https://docs.asciidoctor.org/asciidoc/latest/macros/keyboard-macro/
+
+=== Text entered in the UI
+
+If you want the user to type something in the UI, use backticks. +
+For example:
+
+[source]
+In the *Commit message* box, type `This is my merge request`.
+
+Backticks are more precise than quotes and avoid painful escaping when input
+text contains quotes.
+
+=== Inline code
+
+Inline code style is applied inline with regular text.
+
+Use inline code style:
+
+* For filenames or fragments of configuration files. +
+  For example: `.gitlab-ci.yml`, `CODEOWNERS`, and `only: [main]`.
+* For methods and STATUS messages
+  For example: FIXME
+
+To apply inline code style, wrap the text in a single backtick (```). +
+For example: `this is inline code style`.
+
+=== Code blocks
+
+Code block style separates code text from regular text.
+
+Use code block style for commands run in the command-line interface. +
+Code block style is easier to copy and paste in a user's terminal window.
+
+// FIXME Code blocks styling
+//   https://docs.asciidoctor.org/asciidoc/latest/verbatim/source-blocks/
+//   https://asciidoc-py.github.io/userguide.html#X104
+To apply code block style, wrap the text in quadruple dashes (four `-`)
+and add a `source` style with the adequate language.
+For example:
+
+
+----
+This is codeblock style
+----
+
+When using code block style:
+
+* Use quadruple backticks (four ```) to apply code block style when the
+  code block you are styling has triple backticks in it. +
+  For example, when illustrating code block style.
+* Add a blank line above and below code blocks.
+* Syntax highlight hints are required for code blocks. +
+  See the https://github.com/rouge-ruby/rouge/wiki/List-of-supported-languages-and-lexers[list of supported languages and lexers]
+  for available syntax highlighters. +
+  Use `plaintext` if no better hint is available.
+
+== Lists
+
+* Always start list items with a capital letter, unless they're parameters
+  or commands that are in backticks, or similar.
+* Always leave a blank line before and after a list.
+* Begin a line with spaces (not tabs) to denote a <<nesting-inside-a-list-item,nested sub-item>>.
+
+// TODO Complex lists https://docs.asciidoctor.org/asciidoc/latest/lists/continuation/
+
+=== Choose between an ordered or unordered list
+
+Use ordered lists for a sequence of steps, ie:
+
+[source,adoc]
+----
+Follow these steps to do something.
+
+. First, do the first step.
+. Then, do the next step.
+. Finally, do the last step.
+----
+
+Use an unordered lists when the steps do not need to be completed in order,
+ie:
+
+[source,adoc]
+----
+These things are imported:
+
+* Thing 1
+* Thing 2
+* Thing 3
+----
+
+=== Markup
+
+* Use asterisk (`*`) for unordered lists.
+* Use dots/periods (`.`) for ordered lists.
+
+// TODO Forcing lists appart
+//   https://docs.asciidoctor.org/asciidoc/latest/lists/unordered/
+//   https://docs.asciidoctor.org/asciidoc/latest/lists/separating/
+
+=== Punctuation
+
+* Don't add commas (`,`) or semicolons (`;`) to the ends of list items.
+* If a list item is a complete sentence (with a subject and a verb), add
+  a period at the end.
+* Majority rules: if the majority of items do not end in a period, do not
+  end any of the items in a period.
+* Separate list items from explanatory text with a colon (`:`). +
+  For example:
++
+[source,adoc]
+----
+The list is as follows:
+
+* First item: this explains the first item.
+* Second item: this explains the second item.
+----
+
+=== Nesting inside a list item
+
+// TODO Nesting lists https://docs.asciidoctor.org/asciidoc/latest/lists/unordered/
+
+It's possible to nest items under a list item, so that they render with
+the same indentation as the list item. This can be done with:
+
+// FIXME Anchors
+* <<code-blocks,Code blocks>>
+* <<blockquotes,Blockquotes>>
+* <<alert-boxes,Alert boxes>>
+* <<images,Images>>
+
+Items nested in lists should always align with the first character of the
+list item. In unordered lists (using `*`), this means two spaces for each
+level of indentation:
+
+[source,adoc]
+----
+- Unordered list item 1
+
+  A line nested using 2 spaces to align with the `U` above.
+
+* Unordered list item 2
++
+____
+A quote block that will nest
+inside list item 2.
+____
+
+* Unordered list item 3
++
+-----
+a code block that nests inside list item 3
+-----
+
+* Unordered list item 4
++
+image:image.png[an image that will nest inside list item 4]
+----
+
+For explicitly numbered ordered lists, use three spaces for each level of
+indentation:
+
+[source,adoc]
+----
+1. Ordered list item 1
+
+A line nested using 3 spaces to align with the `O` above.
+
+. Ordered list item 2
++
+____
+A quote block that will nest
+inside list item 2.
+____
+
+. Ordered list item 3
++
+-----
+a code block that nests inside list item 3
+-----
+
+. Ordered list item 4
++
+image:image.png[an image that will nest inside list item 4]
+----
+
+You can nest full lists inside other lists using the same rules as above.
+If you want to mix types, that's also possible, if you don't mix items at
+the same level:
+
+[source,adoc]
+----
+1. Ordered list item one.
+1. Ordered list item two.
+   - Nested unordered list item one.
+   - Nested unordered list item two.
+1. Ordered list item three.
+
+* Unordered list item one.
+* Unordered list item two.
+ .. Nested ordered list item one.
+ .. Nested ordered list item two.
+* Unordered list item three.
+----
+
+[[docs:style:tables]]
+== Tables
+
+Tables should be used to describe complex information in a straightforward
+manner. Note that in many cases, an unordered list is sufficient to describe
+a list of items with a single, simple description per item. But, if you
+have data that's best described by a matrix, tables are the best choice.
+
+// TODO Improve tables
+//   https://docs.asciidoctor.org/asciidoc/latest/tables/build-a-basic-table/
+//   https://asciidoc-py.github.io/userguide.html#_tables
+
+=== Creation guidelines
+
+To keep tables accessible and scannable, tables should not have any
+empty cells. If there is no otherwise meaningful value for a cell, consider entering
+*N/A* for 'not applicable' or *None*.
+
+To help tables be easier to maintain, consider adding additional spaces to the
+column widths to make them consistent. +
+For example:
+
+[source,adoc]
+----
+|===
+| App name | Description          | Requirements
+
+| App 1    | Description text 1.  | Requirements 1
+| App 2    | Description text 2.  | None
+|===
+----
+
+// TODO Editors plugins or extensions for formatting AsciiDoc tables ?
+
+=== Table headings
+
+Use sentence case for table headings. +
+For example: `Keyword value` or `Project name`.
+
+=== Feature tables
+
+// FIXME Feature tables, or delete ?
+When creating tables of lists of features use these phrases:
+
+|===
+| Option | AsciiDoc | Displayed result
+
+| No
+| `+**{dotted-circle}** No+`
+| *\{dotted-circle}* No
+
+| Yes
+| `+**{check-circle}** Yes+`
+| *\{check-circle}* Yes
+|===
+
+
+[[docs:style:footnotes]]
+== Footnotes
+
+For tables footnotes, use:
+
+* A superscript number between square brackets at the end of cell content,
+  separated by a space.
+* An ordered list below the table for footnotes content
+
+For example:
+
+[source,adoc]
+----
+|===
+| App name | Description                      |
+
+| App A    | Description text. ^[1]^
+| App B    | Description text. ^[2]^
+|===
+
+. This is the first footnote.
+. This is the second footnote.
+----
+
+This text renders this output:
+
+|===
+| App name | Description
+
+| App A | Description text. ^[1]^
+| App B | Description text. ^[2]^
+|===
+
+. This is the first footnote.
+. This is the second footnote.
+
+
+[[docs:style:quotes]]
+== Quotes
+
+* Standard quotes: double quotes (`"`). +
+  Example: "This is wrapped in double quotes".
+* Quote inside a quote: double quotes (`"`) wrapped into single quotes (`'`). +
+  Example: "This sentence 'quotes' something in a quote".
+
+////
+TODO Other punctuation rules, refer to the
+  https://design.gitlab.com/content/punctuation/[Pajamas Design System Punctuation section].
+  This is overridden by the <<punctuation,documentation-specific punctuation rules>>.
+////
+
+
+[[docs:style:links]]
+== Links
+
+//  https://asciidoc-py.github.io/userguide.html#_inline_macros
+
+Links are important in LinuxCNC documentation. Use links instead of
+summarizing to help preserve a <<docs:style:ssot,single source of truth>>.
+
+We include guidance for links in these categories:
+
+* How to set up <<docs:style:anchors,anchor links>> for headings.
+* How to set up <<basic-link-criteria,criteria>> for configuring a link.
+////
+TODO Applications embedded help ?
+* What to set up when link:../../documentation/index.md#linking-to-help[linking to a `help`]
+page.
+////
+* How to set up <<links-to-internal-documentation,links to internal documentation>>
+  for cross-references.
+* How to set up <<links-to-external-documentation,links to external documentation>>
+  for authoritative sources.
+// * When to use <<links-requiring-permissions,links requiring permissions>>.
+* How to set up a <<link-to-video,link to a video>>.
+* How to <<link-to-specific-lines-of-code,link to specific lines of code>>
+
+[[docs:style:anchors]]
+=== Anchor links
+
+Headings generate anchor links when rendered: `== This is an example` generates
+the anchor `#this-is-an-example`.
+
+Keep in mind that:
+
+* LinuxCNC user interfaces can link to documentation pages and anchor links
+  to take the user to the right spot.
+* Crosslinking is encouraged into documentation as part of the SSOT policy.
+
+Thus, when you change a heading, search `docs/*` for the old anchor and
+fix the possible broken links. +
+If you do not fix these links, the link:../checkref[`checkref` script]
+will choke and documentation build will fail.
+
+Important:
+
+* Avoid crosslinking documentation to headings unless you need to link to
+  a specific section of the document. This avoids breaking anchors in the
+  future in case the heading is changed.
+* If possible, avoid changing headings, because they're not only linked
+  internally. There are various links to LinuxCNC documentation on the
+  internet, such as tutorials, presentations, forum posts, and other sources.
+* Do not link to `h1` headings.
+
+=== Basic link criteria
+
+* Use inline URL macro `+https://example.com[Text]+`.
+* Use meaningful anchor text. +
+  For example, instead of writing something like `Read more about merge
+  requests <url>[here]`, write `Read more about <url>[merge requests]`.
+* Put the entire link on a single line. +
+  Some tools do not work with links split over multiple lines, and incorrect
+  or broken links could slip through and cause problems downstream.
+
+=== Links to internal documentation
+
+// TODO Anchor links `[[...]]` creation policy and pattern
+//  https://docs.asciidoctor.org/asciidoc/latest/macros/xref/
+
+NOTE: *Internal* refers to documentation in the same repository. +
+  When linking to documentation in separate projects (for example, linking
+  to MesaCT or QtPyVCP), you must use absolute URLs.
+
+Do not use absolute URLs like
+`+https://linuxcnc.org/docs/stable/html/getting-started/about-linuxcnc.html[]+`
+to cross-link to other documentation in the same project. +
+Use relative links to the file like `+link:../getting-started/about-linuxcnc.adoc[]+`,
+these are converted to HTML when the site is rendered.
+
+Relative linking enables cross-links to work:
+
+* In editors, review apps, and local previews.
+* When working on the documentation locally, so you can verify that they
+  work as early as possible in the process.
+////
+TODO apps embedded help
+* In the LinuxCNC user interfaces when browsing doc files in their respective
+  repositories. For example, the links displayed at
+  `+https://gitlab.com/gitlab-org/gitlab/-/blob/master/doc/README.md+`.
+////
+
+To link to internal documentation:
+
+* Use relative links to AsciiDoc files in the same repository.
+* Do not use absolute URLs or URLs from `https://linuxcnc.org/docs/`.
+* Use `../` to navigate to higher-level directories.
+* Don't prepend `./` to links to files or directories. +
+  To link to a file in the same directory or one of its sub-directories,
+  use the syntax `path/to/file.adoc`.
+* Don't link relative to root. For example, `/getting-started/about-linuxcnc.adoc`.
+* Always add the filename `file.adoc` at the end of the link with the
+  `.adoc` extension, not `.html`.
++
+Don't:
+
+ ** `../../merge_requests/`
+ ** `../../issues/tags.html`
+ ** `../../issues/tags.html#stages`
+
++
+Do:
+
+ ** `../../merge_requests/index.md`
+ ** `../../issues/tags.md`
+ ** `../../issues/tags.md#stages`
+ ** `issues/tags.md`
+
+=== Links to external documentation
+
+When possible, avoid links to external documentation. These links can easily
+become outdated, and are difficult to maintain.
+
+* https://en.wikipedia.org/wiki/Link_rot[They lead to link rot].
+* They create issues with maintenance.
+
+Sometimes links are required. They might clarify troubleshooting steps or
+help prevent duplication of content. +
+Sometimes they are more precise and will be maintained more actively.
+
+For each external link you add, weigh the user benefit with the maintenance
+difficulties.
+
+////
+=== Links requiring permissions
+
+Don't link directly to:
+
+* xref:../../../user/project/issues/confidential_issues.adoc[Confidential issues].
+* Project features that require xref:../../../user/permissions.adoc[special permissions]
+to view.
+
+These fail for:
+
+* Those without sufficient permissions.
+* Automated link checkers.
+
+Instead:
+
+* To reduce confusion, mention in the text that the information is either:
+ ** Contained in a confidential issue.
+ ** Requires special permission to a project to view.
+* Provide a link in back ticks (```) so that those with access to the issue
+can navigate to it.
+
+Example:
+
+`+markdown
+For more information, see the [confidential issue](../../../user/project/issues/confidential_issues.md) `https://gitlab.com/gitlab-org/gitlab-foss/-/issues/<issue_number>`.
++`
+////
+
+=== Link to specific lines of code
+
+When linking to specific lines in a file, link to a commit instead of to
+the branch. Lines of code change over time. Linking to a line by using
+the commit link ensures the user lands on the line you're referring to.
+The *Permalink* button, displayed when viewing a file in a project,
+provides a link to the most recent commit of that file.
+
+* Do: `+https://github.com/LinuxCNC/linuxcnc/blob/e11daeb96779ebdeb7a811e2034b40dabbd45cbb/docs/src/getting-started/about-linuxcnc.adoc?plain=1#L3[link to line 3].+`
+* Don't: `+https://github.com/LinuxCNC/linuxcnc/blob/master/docs/src/getting-started/about-linuxcnc.adoc?plain=1#L3[link to line 3]+`
+
+If that linked expression has changed line numbers due to additional
+commits, you can still search the file for that query. In this case, update
+the document to ensure it links to the most recent version of the file.
+
+
+[[docs:style:navigation]]
+== Navigation
+
+When documenting how to navigate through the LinuxCNC UIs:
+
+* Always use location, then action.
+ ** From the *File* menu (location), select *Open...* (action).
+* Be brief and specific. +
+  For example:
+  ** Do: Select *Save*.
+  ** Do not: Select *Save* for the changes to take effect.
+* If a step must include a reason, start the step with it. +
+  This helps the user scan more quickly.
+  ** Do: To view the changes, in the merge request, select the link.
+  ** Do not: Select the link in the merge request to view the changes.
+* Use ordered lists to describe sequences of operations.
+
+////
+TODO === Names for menus
+
+Use these terms when referring to the main LinuxCNC user interface
+elements:
+
+FIXME UIs bars: Menu bar, Tool bar, Status bar, other(s) ?
+* *Top bar*: This is the top bar that spans the width of the user interface.
+  It includes the menu, the LinuxCNC logo, search field, counters, and the user's avatar.
+* *Left sidebar*: This is the navigation sidebar on the left of the user
+  interface, specific to the project or group.
+* *Right sidebar*: This is the navigation sidebar on the right of the user
+  interface, specific to the open issue, merge request, or epic.
+////
+
+=== Names for UI elements
+
+// TODO https://docs.asciidoctor.org/asciidoc/latest/macros/ui-macros/
+UI elements, like button and checkbox names, should be *`monotype bold`*.
+
+[source,adoc]
+----
+Click the *`Open`* button.
+----
+
+Which will render as:
+
+Click the *`Open`* button.
+
+// TODO Guidance for each individual UI element is in link:word_list.adoc[the word list]
+
+=== How to write navigation task steps
+
+Explicit full menu navigation paths using right pointing chevron ("greater
+than") surrounded by white spaces ` > ` to separate each menu level or entry. +
+Navigation paths should be in *`monotype bold`*. +
+Example:
+
+[source,adoc]
+----
+. In the menu bar, select *`File > Open...`* and find your NC program file.
+. Select program file and click the *`Open`* button.
+----
+
+Which will render as:
+
+. In the menu bar, select *`File > Open...`* and find your NC program file.
+. Select program file and click the *`Open`* button.
+
+////
+TODO Navigation tasks templates
+To be consistent, use these templates when you write navigation steps in
+a task topic.
+
+To open project settings:
+
+----
+. On the top bar, select **Main menu > Projects** and find your project.
+. On the left sidebar, select **Settings > CI/CD**.
+. Expand **General pipelines**.
+----
+
+To open group settings:
+
+----
+. On the top bar, select **Main menu > Groups** and find your group.
+. On the left sidebar, select **Settings > CI/CD**.
+. Expand **General pipelines**.
+----
+
+To open the Admin Area:
+
+----
+. On the top bar, select **Main menu > Admin**.
+----
+
+To select your avatar:
+
+----
+. On the top bar, in the top right corner, select your avatar.
+----
+
+To save the selection in some dropdown lists:
+
+----
+. Go to your issue.
+. On the right sidebar, in the **Iteration** section, select **Edit**.
+. From the dropdown list, select the iteration to associate this issue with.
+. Select any area outside the dropdown list.
+----
+////
+
+=== Optional steps
+
+If a step is optional, start the step with the word `Optional` followed
+by a period.
+
+For example:
+
+----
+. Optional. Enter a description for the job.
+----
+
+=== Recommended steps
+
+If a step is recommended, start the step with the word `Recommended` followed
+by a period.
+
+For example:
+
+----
+. Recommended. Enter a description for the job.
+----
+
+=== Documenting multiple fields at once
+
+If the UI text sufficiently explains the fields in a section, do not include
+a task step for every field. +
+Instead, summarize multiple fields in a single task step.
+
+Use the phrase *Complete the fields*.
+
+// TODO Replace by an actual LinuxCNC example, like in Axis
+For example:
+
+. On the top bar, select menu:Main menu[Projects] and find your project.
+. On the left sidebar, select menu:Settings[Repository].
+. Expand *Push rules*.
+. Complete the fields.
+
+If you are documenting multiple fields and only one field needs explanation,
+do it in the same step with a forced line break:
+
+. Expand *Push rules*.
+. Complete the fields. +
+  *Branch name* must be a regular expression.
+
+To describe multiple fields, use unordered list items:
+
+. Expand *General pipelines*.
+. Complete the fields.
+  ** *Branch name* must be a regular expression.
+  ** *User* must be a user with at least the *Maintainer* role.
+
+
+[[docs:style:images]]
+== Images
+
+Images, including screenshots, can help a reader better understand a concept.
+However, they should be used sparingly because:
+
+* They tend to become out-of-date.
+* They are difficult and expensive to localize.
+* They cannot be read by screen readers.
+
+When needed, use images to help the reader understand:
+
+* Where they are in a complicated process.
+* How they should interact with the application.
+
+[[docs:style:captures]]
+=== Screen captures
+
+When you take screenshots:
+
+* *Ensure it provides value.* +
+  Don't use `lorem ipsum` text. +
+  Try to replicate how the feature would be used in a real-world scenario,
+  and <<docs:style:fake,use realistic text>>.
+* *Capture only the relevant UI.* +
+  Don't include unnecessary white space or areas of the UI that don't help
+  illustrate the point. +
+  Some parts of the UIs can change, so don't include them in screenshots
+  unless absolutely necessary.
+* *Keep it small.* +
+  If you don't need to show the full width of the screen, don't. +
+  Reduce the size of the application window as much as possible to keep
+  elements close together and reduce empty space. +
+  Try to keep the screenshot dimensions as small as possible.
+* *Review how the image renders on the page.* +
+  Preview the image locally or use the preview on GitHub once pushed. +
+  Make sure the image isn't blurry or overwhelming.
+* *Be consistent.* +
+  Coordinate screenshots with the other screenshots already on a documentation
+  page for a consistent reading experience. +
+  Ensure you use the default preferences for appearance and UI themes.
+
+=== Add callouts
+
+If you need to emphasize an area in a screenshot, use an arrow.
+
+* For color, use `#EE2604`.
+* For the line width, use 3 pt.
+* Use the simple triangular plain arrow style.
+* If you have multiple arrows, make them parallel when possible.
+
+=== Save the image
+
+* Resize any wide or tall screenshots if needed, but make sure the screenshot
+  is still clear after being resized and compressed.
+* All images *must* be <<docs:style:compress,compressed>> to 100KB or less.+
+  In many cases, 25-50KB or less is often possible without reducing image
+  quality.
+* Save the image with a lowercase filename that's descriptive of the feature
+  or concept in the image:
+  ** If the image is of an application interface append the LinuxCNC version
+     to the filename based on this format: `image_name_vX_Y.png`. +
+     If the application version differs for LinuxCNC's, use the former one.
+     For example, for a screenshot taken from the Axis UI of LinuxCNC 2.8.4,
+     a valid name is `axis_v2_8_4.png`.
+  ** If you're adding an illustration that doesn't include parts of the
+     user interface, add the release number corresponding to the release
+     the image was added to. +
+     For a PR added to future 2.9.0 version, a valid name for an illustration
+     is `components_diagram_v2_9_0.png`.
+* Place images in a separate directory named `img/` in the same directory
+  where the `.adoc` document that you're working on is located.
+* Consider using PNG images instead of JPEG.
+// TODO Propose FOSS alternative solutions to compress GIFs
+* Images should be used (only when necessary) to illustrate the description
+  of a process, not to replace it.
+* See also how to link and embed <<docs:style:videos,videos>> to illustrate
+  the documentation.
+
+=== Insert the image into content
+
+// TODO Expand block image insertion infos
+//   https://asciidoc-py.github.io/userguide.html#_block_macros
+//   https://docs.asciidoctor.org/asciidoc/latest/macros/images/
+The AsciiDoc code for including an image in a document is:
+
+----
+`image::img/document_image_title_vX_Y.png["Image description which will be the alt tag"]`
+----
+
+The image description is the alt text for the rendered image on the
+documentation site. +
+For accessibility and SEO, use https://webaim.org/techniques/alttext/[descriptions]
+that:
+
+* Are accurate, succinct, and unique.
+* Don't use *image of* or *graphic of* to describe the image.
+
+// TODO Add inline image insertion infos
+//   https://asciidoc-py.github.io/userguide.html#_inline_macros
+
+[[docs:style:compress]]
+=== Compress images
+
+You should always compress any new images you add to the documentation.
+
+One known tool is https://pngquant.org/[`pngquant`], which is cross-platform
+and open source. Install it by visiting the official website and/or following
+the instructions for your OS.
+
+////
+TODO Use GitLab's or provide our images compression helper script
+
+If you use macOS and want all screenshots to be compressed automatically, read
+https://about.gitlab.com/blog/2020/01/30/simple-trick-for-smaller-screenshots/[One simple trick to make your screenshots 80% smaller].
+
+GitLab has a https://gitlab.com/gitlab-org/gitlab/-/blob/master/bin/pngquant[Ruby script]
+that you can use to simplify the manual process. In the root directory of
+your local copy of `+https://gitlab.com/gitlab-org/gitlab+`, run in a terminal:
+
+* Before compressing, if you want, check that all documentation PNG images have
+been compressed:
++
+----
+bin/pngquant lint
+----
+
+* Compress all documentation PNG images using `pngquant`:
++
+----
+bin/pngquant compress
+----
+
+* Compress specific files:
++
+----
+bin/pngquant compress doc/user/img/award_emoji_select.png doc/user/img/markdown_logo.png
+`
+
+* Compress all PNG files in a specific directory:
++
+----
+bin/pngquant compress doc/user/img
+----
+////
+
+Compress GIFs with https://ezgif.com/optimize or similar tool.
+
+=== Animated images
+
+Avoid using animated images (such as animated GIFs). They can be distracting
+and annoying for users, and they will be fixed in printed form.
+
+If you're describing a complicated interaction in the user interface and
+want to include a visual representation to help readers understand it, you
+can:
+
+* Use a static image (screenshot) and if necessary, add callouts to emphasize
+  an area of the screen.
+* Create a short video of the interaction and link to it.
+
+////
+TODO Emojis
+== Emojis
+
+Don't use the AsciiDoc emoji format, for example `:smile:`, for any purpose. Use
+<<gitlab-svg-icons,LinuxCNC SVG icons>> instead.
+
+Use of emoji in AsciiDoc requires LinuxCNC Flavored AsciiDoc, which is not supported by Kramdown,
+the AsciiDoc rendering engine used for LinuxCNC documentation.
+////
+
+[[docs:style:icons]]
+== Icons
+
+////
+TODO LinuxCNC Icons
+____
+https://gitlab.com/gitlab-org/gitlab-docs/-/issues/384[Introduced] in GitLab 12.7.
+____
+
+You can use icons from the https://gitlab-org.gitlab.io/gitlab-svgs/[GitLab SVG library]
+directly in the documentation. For example, `+**{tanuki}**+` renders as: *\{tanuki}*.
+
+TODO Icons substitution attributes like {edit} or {trash}
+////
+
+In most cases, you should avoid using the icons in text.
+
+However, you can use an icon when hover text is the only available way to
+describe a UI element. +
+For example, *Delete* or *Edit* buttons often have hover text only.
+
+When you do use an icon, start with the hover text and follow it with the
+inline icon:
+
+* Avoid: `+Select image:pencil.svg[] *Edit*.+` +
+  This generates as: Select image:pencil.svg[] *Edit*.
+* Use instead: `+Select *Edit* (image:pencil.svg[]).+` +
+  This generates as: Select *Edit* (image:pencil.svg[]).
+
+Do not use words to describe the icon:
+
+* Avoid: `+Select *Erase job log* (the trash icon).+`
+* Use instead: `+Select *Erase job log* (image:remove.svg[]).+` +
+  This generates as: Select *Erase job log* (image:remove.svg[]).
+
+[[docs:style:videos]]
+== Videos
+
+Adding LinuxCNC YouTube video tutorials to the documentation is highly
+encouraged, unless the video is outdated. Videos should not replace
+documentation, but complement or illustrate it. If content in a video is
+fundamental to a feature and its key use cases, but isn't adequately
+covered in the documentation, you should:
+
+* Add this detail to the documentation text.
+* Create an issue to review the video and update the page.
+
+Do not upload videos to the product repositories. <<link-to-video,Link>> or
+<<embed-videos,embed>> them instead.
+
+=== Link to video
+
+To link out to a video, include a YouTube icon so that readers can scan
+the page for videos before reading:
+
+`markdown
+<i class="fa fa-youtube-play youtube" aria-hidden="true"></i>
+For an overview, see [Video Title](link-to-video).
+`
+
+You can link any up-to-date video that's useful to the LinuxCNC user.
+
+////
+TODO Embed videos
+  https://asciidoc-py.github.io/userguide.html#X98
+  https://docs.asciidoctor.org/asciidoc/latest/macros/audio-and-video/
+=== Embed videos
+
+____
+https://gitlab.com/gitlab-org/gitlab-docs/-/merge_requests/472[Introduced] in Gitlab 12.1.
+____
+
+The https://docs.gitlab.com[LinuxCNC documentation site] supports embedded
+videos.
+
+You can embed videos from https://www.youtube.com/channel/UCnMGQ8QHMAnVIsI3xJrihhg[the official YouTube account for LinuxCNC] only.
+For videos from other sources, <<link-to-video,link>> them instead.
+
+In most cases, <<link-to-video,link to a video>>, because embedded videos
+take up a lot of space on the page and can be distracting to readers.
+
+To embed a video:
+
+. Copy the code from this procedure and paste it into your AsciiDoc file. +
+  Leave a blank line above and below it. +
+  Do not edit the code (don't remove or add any spaces). +
+. In YouTube, visit the video URL you want to display. +
+  Copy the regular URL from your browser
+  (`+https://www.youtube.com/watch?v=VIDEO-ID+`) and replace the video
+  title and link in the line under `<div class="video-fallback">`.
+. In YouTube, select *Share*, and then select *Embed*.
+. Copy the `<iframe>` source (`src`) *URL only*
+  (`+https://www.youtube.com/embed/VIDEO-ID+`), and paste it, replacing
+  the content of the `src` field in the `iframe` tag.
+
+[source,html]
+----
+leave a blank line here
+
+See the video: https://www.youtube.com/watch?v=MqL6BMOySIQ[Video title].+++<figure class="video-container">++++++<iframe src="https://www.youtube.com/embed/MqL6BMOySIQ" frameborder="0" allowfullscreen="true">++++++</iframe>++++++</figure>+++
+
+leave a blank line here
+----
+
+This is how it renders on the LinuxCNC documentation site:
+
+See the video: https://www.youtube.com/watch?v=enMumwvLAug[What is LinuxCNC].+++<figure class="video-container">++++++<iframe src="https://www.youtube.com/embed/MqL6BMOySIQ" frameborder="0" allowfullscreen="true">++++++</iframe>++++++</figure>+++
+
+____
+Notes:
+
+* The `figure` tag is required for semantic SEO
+* `video-container` class is necessary to make sure the video is responsive
+  and displays on different mobile devices.
+* The `<div class="video-fallback">` is a fallback necessary for `/help`,
+  because the GitLab Markdown processor doesn't support iframes. It's
+  hidden on the documentation site, but is displayed by `/help`.
+____
+////
+
+[[docs:style:admonitions]]
+== Admonitions
+
+// https://asciidoc-py.github.io/userguide.html#X28
+// https://docs.asciidoctor.org/asciidoc/latest/blocks/admonitions/
+
+Use admonition boxes to call attention to information.
+
+Use them sparingly, and never have an alert box immediately follow another
+alert box.
+
+Single paragraph admonitions are generated when one of these uppercase
+labels is used as a style attribute:
+
+* `NOTE`
+* `TIP`
+* `IMPORTANT`
+* `CAUTION`
+* `WARNING`
+// FIXME No DISCLAIMER, nor FLAG or INFO
+
+Lines of the paragraph should be left aligned on the content of the first
+line for better readability of the source.
+
+For example:
+
+[source,adoc]
+----
+[TIP]
+Ain't that a useful tip ?!
+----
+
+Renders as:
+
+[TIP]
+Ain't that a useful tip ?!
+
+[NOTE]
+This form is preferred to the `LABEL:` prefix at the beginning of the paragraph
+for consistency with the multi-block admonitions markup.
+
+When you want to apply an admonition to more elaborate content, set the
+label as a style attribute on an example block (`====`):
+
+[source,adoc]
+----
+[NOTE]
+.Admonition block can have titles
+====
+Admonition blocks allow for multi block content:
+
+* lists
+.. Nested lists
+
+[source]
+command example
+====
+----
+
+Renders as:
+
+[NOTE]
+.Admonition block can have titles
+====
+Admonition blocks allow for multi block content:
+
+* lists
+.. Nested lists
+
+[source]
+command example
+====
+
+
+////
+TODO FLAG admonition
+=== Flag
+
+Use this alert type to describe a feature's availability. For information about how to format
+`FLAG` alerts, see xref:../feature_flags.adoc[Document features deployed behind feature flags].
+////
+
+=== Note
+
+Use notes sparingly. Too many notes can make topics difficult to scan.
+
+Instead of adding a note:
+
+* Re-write the sentence as part of a paragraph.
+* Put the information into its own paragraph.
+* Put the content under a new subheading.
+
+If you must use a note, use this format:
+
+[source,adoc]
+NOTE: This is something to note.
+
+It renders on the LinuxCNC documentation site as:
+
+NOTE: This is something to note.
+
+=== Tip
+
+Use tips to add tricks and useful information from craft and experience.
+
+
+If you must use a note, use this format:
+
+[source,adoc]
+----
+[TIP]
+This is how grandpa did it.
+----
+
+It renders on the LinuxCNC documentation site as:
+
+[TIP]
+This is how grandpa did it.
+
+////
+TODO INFO admonition
+=== Info
+
+The Marketing team uses the `INFO` alert to add information relating to
+sales and marketing efforts.
+
+The text in an `INFO` alert always renders in a floating text box to the
+right of the text around it. To view the rendered LinuxCNC docs site, check
+the review app in the MR. You might need to move the text up or down in
+the surrounding text, depending on where you'd like to floating box to
+appear.
+
+For example, if your page has text like this:
+
+[source,adoc]
+----
+This is an introductory paragraph. LinuxCNC uses the SSH protocol to securely
+communicate with Git. When you use SSH keys to authenticate to the LinuxCNC
+remote server, you don't need to supply your username and password each
+time.
+
+INFO: Here is some information. This information is an important addition
+  to how you work with LinuxCNC and you might want to consider it.
+
+And here is another paragraph. LinuxCNC uses the SSH protocol to securely
+communicate with Git. When you use SSH keys to authenticate to the LinuxCNC
+remote server, you don't need to supply your username and password each
+time.
+
+And here is another paragraph. LinuxCNC uses the SSH protocol to securely
+communicate with Git. When you use SSH keys to authenticate to the LinuxCNC
+remote server, you don't need to supply your username and password each
+time.
+----
+
+It renders on the LinuxCNC documentation site as:
+
+This is an introductory paragraph. LinuxCNC uses the SSH protocol to securely communicate with Git.
+When you use SSH keys to authenticate to the LinuxCNC remote server,
+you don't need to supply your username and password each time.
+
+INFO:
+Here is some information. This information is an important addition to how you
+work with LinuxCNC and you might want to consider it.
+
+And here is another paragraph. LinuxCNC uses the SSH protocol to securely communicate with Git.
+When you use SSH keys to authenticate to the LinuxCNC remote server,
+you don't need to supply your username and password each time.
+
+And here is another paragraph. LinuxCNC uses the SSH protocol to securely communicate with Git.
+When you use SSH keys to authenticate to the LinuxCNC remote server,
+you don't need to supply your username and password each time.
+////
+
+=== Caution
+
+Use a Caution to advise the reader to act carefully (i.e., exercise care).
+
+[source,adoc]
+CAUTION: This is something to be careful about.
+
+It renders on the LinuxCNC documentation site as:
+
+CAUTION: This is something to be careful about.
+
+=== Warning
+
+Use a warning to indicate deprecated features, or to provide a warning about
+procedures that have the potential for:
+
+* data loss
+* danger, harm, or severe consequences.
+
+[source,adoc]
+WARNING: This is something to be warned about.
+
+It renders on the LinuxCNC documentation site as:
+
+WARNING: This is something to be warned about.
+
+////
+TODO DISCLAIMER admonition
+=== Disclaimer
+
+Use to describe future functionality only.
+For more information, see link:../versions.md#legal-disclaimer-for-future-features[Legal disclaimer for future features].
+////
+
+[[docs:style:quoteblocks]]
+== Quote blocks
+
+For highlighting a quoted text inside a block, use this format:
+
+[source,adoc]
+----
+____
+This is a QuoteBlock.
+____
+----
+
+It renders on the LinuxCNC documentation site as:
+
+____
+This is a QuoteBlock.
+____
+
+////
+FIXME Do we want tabs in our documentation pages ?
+  @silopolis: really no
+== Tabs
+
+On the docs site, you can format text so it's displayed as tabs.
+
+To create a set of tabs, follow this example:
+
+```plaintext
+::Tabs
+
+:::TabTitle Tab One
+
+Here's some content in tab one.
+
+:::TabTitle Tab Two
+
+Here's some other content in tab two.
+
+::EndTabs
+```
+
+This code renders on the LinuxCNC documentation site as:
+
+::Tabs
+
+:::TabTitle Tab One
+
+Here's some content in tab one.
+
+:::TabTitle Tab Two
+
+Here's some other content in tab two.
+
+::EndTabs
+
+For tab titles, be brief and consistent. Ensure they are parallel, and start each with a capital letter.
+For example:
+
+* `Omnibus package`, `Helm chart`, `Source`
+* `15.1 and earlier`, `15.2 and later`
+
+See https://design.gitlab.com/components/tabs/#guidelines[Pajamas] for details.
+////
+
+
+[[docs:style:terms]]
+== Terms
+
+To maintain consistency through LinuxCNC documentation, use these styles
+and terms.
+
+=== Describe UI elements
+
+Follow these styles when you're describing user interface elements in an
+application:
+
+* For elements with a visible label, use that label in bold with matching
+  case. +
+  For example: `+Select *Cancel*+`.
+* For elements with a tooltip or hover label, use that label in bold with
+  matching case. +
+  For example: `+Select *Home All*+`.
+
+
+[[docs:style:apps]]
+== Applications, components and features
+
+Refer to the information in this section when describing applications,
+components and features in the LinuxCNC documentation.
+
+=== Avoid line breaks in names
+
+If an application, component, or feature name contains spaces, don't split
+the name with a line break. +
+When names change, it is more complicated to search or `grep` text that has
+line breaks.
+
+
+////
+FIXME LinuxCNC specific sections ? styles ?
+[[docs:style:special-sections]]
+== Specific sections
+
+Certain styles should be applied to specific sections. Styles for specific
+sections are outlined in this section.
+
+=== Installation guide
+
+In link:../../../install/installation.md#2-ruby[step 2 of the installation guide],
+we install Ruby from source. To update the guide for a new Ruby version:
+
+* Change the version throughout the code block.
+* Replace the sha256sum. It's available on the
+https://www.ruby-lang.org/en/downloads/[downloads page] of the Ruby website.
+
+=== Configuration documentation for source and Omnibus installations
+
+LinuxCNC supports two installation methods: installations from source, and Omnibus
+packages. Possible configuration settings include:
+
+* Settings that touch configuration files in `config/`.
+* NGINX settings.
+* Other settings in `lib/support/`.
+
+Configuration procedures can require users to edit configuration files, reconfigure
+LinuxCNC, or restart LinuxCNC. Use these styles to document these steps, replacing
+`PATH/TO` with the appropriate path:
+
+[source,adoc]
+----
+*For Omnibus installations*
+
+. Edit `/etc/gitlab/gitlab.rb`:
++
+[source,ruby]
+external_url "https://gitlab.example.com"
+
+. Save the file and link:PATH/TO/administration/restart_gitlab.md#omnibus-gitlab-reconfigure[reconfigure]
+LinuxCNC for the changes to take effect.
+
+'''
+
+*For installations from source*
+
+. Edit `config/gitlab.yml`:
++
+[source,yaml]
+gitlab:
+  host: "gitlab.example.com"
+
+. Save the file and link:PATH/TO/administration/restart_gitlab.md#installations-from-source[restart]
+LinuxCNC for the changes to take effect.
+----
+
+In this case:
+
+* Bold the installation method's name.
+* Separate the methods with three dashes (`---`) to create a horizontal line.
+* Indent the code blocks to line up with the list item they belong to..
+* Use the appropriate syntax highlighting for each code block.
+* Use the <<gitlab-restart,LinuxCNC Restart>> section to explain any required
+restart or reconfigure of LinuxCNC.
+
+=== LinuxCNC restart
+
+When a restart or reconfigure of LinuxCNC is required, avoid duplication
+by linking to link:../../../administration/restart_gitlab.adoc[`doc/administration/restart_gitlab.md`]
+with text like this, replacing 'reconfigure' with 'restart' as needed:
+
+`markdown
+Save the file and [reconfigure LinuxCNC](../../../administration/restart_gitlab.md)
+for the changes to take effect.
+`
+
+If the document resides outside of the `doc/` directory, use the full path
+instead of the relative link:
+`+https://docs.gitlab.com/ee/administration/restart_gitlab.html+`.
+////
+
+////
+TODO Could this be used for LinuxCNC to help development of big changes ?
+== Feature flags
+
+Learn how to xref:../feature_flags.adoc[document features deployed behind flags]. For
+guidance on developing LinuxCNC with feature flags, see xref:../../feature_flags/index.adoc[Feature flags in development of LinuxCNC].
+////
