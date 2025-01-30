@@ -2,7 +2,7 @@
 
 result=$1
 
-if grep -qi error: $result ; then
+if grep -qi error: "$result" ; then
     echo "found string 'error' in $result"
     exit 1
 fi

@@ -1,2 +1,2 @@
 #!/bin/sh
-! grep -q '\*fail\*' $1
+! grep -q '\*fail\*' "$1"

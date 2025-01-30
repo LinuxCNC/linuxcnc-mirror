@@ -2,7 +2,7 @@
 
 PATH=@EMC2_BIN_DIR@:$PATH
 REALTIME=@REALTIME@
-THIS=$(basename $0)
+THIS=$(basename "$0")
 
 export HAL_RTMOD_DIR=@EMC2_RTLIB_DIR@
 
@@ -60,7 +60,7 @@ while getopts "ef:hi:kqsvIRQTUV" opt ; do
        exit 1;;
   esac
 done
-shift $(($OPTIND - 1))
+shift $((OPTIND - 1))
 
 if [ $# -gt 1 ] ; then
   echo "$THIS: too many arguments <$*>"
@@ -156,11 +156,11 @@ if $HAVEFILE ; then
   fi
 fi
 
-if [ ! -z "$INTERACTIVE" ]; then $INTERACTIVE; fi
+if [ -n "$INTERACTIVE" ]; then $INTERACTIVE; fi
 
 halcmd stop || result=$?
 halcmd unload all || result=$?
 
 $REALTIME stop || result=$?
 
-exit $result
+exit "$result"

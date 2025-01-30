@@ -18,7 +18,7 @@ ILLEGAL_TESTS="
 #
 for t in $LEGAL_TESTS; do
     echo "Legal test ${t}:"
-    rs274 -g test-legal-${t}.ngc | awk '{$1=""; print}'
+    rs274 -g "test-legal-${t}.ngc" | awk '{$1=""; print}'
     res=${PIPESTATUS[0]}
     if test "$res" = 0; then
 	echo "Success: Test '${t}' exited ${res}" >&2
@@ -33,7 +33,7 @@ done
 for t in $ILLEGAL_TESTS; do
     echo "Illegal test ${t}:"
     res=-1
-    rs274 -g test-illegal-${t}.ngc | awk '{$1=""; print}'
+    rs274 -g "test-illegal-${t}.ngc" | awk '{$1=""; print}'
     res=${PIPESTATUS[0]}
     if test "$res" = 0; then
 	echo "Error: Illegal test '${t}' exited ${res}" >&2

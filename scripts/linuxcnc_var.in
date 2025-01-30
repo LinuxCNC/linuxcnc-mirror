@@ -25,7 +25,7 @@ function usage () {
 
 Retrieve Linuxcnc Variables
 Usage:
-      $(basename $0) [ varname | all ]
+      $(basename "$0") [ varname | all ]
 
 Varnames supported:
          LINUXCNCVERSION
@@ -67,7 +67,7 @@ function show_item () {
 
 case $# in
    0) usage;;
-   1) show_item $1;;
+   1) show_item "$1";;
    *) usage;;
 esac
 exit 0

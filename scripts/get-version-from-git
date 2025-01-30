@@ -1,18 +1,18 @@
 #!/bin/bash
 
-if [ ! -z "$EMC2_HOME" ]; then
-    source $EMC2_HOME/scripts/githelper.sh
+if [ -n "$EMC2_HOME" ]; then
+    source "$EMC2_HOME"/scripts/githelper.sh
 else
-    source $(git rev-parse --show-toplevel)/scripts/githelper.sh
+    source "$(git rev-parse --show-toplevel)"/scripts/githelper.sh
 fi
 
-githelper $1
+githelper "$1"
 
 if [ "$DEB_COMPONENT" = "scratch" ]; then
     # unknown branches get the VERSION file, plus the branch name (with any
     # characters that are invalid in debian version numbers replaced with
     # dashes '-'), plus the HEAD commit SHA1
-    echo v$(git show HEAD:VERSION | cut -d ' ' -f 1)~${GIT_BRANCH//[^-.+:~a-z0-9]/-}~$(git show --pretty=format:%h HEAD | head -1)
+    echo "v$(git show HEAD:VERSION | cut -d ' ' -f 1)~${GIT_BRANCH//[^-.+:~a-z0-9]/-}~$(git show --pretty=format:%h HEAD | head -1)"
 else
     # known branches get the "describe" of the most recent signed git tag,
     # or of the most recent unsigned tag if no signed tags are found

@@ -8,23 +8,23 @@
 # that is signed by the release manager's key.
 #
 
-if [ ! -z "$EMC2_HOME" ]; then
-    source $EMC2_HOME/scripts/githelper.sh
+if [ -n "$EMC2_HOME" ]; then
+    source "$EMC2_HOME"/scripts/githelper.sh
 else
-    source $(git rev-parse --show-toplevel)/scripts/githelper.sh
+    source "$(git rev-parse --show-toplevel)"/scripts/githelper.sh
 fi
 
-githelper $1
+githelper "$1"
 if [ -z "$GIT_TAG" ]; then
     # no signed tags found
     echo "no"
     exit 1
 fi
 
-TAGGED_REV=$(git rev-parse $GIT_TAG^{commit})
+TAGGED_REV=$(git rev-parse "$GIT_TAG^{commit}")
 HEAD_REV=$(git rev-parse HEAD)
 
-if [ "$TAGGED_REV" == "$HEAD_REV" ]; then
+if [ "$TAGGED_REV" = "$HEAD_REV" ]; then
     echo "yes"
     exit 0
 fi

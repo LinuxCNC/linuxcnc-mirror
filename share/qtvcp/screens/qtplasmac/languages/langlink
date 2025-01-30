@@ -19,8 +19,8 @@ else
     echo -e "\ncreating links to qtplasmac_$1.qn translation for qtplasmac_4x3 and qtplasmac_9x16\n"
     mkdir -p "../../qtplasmac_4x3/languages"
     mkdir -p "../../qtplasmac_9x16/languages"
-    ln -rs qtplasmac_$1.qm -t ../../qtplasmac_4x3/languages
-    ln -rs qtplasmac_$1.qm -t ../../qtplasmac_9x16/languages
-    mv ../../qtplasmac_4x3/languages/qtplasmac_$1.qm ../../qtplasmac_4x3/languages/qtplasmac_4x3_sk.qm
-    mv ../../qtplasmac_9x16/languages/qtplasmac_$1.qm ../../qtplasmac_9x16/languages/qtplasmac_9x16_sk.qm
+    ln -rs "qtplasmac_$1.qm" -t ../../qtplasmac_4x3/languages
+    ln -rs "qtplasmac_$1.qm" -t ../../qtplasmac_9x16/languages
+    mv "../../qtplasmac_4x3/languages/qtplasmac_$1.qm" ../../qtplasmac_4x3/languages/qtplasmac_4x3_sk.qm
+    mv "../../qtplasmac_9x16/languages/qtplasmac_$1.qm" ../../qtplasmac_9x16/languages/qtplasmac_9x16_sk.qm
 fi

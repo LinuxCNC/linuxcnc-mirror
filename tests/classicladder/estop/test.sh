@@ -7,4 +7,4 @@
 if [ "libeatmydata.so" = "$LD_PRELOAD" ] ; then
     unset LD_PRELOAD
 fi
-exec linuxcnc $(dirname $0)/classicladder-estop.ini
+exec linuxcnc "$(dirname "$0")/classicladder-estop.ini"

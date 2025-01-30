@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-TESTDIR=$(dirname $1)
+TESTDIR=$(dirname "$1")
 cd "${TESTDIR}"
 
 # HAL assigns each component a unique component ID at load-time.

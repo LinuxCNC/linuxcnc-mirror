@@ -49,7 +49,9 @@ case "$0" in
     *) as_command=false
 esac
 
-if ! test "xyes" = "x@RUN_IN_PLACE@"; then
+# This evaluates to [ "yes" = "yes" ], which is fine.
+# shellcheck disable=SC2050
+if [ "yes" != "@RUN_IN_PLACE@" ]; then
     echo "This script is only useful on run-in-place systems."
     return
 fi
@@ -69,7 +71,7 @@ LINUXCNCVERSION="@EMC2VERSION@"; export LINUXCNCVERSION
 LINUXCNC_NCFILES_DIR="@EMC2_NCFILES_DIR@"; export LINUXCNC_NCFILES_DIR
 LINUXCNC_EMCSH=@WISH@; export LINUXCNC_EMCSH
 PATH=@EMC2_BIN_DIR@:$EMC2_HOME/scripts:$EMC2_HOME/tcl:"$PATH"
-GLADE_ICON_THEME_PATH=$EMC2_HOME/share/glade/pixmaps:"$GLADE_ICON_THEME_PATH" export GLADE_ICON_THEME_PATH
+GLADE_ICON_THEME_PATH=$EMC2_HOME/share/glade/pixmaps:"$GLADE_ICON_THEME_PATH"; export GLADE_ICON_THEME_PATH
 
 if [ -z "$TCLLIBPATH" ]; then
     TCLLIBPATH=$EMC2_HOME/tcl
@@ -108,7 +110,7 @@ fi
 if ! $as_command; then
     # TODO: if these completion directives give trouble for any versions
     # of bash actively in use, protect them with checks of BASH_VERSINFO
-    if [ $BASH_VERSINFO -eq 2 ]; then
+    if [ "${BASH_VERSINFO[0]}" -eq 2 ]; then
         complete -o dirnames -f -X '!*.ini' emc axis mdi
         complete -o dirnames -f -X '!*.hal' halrun halcmd
         complete -W 'start stop restart status' realtime
@@ -127,8 +129,8 @@ if ! $as_command; then
         complete -C "halcmd -C" halcmd
     fi
 
-    if [ -f $EMC2_HOME/src/Makefile ]; then
-        build () { make -C $EMC2_HOME/src "$@"; }
+    if [ -f "$EMC2_HOME/src/Makefile" ]; then
+        build () { make -C "$EMC2_HOME/src" "$@"; }
     fi
 fi
 

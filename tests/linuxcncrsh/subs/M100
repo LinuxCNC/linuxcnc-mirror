@@ -15,6 +15,6 @@ OUT_FILE=$TEST_DIR/gcode-output
 P=$1
 Q=$2
 
-echo P is $P >> $OUT_FILE
-echo Q is $Q >> $OUT_FILE
+echo "P is $P" >> "$OUT_FILE"
+echo "Q is $Q" >> "$OUT_FILE"
 

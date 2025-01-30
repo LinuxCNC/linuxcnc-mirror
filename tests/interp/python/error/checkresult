@@ -1,2 +1,2 @@
 #!/bin/sh
-grep -q -F 'Radius to end of arc differs from radius to start:' $1
+grep -q -F 'Radius to end of arc differs from radius to start:' "$1"

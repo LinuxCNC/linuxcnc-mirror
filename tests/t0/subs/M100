@@ -15,15 +15,15 @@ Q=$2
 #echo Q is $Q >> $OUT_FILE
 
 case $P in
-    0.000000) echo "X = $Q" >> $OUT_FILE;;
-    1.000000) echo "Y = $Q" >> $OUT_FILE;;
-    2.000000) echo "Z = $Q" >> $OUT_FILE;;
-    3.000000) echo "toolno = $Q" >> $OUT_FILE;;
-    4.000000) echo "tlo_z = $Q" >> $OUT_FILE;;
-    5.000000) echo "" >> $OUT_FILE;;
-    6.000000) echo "sequence number $Q" >> $OUT_FILE;;
+    0.000000) echo "X = $Q" >> "$OUT_FILE" ;;
+    1.000000) echo "Y = $Q" >> "$OUT_FILE" ;;
+    2.000000) echo "Z = $Q" >> "$OUT_FILE" ;;
+    3.000000) echo "toolno = $Q" >> "$OUT_FILE" ;;
+    4.000000) echo "tlo_z = $Q" >> "$OUT_FILE" ;;
+    5.000000) echo "" >> "$OUT_FILE" ;;
+    6.000000) echo "sequence number $Q" >> "$OUT_FILE" ;;
     *)
-        echo "unknown P=$P (Q=$Q)" >> $OUT_FILE
+        echo "unknown P=$P (Q=$Q)" >> "$OUT_FILE"
         exit 1;;
 esac
 

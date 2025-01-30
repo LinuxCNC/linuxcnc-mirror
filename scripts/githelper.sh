@@ -12,6 +12,7 @@
 # Sets GIT_TAG to the most recent signed tag (this will fall back to the
 # most recent tag of any kind if no signed tag is found).
 #
+# shellcheck shell=bash
 
 
 function githelper() {
@@ -45,32 +46,35 @@ function githelper() {
             ;;
         *)
             GIT_TAG_GLOB="*"
+            # Disable unused variable warnings on DEB_COMPONENT
+            # shellcheck disable=SC2034
             DEB_COMPONENT="scratch"
             ;;
     esac
 
 
     # use the gnupg keyring from our git repo to verify signatures on the release tags
-    export GNUPGHOME=$(git rev-parse --show-toplevel)/gnupg
+    GNUPGHOME=$(git rev-parse --show-toplevel)/gnupg
+    export GNUPGHOME
 
     NEWEST_SIGNED_TAG_UTIME=-1
     NEWEST_UNSIGNED_TAG_UTIME=-1
     for TAG in $(git tag -l "$GIT_TAG_GLOB"); do
-        if ! git cat-file tag $TAG > /dev/null 2> /dev/null; then
+        if ! git cat-file tag "$TAG" > /dev/null 2> /dev/null; then
             continue
         fi
 
-        TAG_UTIME=$(git cat-file tag $TAG | grep tagger | awk '{print $(NF-1)-$NF*36}')
+        TAG_UTIME=$(git cat-file tag "$TAG" | grep tagger | awk '{print $(NF-1)-$NF*36}')
 
         if git tag -v "$TAG" > /dev/null 2> /dev/null; then
             # it's a valid signed tag
-            if [ $TAG_UTIME -gt $NEWEST_SIGNED_TAG_UTIME ]; then
+            if [ "$TAG_UTIME" -gt "$NEWEST_SIGNED_TAG_UTIME" ]; then
                 NEWEST_SIGNED_TAG=$TAG
                 NEWEST_SIGNED_TAG_UTIME=$TAG_UTIME
             fi
         else
             # unsigned tag
-            if [ $TAG_UTIME -gt $NEWEST_UNSIGNED_TAG_UTIME ]; then
+            if [ "$TAG_UTIME" -gt "$NEWEST_UNSIGNED_TAG_UTIME" ]; then
                 NEWEST_UNSIGNED_TAG=$TAG
                 NEWEST_UNSIGNED_TAG_UTIME=$TAG_UTIME
             fi
@@ -78,13 +82,17 @@ function githelper() {
 
     done
 
-    if [ $NEWEST_SIGNED_TAG_UTIME -gt -1 ]; then
+    if [ "$NEWEST_SIGNED_TAG_UTIME" -gt -1 ]; then
+        # Disable unused variable warnings on GIT_TAG
+        # shellcheck disable=SC2034
         GIT_TAG="$NEWEST_SIGNED_TAG"
         return
     fi
 
-    if [ $NEWEST_UNSIGNED_TAG_UTIME -gt -1 ]; then
+    if [ "$NEWEST_UNSIGNED_TAG_UTIME" -gt -1 ]; then
         echo "no signed tags found, falling back to unsigned tags" > /dev/null 1>&2
+        # Disable unused variable warnings on GIT_TAG
+        # shellcheck disable=SC2034
         GIT_TAG="$NEWEST_UNSIGNED_TAG"
         return
     fi

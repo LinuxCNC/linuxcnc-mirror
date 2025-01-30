@@ -1,19 +1,19 @@
 #!/bin/sh
 
-STDERR=$(dirname $1)/stderr
-if [ ! -f $STDERR ]; then
+STDERR=$(dirname "$1")/stderr
+if [ ! -f "$STDERR" ]; then
     echo "stderr file not found!"
     exit 1
 fi
 
 # Linux spelling of ERANGE
-if grep -E -q 'rtapi_app_main_fails.* Numerical result out of range' $STDERR; then
+if grep -E -q 'rtapi_app_main_fails.* Numerical result out of range' "$STDERR"; then
     echo "loadrt found the test component, and it failed to load"
     exit 0
 fi
 
 # FreeBSD spelling of ERANGE
-if grep -E -q 'rtapi_app_main_fails.* Result too large' $STDERR; then
+if grep -E -q 'rtapi_app_main_fails.* Result too large' "$STDERR"; then
     echo "loadrt found the test component, and it failed to load"
     exit 0
 fi

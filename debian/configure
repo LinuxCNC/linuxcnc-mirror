@@ -28,7 +28,7 @@ EOF
 
 cd "${0%/*}"
 
-if [ "$1" == "-h" -o "$1" == "-help" -o "$1" == "--help" ]; then
+if [ "$1" == "-h" ] || [ "$1" == "-help" ] || [ "$1" == "--help" ]; then
     usage
     exit 0
 fi
@@ -168,7 +168,7 @@ sed \
     -e "s|@YAPPS_RUNTIME@|$YAPPS_RUNTIME|g" \
     -e "s#@ENABLE_BUILD_DOCUMENTATION@#$ENABLE_BUILD_DOCUMENTATION#g" \
     -e '/^\s*,\s*$/d' \
-    $*
+    "$@"
 }
 
 if [[ -z "${COMPAT}" ]]; then

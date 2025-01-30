@@ -8,6 +8,6 @@ elif [ ${#1} -ne 2 ]; then
     exit
 fi
 
-echo -e '\ncreating language translation file qtdragon_hd_'$1'.ts\n'
+echo -e '\ncreating language translation file qtdragon_hd_'"$1"'.ts\n'
 
-pylupdate5 *.py ../*.py  -ts qtdragon_hd_$1.ts
+pylupdate5 ./*.py ../*.py  -ts "qtdragon_hd_$1.ts"

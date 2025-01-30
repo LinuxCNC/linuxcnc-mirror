@@ -1,4 +1,4 @@
 #!/bin/bash
-SCRIPT_LOCATION=$(dirname $(readlink -f $0))
-python3 -mcProfile -o axis.profile $SCRIPT_LOCATION/axis "$@"
+SCRIPT_LOCATION=$(dirname "$(readlink -f "$0")")
+python3 -mcProfile -o axis.profile "$SCRIPT_LOCATION"/axis "$@"
 (echo sort cumulative; echo stats 20) | python3 -mpstats axis.profile

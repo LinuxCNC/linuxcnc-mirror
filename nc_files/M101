@@ -8,8 +8,8 @@
 P=$1
 Q=$2
 
-MCMD=$(readlink -nf $0) ;# canonical file name
-MNAME=$(basename $MCMD)
+MCMD=$(readlink -nf "$0")
+MNAME=$(basename "$MCMD")
 
 echo
 echo "Example for User M-code invocation:"
@@ -19,4 +19,4 @@ echo "$MNAME P$P Q$Q"
 
 # if a M1nn command exits with nonzero status,
 # the G-code program exits.  So always exit 0.
-exit 0 ;# 0 for success
+exit 0

@@ -12,4 +12,4 @@ fi
 
 echo -e "\ncreating language translation file qtplasmac_$1.ts\n"
 
-pylupdate5 *.py ../*.py ../../../../../lib/python/qtvcp/lib/qtplasmac/*.py -ts qtplasmac_$1.ts
+pylupdate5 ./*.py ../*.py ../../../../../lib/python/qtvcp/lib/qtplasmac/*.py -ts "qtplasmac_$1.ts"

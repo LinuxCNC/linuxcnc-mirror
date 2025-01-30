@@ -7,4 +7,4 @@ linuxcnc -r motion-logger.ini
 
 # Run test file in stand-alone interpreter:  should run program once
 rs274 -g test.ngc | awk '{$1=""; print}'
-exit ${PIPESTATUS[0]}
+exit "${PIPESTATUS[0]}"

@@ -4,33 +4,33 @@
 
 # Convert all non-link manual pages to adoc
 for m in docs/man/man?/*; do
-    test -L $m && continue
-    n=$(echo $m |sed s%docs/man%docs/src/man%).adoc
-    if [ -e "$n" ] || [ -e "$n".in ] || grep -q '^.so' $m; then
-	echo "Not converting $m due to roff include or existing adoc version"
+    test -L "$m" && continue
+    n=$(echo "$m" |sed s%docs/man%docs/src/man%).adoc
+    if [ -e "$n" ] || [ -e "$n".in ] || grep -q '^.so' "$m"; then
+	echo "E: Not converting $m due to roff include or existing adoc version"
     else
-	echo "Converting $m to $n"
-        pandoc -f man -t asciidoc $m -o $n
-        git add $n
-        git rm --quiet $m
+	echo "I: Converting '$m' to '$n'"
+        pandoc -f man -t asciidoc "$m" -o "$n"
+        git add "$n"
+        git rm --quiet "$m"
     fi
 done
 
 # Make sure they can be converted back to manpage format
 for n in docs/src/man/man?/*.adoc; do
     #echo "Making sure $n got required header"
-    b=$(basename $n .adoc)
-    name=$(echo $b|cut -d. -f1)
-    s=$(echo $b|cut -d. -f2)
-    if ! head -1 $n | grep -q "= $name ($s)" ||
+    b=$(basename "$n" .adoc)
+    name=$(echo "$b"|cut -d. -f1)
+    s=$(echo "$b"|cut -d. -f2)
+    if ! head -1 "$n" | grep -q "= $name ($s)" ||
 	    ! "/usr/bin/asciidoc" --backend docbook \
               -a "a2x-format=manpage" --doctype manpage \
               --attribute "mansource=LinuxCNC" \
               --attribute "manmanual=LinuxCNC Documentation" \
               --verbose \
-              --out-file x.man $m
+              --out-file x.man "$m"
     then
-        (echo "= $name($s)"; echo; cat $n) > $n.new && mv $n.new $n
-        git add $n
+        (echo "= $name($s)"; echo; cat "$n") > "$n.new" && mv "$n.new" "$n"
+        git add "$n"
     fi
 done

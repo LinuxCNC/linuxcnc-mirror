@@ -1,12 +1,12 @@
 #!/bin/bash
 
-if [ ! -z "$EMC2_HOME" ]; then
-    source $EMC2_HOME/scripts/githelper.sh
+if [ -n "$EMC2_HOME" ]; then
+    source "$EMC2_HOME"/scripts/githelper.sh
 else
-    source $(git rev-parse --show-toplevel)/scripts/githelper.sh
+    source "$(git rev-parse --show-toplevel)"/scripts/githelper.sh
 fi
 
-githelper $1
+githelper "$1"
 
-echo $DEB_COMPONENT
+echo "$DEB_COMPONENT"
 

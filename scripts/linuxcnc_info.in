@@ -21,7 +21,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 ofile=/tmp/linuxcnc_info.txt
-PROG=$(basename $0)
+PROG=$(basename "$0")
 
 usage () {
   cat <<EOF
@@ -36,11 +36,11 @@ exit 1
 }
 
 git_commit () {
-  dir=$(dirname $0)
+  dir=$(dirname "$0")
   if [ "${dir}" = "/usr/bin" ] ; then
     echo NA
   else
-    echo $(cd $dir; git rev-parse --short HEAD 2>/dev/null)
+    echo "$(cd "$dir" && git rev-parse --short HEAD 2>/dev/null)"
   fi
 }
 
@@ -49,7 +49,7 @@ git_commit () {
 editors="$VISUAL gedit mousepad geany nedit nano gvim abiword"
 VIEWER=""
 for e in $editors ; do
-  if [  -x "$(command -v $e)" ] ; then
+  if [  -x "$(command -v "$e")" ] ; then
     VIEWER=$e
     break #use first editor found
   fi
@@ -81,7 +81,7 @@ function show () {
 }
 
 function parse_cpuinfo () {
-  cat /proc/cpuinfo|grep "$1"|head -1|cut -d: -f2-
+  grep "$1" < /proc/cpuinfo | head -1 | cut -d: -f2-
 }
 
 function parse_after_colon () {
@@ -111,58 +111,58 @@ system and configuration.
 
 EOF
 
-[ -n "$VIEWER" ] && echo VIEWER=$VIEWER
+[ -n "$VIEWER" ] && echo "VIEWER=$VIEWER"
 
-show "            Date" $(date)
-show "        UTC Date" $(date -u)
-show "    this program" $0
-show "          uptime" $(uptime)
-show " lsb_release -sa" $(lsb_release -sa 2>/dev/null)
-show "        linuxcnc" $(command -v linuxcnc)
-show "             pwd" $(pwd -P)
-show "            USER" $USER
-show "         LOGNAME" $LOGNAME
-show "            HOME" $HOME
-show "          EDITOR" $EDITOR
-show "          VISUAL" $VISUAL
-show "        LANGUAGE" $LANGUAGE
-show "            TERM" $TERM
-show "       COLORTERM" $COLORTERM
-show "         DISPLAY" $DISPLAY
-show "         DESKTOP" $DESKTOP_SESSION
-show "    display size" $(parse_after_colon $(xdpyinfo|grep dimensions))
-show "            PATH" $PATH
+show "            Date" "$(date)"
+show "        UTC Date" "$(date -u)"
+show "    this program" "$0"
+show "          uptime" "$(uptime)"
+show " lsb_release -sa" "$(lsb_release -sa 2>/dev/null)"
+show "        linuxcnc" "$(command -v linuxcnc)"
+show "             pwd" "$(pwd -P)"
+show "            USER" "$USER"
+show "         LOGNAME" "$LOGNAME"
+show "            HOME" "$HOME"
+show "          EDITOR" "$EDITOR"
+show "          VISUAL" "$VISUAL"
+show "        LANGUAGE" "$LANGUAGE"
+show "            TERM" "$TERM"
+show "       COLORTERM" "$COLORTERM"
+show "         DISPLAY" "$DISPLAY"
+show "         DESKTOP" "$DESKTOP_SESSION"
+show "    display size" "$(parse_after_colon "$(xdpyinfo|grep dimensions)")"
+show "            PATH" "$PATH"
 echo
 echo "uname items:"
-show "     nodename -n" $(uname -n)
-show "  kernel-name -s" $(uname -s)
-show "  kernel-vers -v" $(uname -v)
-show "      machine -m" $(uname -m)
-show "    processor -p" $(uname -p)
-show "     platform -i" $(uname -i)
-show "  oper system -o" $(uname -o)
+show "     nodename -n" "$(uname -n)"
+show "  kernel-name -s" "$(uname -s)"
+show "  kernel-vers -v" "$(uname -v)"
+show "      machine -m" "$(uname -m)"
+show "    processor -p" "$(uname -p)"
+show "     platform -i" "$(uname -i)"
+show "  oper system -o" "$(uname -o)"
 show ""
 echo "/proc items:"
-show "         cmdline" $(< /proc/cmdline)
-show "      model name" $(parse_cpuinfo "model name")
-show "           cores" $(parse_cpuinfo "cpu cores")
-show "         cpu MHz" $(parse_cpuinfo "cpu MHz")
-show "         parport" $(cat /proc/ioports|grep parport)
-show "          serial" $(cat /proc/ioports|grep serial)
+show "         cmdline" "$(< /proc/cmdline)"
+show "      model name" "$(parse_cpuinfo "model name")"
+show "           cores" "$(parse_cpuinfo "cpu cores")"
+show "         cpu MHz" "$(parse_cpuinfo "cpu MHz")"
+show "         parport" "$(grep parport < /proc/ioports)"
+show "          serial" "$(grep serial < /proc/ioports)"
 echo
 echo "Versions:"
-show "             gcc" $(gcc --version|head -1)
-show "          python" $(@PYTHON@ --version 2>&1)
-show "             git" $(tryversion git)
-show "      git commit" $(git_commit)
-show "             tcl" $(echo "puts $::tcl_version"|tclsh)
-show "              tk" $(echo "puts $::tk_version;destroy ."|wish)
-show "           glade" $(tryversion glade)
+show "             gcc" "$(gcc --version|head -1)"
+show "          python" "$(@PYTHON@ --version 2>&1)"
+show "             git" "$(tryversion git)"
+show "      git commit" "$(git_commit)"
+show "             tcl" "$(echo "puts $::tcl_version"|tclsh)"
+show "              tk" "$(echo "puts $::tk_version;destroy ."|wish)"
+show "           glade" "$(tryversion glade)"
 echo
 echo "linuxcnc_var all:"
 echo
 for n in $(linuxcnc_var all) ; do
-   show "${n%%=*}" ${n##*=}
+   show "${n%%=*}" "${n##*=}"
 done
 
 echo

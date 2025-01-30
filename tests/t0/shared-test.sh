@@ -25,7 +25,7 @@ while [  $TOGO -gt 0 ]; do
         break
     fi
     sleep 0.25
-    TOGO=$(($TOGO - 1))
+    TOGO=$((TOGO - 1))
 done
 if [  $TOGO -eq 0 ]; then
     echo connection to linuxcncrsh timed out
@@ -47,12 +47,12 @@ fi
         echo 'set wait done'
     }
 
-    echo hello EMC mt 1.0
-    echo set enable EMCTOO
+    echo "hello EMC mt 1.0"
+    echo "set enable EMCTOO"
 
-    echo set estop off
-    echo set machine on
-    echo set mode mdi
+    echo "set estop off"
+    echo "set machine on"
+    echo "set mode mdi"
 
 
     #
@@ -77,12 +77,12 @@ fi
 
     # Apply the TLO of the current tool.  On both, the spindle has no tool,
     # which has 0 TLO.
-    echo set mdi g43
+    echo "set mdi g43"
     introspect 1
 
     # Apply the TLO of tool T1.  On both, T1 is a valid tool, so we use its
     # TLO.
-    echo set mdi g43 h1
+    echo "set mdi g43 h1"
     introspect 2
 
     # Apply the TLO of H0, this one is weird.
@@ -94,7 +94,7 @@ fi
     # table, this is an error and the active TLO remains unchanged (so it
     # stays as the TLO of T1 that we just set above).  If T0 is defined, we
     # apply its TLO here.
-    echo set mdi g43 h0
+    echo "set mdi g43 h0"
     introspect 3
 
 
@@ -104,18 +104,18 @@ fi
 
     # Try to change TLO of the normal tool T7.  This should work on both,
     # but not change the active TLO.
-    echo set mdi g10 l1 p7 z0.1
+    echo "set mdi g10 l1 p7 z0.1"
     introspect 4
 
     # Apply the TLO of T7, which we just tried to set.  This should work on
     # both.
-    echo set mdi g43 h7
+    echo "set mdi g43 h7"
     introspect 5
 
     # Try to change TLO of the strange tool T0.
     #
     # This should fail in every config because you cannot change T0.
-    echo set mdi g10 l1 p0 z0.2
+    echo "set mdi g10 l1 p0 z0.2"
     introspect 6
 
     # Apply the TLO of the special H0.
@@ -127,7 +127,7 @@ fi
     # table, this is an error and the active TLO remains unchanged (so it
     # stays as the TLO of T7 that we just set above).  If T0 is defined, we
     # apply its TLO here.
-    echo set mdi g43 h0
+    echo "set mdi g43 h0"
     introspect 7
 
 
@@ -136,18 +136,18 @@ fi
     #
 
     # Try to change TLO of the normal tool T7.  This should work on both.
-    echo set mdi g10 l10 p7 z0.3
+    echo "set mdi g10 l10 p7 z0.3"
     introspect 8
 
     # Apply the TLO of T7, which we just tried to set.  This should work on
     # both.
-    echo set mdi g43 h7
+    echo "set mdi g43 h7"
     introspect 9
 
     # Try to change TLO of the strange tool T0.
     #
     # This should fail on every config because you cannot change T0.
-    echo set mdi g10 l10 p0 z0.4
+    echo "set mdi g10 l10 p0 z0.4"
     introspect 10
 
     # Apply the TLO of the special H0.
@@ -159,7 +159,7 @@ fi
     # table, this is an error and the active TLO remains unchanged (so it
     # stays as the TLO of T7 that we just set above).  If T0 is defined, we
     # apply its TLO here.
-    echo set mdi g43 h0
+    echo "set mdi g43 h0"
     introspect 11
 
 
@@ -184,13 +184,13 @@ fi
     #        random with T0: -5.0 + 0.0 TLO = -5.0
     #
     # All the configs will be at Z=5.0 after switching to G59.3.
-    echo set mdi g10 l20 p9 z5
+    echo "set mdi g10 l20 p9 z5"
     introspect 11.5
 
-    echo set mdi g59.3
+    echo "set mdi g59.3"
     introspect 12
 
-    echo set mdi g54
+    echo "set mdi g54"
     introspect 13
 
     # Try to change TLO of the normal tool T7.  This should work on all
@@ -202,18 +202,18 @@ fi
     #        Random with T0: -5.0 + 0.5 = -4.5
     #
     # But these offsets are not active until the G43 below.
-    echo set mdi g10 l11 p7 z0.5
+    echo "set mdi g10 l11 p7 z0.5"
     introspect 14
 
     # Apply the TLO of T7, which we just tried to set.  This should
     # work on all configs.
-    echo set mdi g43 h7
+    echo "set mdi g43 h7"
     introspect 15
 
     # Try to change TLO of the strange tool T0.
     #
     # This should fail on every config because you cannot change T0.
-    echo set mdi g10 l11 p0 z0.6
+    echo "set mdi g10 l11 p0 z0.6"
     introspect 16
 
     # Apply the TLO of the special H0.
@@ -225,7 +225,7 @@ fi
     # table, this is an error and the active TLO remains unchanged (so it
     # stays as the TLO of T7 that we just set above).  If T0 is defined, we
     # apply its TLO here.
-    echo set mdi g43 h0
+    echo "set mdi g43 h0"
     introspect 17
 
 
@@ -242,7 +242,7 @@ fi
 
     # Switch to the valid tool T50 but don't apply its TLO yet.
     # This should work on all configs.
-    echo set mdi t50 m6
+    echo "set mdi t50 m6"
     introspect 100
 
 
@@ -252,17 +252,17 @@ fi
 
     # Apply the TLO of the current tool.  On all configs, the spindle has
     # T50.  This should work on all configs.
-    echo set mdi g43
+    echo "set mdi g43"
     introspect 101
 
     # change the TLO of the normal tool T7
     # this should work on both, but not change the active TLO
-    echo set mdi g10 l10 p7 z1.1
+    echo "set mdi g10 l10 p7 z1.1"
     introspect 102
 
     # apply the TLO of the normal tool T7 (TLO of 0.5 set above)
     # this should work on both
-    echo set mdi g43 h7
+    echo "set mdi g43 h7"
     introspect 103
 
     # try to change the TLO of T0
@@ -272,7 +272,7 @@ fi
     # On random without T0 this should fail because there is no T0.
     #
     # On random with T0 this should fail because you can't change T0.
-    echo set mdi g10 l10 p0 z1.2
+    echo "set mdi g10 l10 p0 z1.2"
     introspect 104
 
     # Apply the TLO of the special H0.
@@ -284,7 +284,7 @@ fi
     # table, this is an error and the active TLO remains unchanged (so it
     # stays as the TLO of T7 that we just set above).  If T0 is defined, we
     # apply its TLO here.
-    echo set mdi g43 h0
+    echo "set mdi g43 h0"
     introspect 105
 
 
@@ -294,12 +294,12 @@ fi
 
     # Try to change TLO of the normal tool T7.  This should work on all
     # configs, but not change the active TLO.
-    echo set mdi g10 l1 p7 z1.3
+    echo "set mdi g10 l1 p7 z1.3"
     introspect 106
 
     # Apply the TLO of T7, which we just tried to set.  This should work on
     # all configs.
-    echo set mdi g43 h7
+    echo "set mdi g43 h7"
     introspect 107
 
     # Try to change TLO of the strange tool T0.
@@ -309,7 +309,7 @@ fi
     # It should fail on random without T0 because it has no T0.
     #
     # It should fail on random with T0 because you cannot change T0.
-    echo set mdi g10 l1 p0 z1.4
+    echo "set mdi g10 l1 p0 z1.4"
     introspect 108
 
     # Apply the TLO of the special H0.
@@ -321,7 +321,7 @@ fi
     # from T7 above.
     #
     # It should work on random with T0 and give us the TLO of T0 (0.0).
-    echo set mdi g43 h0
+    echo "set mdi g43 h0"
     introspect 109
 
 
@@ -331,12 +331,12 @@ fi
 
     # Try to change TLO of the normal tool T7.  This should work on all
     # configs.
-    echo set mdi g10 l10 p7 z1.5
+    echo "set mdi g10 l10 p7 z1.5"
     introspect 110
 
     # Apply the TLO of T7, which we just tried to set.  This should work on
     # all configs.
-    echo set mdi g43 h7
+    echo "set mdi g43 h7"
     introspect 111
 
     # Try to change TLO of the strange tool T0.
@@ -346,7 +346,7 @@ fi
     # It should fail on random without T0 because it has no T0.
     #
     # It should fail on random with T0 because you cannot change T0
-    echo set mdi g10 l10 p0 z1.6
+    echo "set mdi g10 l10 p0 z1.6"
     introspect 112
 
     # Apply the TLO of the special H0.
@@ -358,12 +358,12 @@ fi
     # from T7 above.
     #
     # It should work on random with T0 and give us the TLO of T0 (0.0).
-    echo set mdi g43 h0
+    echo "set mdi g43 h0"
     introspect 113
 
     # Try to change TLO of the currently loaded tool, T50.
     # This should work on all configs but not change the active TLO
-    echo set mdi g10 l10 p50 z1.7
+    echo "set mdi g10 l10 p50 z1.7"
     introspect 114
 
     # Apply the TLO of the special H0.
@@ -375,17 +375,17 @@ fi
     # from T7 above.
     #
     # It should work on random with T0 and give us the TLO of T0 (0.0).
-    echo set mdi g43 h0
+    echo "set mdi g43 h0"
     introspect 115
 
     # Apply the TLO of T7.
     # This should work on all configs.
-    echo set mdi g43 h7
+    echo "set mdi g43 h7"
     introspect 116
 
     # Apply the TLO of the current tool
     # This should work on all configs.
-    echo set mdi g43
+    echo "set mdi g43"
     introspect 117
 
 
@@ -405,23 +405,23 @@ fi
     #     -6.0 + 1.7 TLO = -4.3
     #
     # All the configs will be at Z = 6.0 after switching to G59.3.
-    echo set mdi g10 l20 p9 z6
+    echo "set mdi g10 l20 p9 z6"
     introspect 117.5
 
-    echo set mdi g59.3
+    echo "set mdi g59.3"
     introspect 118
 
-    echo set mdi g54
+    echo "set mdi g54"
     introspect 119
 
     # Try to change TLO of the normal tool T7.  This should work on all
     # configs.
-    echo set mdi g10 l11 p7 z1.8
+    echo "set mdi g10 l11 p7 z1.8"
     introspect 120
 
     # Apply the TLO of T7, which we just tried to set.  This should
     # work on all configs.
-    echo set mdi g43 h7
+    echo "set mdi g43 h7"
     introspect 121
 
     # Try to change TLO of the strange tool T0.
@@ -431,7 +431,7 @@ fi
     # It should fail on random without T0 because it has no T0.
     #
     # This should fail on random with T0 because you cannot change T0.
-    echo set mdi g10 l11 p0 z1.3
+    echo "set mdi g10 l11 p0 z1.3"
     introspect 122
 
     # Apply the TLO of T0, which we just tried to set.
@@ -443,7 +443,7 @@ fi
     # above.
     #
     # It should work on random with T0 and give us the TLO of T0: 0.0
-    echo set mdi g43 h0
+    echo "set mdi g43 h0"
     introspect 123
 
 
@@ -461,7 +461,7 @@ fi
     #
     # On random with T0 this should work and put T0 in the spindle.
 
-    echo set mdi t0 m6
+    echo "set mdi t0 m6"
     introspect 200
 
 
@@ -477,17 +477,17 @@ fi
     # set above.
     #
     # On random with T0 the spindle has tool T0, which has a 0 TLO.
-    echo set mdi g43
+    echo "set mdi g43"
     introspect 201
 
     # change the TLO of the normal tool T7
     # this should work on all configs, but not change the active TLO
-    echo set mdi g10 l10 p7 z2.0
+    echo "set mdi g10 l10 p7 z2.0"
     introspect 202
 
     # apply the TLO of the normal tool T7 (TLO set above)
     # this should work on all configs
-    echo set mdi g43 h7
+    echo "set mdi g43 h7"
     introspect 203
 
     # try to change the TLO of T0
@@ -497,7 +497,7 @@ fi
     # On random without T0 this should fail because there is no T0.
     #
     # On random with T0 this should fail because you can't change T0.
-    echo set mdi g10 l10 p0 z2.1
+    echo "set mdi g10 l10 p0 z2.1"
     introspect 204
 
     # try to apply the TLO of H0
@@ -510,7 +510,7 @@ fi
     # unchanged.
     #
     # On random with T0 this should apply the TLO of T0 (0.0).
-    echo set mdi g43 h0
+    echo "set mdi g43 h0"
     introspect 205
 
 
@@ -520,12 +520,12 @@ fi
 
     # Try to change TLO of the normal tool T7.  This should work on all
     # configs, but not change the active TLO.
-    echo set mdi g10 l1 p7 z2.2
+    echo "set mdi g10 l1 p7 z2.2"
     introspect 206
 
     # Apply the TLO of T7, which we just tried to set.  This should work on
     # all configs.
-    echo set mdi g43 h7
+    echo "set mdi g43 h7"
     introspect 207
 
     # Try to change TLO of the strange tool T0.
@@ -535,7 +535,7 @@ fi
     # It should fail on random without T0 because it has no T0.
     #
     # This should fail on random with T0 because you cannot change T0.
-    echo set mdi g10 l1 p0 z2.3
+    echo "set mdi g10 l1 p0 z2.3"
     introspect 208
 
     # Apply the TLO of H0.
@@ -547,7 +547,7 @@ fi
     # from T7 above.
     #
     # It should work on random with TLO and give us the TLO of T0.
-    echo set mdi g43 h0
+    echo "set mdi g43 h0"
     introspect 209
 
 
@@ -557,12 +557,12 @@ fi
 
     # Try to change TLO of the normal tool T7.  This should work on all
     # configs.
-    echo set mdi g10 l10 p7 z2.4
+    echo "set mdi g10 l10 p7 z2.4"
     introspect 210
 
     # Apply the TLO of T7, which we just tried to set.  This should work on
     # all configs.
-    echo set mdi g43 h7
+    echo "set mdi g43 h7"
     introspect 211
 
     # Try to change TLO of the strange tool T0.
@@ -572,7 +572,7 @@ fi
     # It should fail on random without T0 because it has no T0.
     #
     # It should fail on random with T0 because you cannot change T0
-    echo set mdi g10 l10 p0 z2.5
+    echo "set mdi g10 l10 p0 z2.5"
     introspect 212
 
     # Apply the TLO of the special H0.
@@ -584,7 +584,7 @@ fi
     # from T7 above.
     #
     # It should work on random with T0 and give us the TLO of T0 (0.0).
-    echo set mdi g43 h0
+    echo "set mdi g43 h0"
     introspect 213
 
 
@@ -609,13 +609,13 @@ fi
     #        random with T0: -7.0 + 0.0 TLO = -7.0
     #
     # All the configs will be at Z=7.0 after switching to G59.3.
-    echo set mdi g10 l20 p9 z7
+    echo "set mdi g10 l20 p9 z7"
     introspect 213.5
 
-    echo set mdi g59.3
+    echo "set mdi g59.3"
     introspect 214
 
-    echo set mdi g54
+    echo "set mdi g54"
     introspect 215
 
     # Try to change TLO of the normal tool T7.  This should work on all
@@ -627,12 +627,12 @@ fi
     #        Random with T0: -7.0 + 2.6 = -4.4
     #
     # But these offsets are not active until the G43 below.
-    echo set mdi g10 l11 p7 z2.6
+    echo "set mdi g10 l11 p7 z2.6"
     introspect 216
 
     # Apply the TLO of T7, which we just tried to set.  This should
     # work on all configs.
-    echo set mdi g43 h7
+    echo "set mdi g43 h7"
     introspect 217
 
     # Try to change TLO of the strange tool T0.
@@ -642,7 +642,7 @@ fi
     # It should fail on random without T0 because it has no T0.
     #
     # It should work on random with T0 because you cannot change T0.
-    echo set mdi g10 l11 p0 z2.7
+    echo "set mdi g10 l11 p0 z2.7"
     introspect 218
 
     # Apply the TLO of H0.
@@ -655,7 +655,7 @@ fi
     #
     # It should work on random with T0 and give us a TLO of the tool in the
     # spindle, T0
-    echo set mdi g43 h0
+    echo "set mdi g43 h0"
     introspect 219
 
 

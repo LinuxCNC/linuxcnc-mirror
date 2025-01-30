@@ -1,2 +1,2 @@
 #!/bin/sh
-[ -x "`dirname "$1"`/extralib_test" ]
+[ -x "$(dirname "$1")/extralib_test" ]

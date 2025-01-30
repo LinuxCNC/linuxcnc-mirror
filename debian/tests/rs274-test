@@ -2,17 +2,17 @@
 
 set -e
 
-cd $(dirname $0)
+cd "$(dirname "$0")"
 
 log=$AUTOPKGTEST_TMP/rs274.out
 
-if ! rs274 -g rs274.ngc > $log 2>&1 ; then
+if ! rs274 -g rs274.ngc > "$log" 2>&1 ; then
     echo "error: failed to run rs274"
-    cat $log
+    cat "$log"
     exit 1
 fi
 
-if ! diff -u $log rs274.res ; then
+if ! diff -u "$log" rs274.res ; then
     echo "error: rs274 output do not match rs274.res"
     exit 1
 fi

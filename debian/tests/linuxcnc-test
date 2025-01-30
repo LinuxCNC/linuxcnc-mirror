@@ -4,7 +4,7 @@
 
 set -e
 
-cd $(dirname $0)
+cd "$(dirname "$0")"
 
 if ! linuxcnc -r linuxcnc-test.ini ; then
     echo "error: failed to execute linuxcnc"

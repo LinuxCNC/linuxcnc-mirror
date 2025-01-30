@@ -1,5 +1,5 @@
 #!/bin/sh
 set -e
-grep -q "overrun detected in sampler" $1
-grep -q "10 overruns detected, giving up" $1
-grep -q "1 tests run, 0 successful, 1 failed . 0 expected" $1
+grep -q "overrun detected in sampler" "$1"
+grep -q "10 overruns detected, giving up" "$1"
+grep -q "1 tests run, 0 successful, 1 failed . 0 expected" "$1"
