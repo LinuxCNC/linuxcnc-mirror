@@ -981,9 +981,7 @@ int Posix::task_delete(int id)
   return 0;
 }
 
-static int find_rt_cpu_number() {
-    if(getenv("RTAPI_CPU_NUMBER")) return atoi(getenv("RTAPI_CPU_NUMBER"));
-
+static int probe_rt_cpu_number() {
 #ifdef __linux__
     cpu_set_t cpuset_orig;
     int r = sched_getaffinity(getpid(), sizeof(cpuset_orig), &cpuset_orig);
@@ -1029,6 +1027,24 @@ static int find_rt_cpu_number() {
 #endif
 }
 
+static int find_rt_cpu_number(int prio) {
+    static const int probed_cpu_number = probe_rt_cpu_number();
+
+    char cpu_env[64];
+    const char *minus = "";
+    if (prio < 0) {
+        prio = -prio;
+	minus = "m";
+    }
+    snprintf(cpu_env, sizeof(cpu_env), "RTAPI_CPU_NUMBER_PRIO%s%d", minus, prio);
+    if(getenv(cpu_env))
+        return atoi(getenv(cpu_env));
+    if(getenv("RTAPI_CPU_NUMBER"))
+        return atoi(getenv("RTAPI_CPU_NUMBER"));
+
+    return probed_cpu_number;
+}
+
 int Posix::task_start(int task_id, unsigned long int period_nsec)
 {
   auto task = ::rtapi_get_task<PosixTask>(task_id);
@@ -1061,7 +1077,7 @@ int Posix::task_start(int task_id, unsigned long int period_nsec)
   if((ret = pthread_attr_setinheritsched(&attr, PTHREAD_EXPLICIT_SCHED)) != 0)
       return -ret;
   if(nprocs > 1) {
-      const static int rt_cpu_number = find_rt_cpu_number();
+      int rt_cpu_number = find_rt_cpu_number(task->prio);
       if(rt_cpu_number != -1) {
 #ifdef __FreeBSD__
           cpuset_t cpuset;
