@@ -1,10 +1,8 @@
 #!/bin/bash
 export PYTHONUNBUFFERED=1
-rs274 -i test.ini  -g test.ngc 2>&1
-
-# expected to fail
-if [ $? -ne 0 ]; then
+if ! rs274 -i test.ini  -g test.ngc 2>&1
+then
+    # expected to fail
     exit 0
 fi
-
 exit 1

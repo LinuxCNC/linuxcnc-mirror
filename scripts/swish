@@ -11,11 +11,11 @@ fi
 
 case "$0" in
 	*/*) MYDIR="${0%/*}" ;;
-	*) MYDIR="`type -path $0`"; MYDIR="${MYDIR%/*}"
+	*) MYDIR="$(type -path "$0")"; MYDIR="${MYDIR%/*}"
 esac
 
-SRCDIR=$(cd "$MYDIR/../src"; pwd)
-SWISHINDEX="$SRCDIR/.swishindex"
+SRCDIR=$(cd "$MYDIR/../src" && pwd || exit 1)
+SWISHINDEX="$SRCDIR"/.swishindex
 
 function makerelative () {
 python -c '
@@ -73,27 +73,27 @@ do
 	h|?)	usage ;;
 	esac
 done
-shift $(($OPTIND-1))
+shift $((OPTIND-1))
 
 if [ "$FORCEREBUILD" -o ! -f "$SWISHINDEX" ]
 then
-	make -C "$SRCDIR" swish || exit $?
-	if [ $# -eq 0 ]; then exit 0; fi
+	make -C "$SRCDIR" swish || exit "$?"
+	if [ "$#" -eq 0 ]; then exit 0; fi
 fi
 
 PAT="$1"; shift
-if [ $# -eq 0 ]; then
+if [ "$#" -eq 0 ]; then
 	REGEXP="${PAT%%\*}"
 else
 	REGEXP="$1"
 fi
 
-if ! [ -z "$FILEFILTER" ]; then
-	swish-e -f $SWISHINDEX -H0 -x '<swishdocpath>\0' -w "$PAT" \
+if [ -n "$FILEFILTER" ]; then
+	swish-e -f "$SWISHINDEX" -H0 -x '<swishdocpath>\0' -w "$PAT" \
 		| $FILEFILTER | makerelative \
 		| xargs -0 grep -E -Hnis -e "$REGEXP"
 else
-	swish-e -f $SWISHINDEX -H0 -x '<swishdocpath>\0' -w "$PAT" \
+	swish-e -f "$SWISHINDEX" -H0 -x '<swishdocpath>\0' -w "$PAT" \
 		| makerelative \
 		| xargs -0 grep -E -Hnis -e "$REGEXP"
 fi

@@ -13,4 +13,4 @@ linuxcnc -r circular_arcs.ini > test.log &
 ./machine_setup.py "$1" && say_done
 fg
 ./save_activate.sh test.log
-exit $1
+exit "$1"

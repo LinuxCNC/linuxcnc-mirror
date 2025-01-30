@@ -3,13 +3,14 @@
 halrun setup.hal > hal-output 2>&1
 RESULT=$?
 
-NUM_PINS=$(cat hal-output | grep -E $(cat PIN_NAME_REGEX) | wc -l)
+# grep -c counts number of matches
+NUM_PINS=$(grep -E -c "$(cat PIN_NAME_REGEX)" hal-output)
 
-if [ $RESULT -ne $(cat RESULT) ]; then
+if [ "$RESULT" -ne "$(cat RESULT)" ]; then
     exit 1
 fi
 
-if [ "$NUM_PINS" -ne $(cat NUM_PINS) ]; then
+if [ "$NUM_PINS" -ne "$(cat NUM_PINS)" ]; then
     exit 1
 fi
 

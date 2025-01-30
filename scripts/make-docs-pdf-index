@@ -9,9 +9,9 @@ set -e
 # --show-toplevel` because when building from dsc we don't have a
 # git repo.
 TOPLEVEL=${PWD}/..
-cd ${TOPLEVEL}/docs
+cd "${TOPLEVEL}"/docs
 
-TITLE="LinuxCNC PDF docs ($(cat ${TOPLEVEL}/VERSION))"
+TITLE="LinuxCNC PDF docs ($(cat "${TOPLEVEL}"/VERSION))"
 
 rm -f index.html
 

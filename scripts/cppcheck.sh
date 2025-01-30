@@ -25,19 +25,19 @@ CPPCHKCC="$CPPCHKOPT $CCSTD"
 CPPCHKCX="$CPPCHKOPT $CXSTD"
 
 # Do this from the source directory
-cd "$(dirname "$0")/../src"
+cd "$(dirname "$0")/../src" || (echo "E: Could not return to source directory" ; exit 1 )
 
 docheck() {
     files=$(find "$1" -maxdepth 1 \( -name "*.c" -o -name "*.h" \) )
-    [ ! -z "$files" ] && cppcheck -I"$1" $CPPCHKCC $files
+    [ -n "$files" ] && cppcheck -I"$1" "$CPPCHKCC" "$files"
 
     files=$(find "$1" -maxdepth 1 \( -name "*.cc" -o -name "*.hh" \) )
-    [ ! -z "$files" ] && cppcheck -I"$1" $CPPCHKCX $files
+    [ -n "$files" ] && cppcheck -I"$1" "$CPPCHKCX" "$files"
 }
 
 # *** HAL files ***
 echo "I (1/4): checking HAL folders with both C and C++ code"
-for d in $(find hal/ -type d -not -name "*__pycache__")
+find hal/ -type d -not -name "*__pycache__" | while read -r d
 do
     # Don't care about examples
     case "$d" in hal/user_comps/mb2hal/examples*) continue;; esac
@@ -48,7 +48,7 @@ done
 
 # *** EMC files ***
 echo "I (2/4): checking EMC folders with both C and C++ code"
-for d in $(find emc/ -type d -not -name "*__pycache__")
+find emc/ -type d -not -name "*__pycache__" | while read -r d 
 do
     # Will give Tcl problems
     case "$d" in emc/usr_intf/axis/extensions*) continue;; esac
@@ -59,7 +59,7 @@ done
 
 # *** NML files ***
 echo "I (3/4): checking LIBNML folders with both C and C++ code"
-for d in $(find libnml/ -type d -not -name "*__pycache__")
+find libnml/ -type d -not -name "*__pycache__" | while read -r d
 do
     echo "I (3/4): checking $d"
     docheck "$d"
@@ -67,7 +67,7 @@ done
 
 # *** RTAPI files ***
 echo "I (4/4): checking RTAPI folders with both C and C++ code"
-for d in $(find rtapi/ -type d -not -name "*__pycache__")
+find rtapi/ -type d -not -name "*__pycache__" | while read -r d
 do
     echo "I (4/4): checking $d"
     docheck "$d"

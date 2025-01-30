@@ -25,7 +25,7 @@ while [  $TOGO -gt 0 ]; do
         break
     fi
     sleep 0.25
-    TOGO=$(($TOGO - 1))
+    TOGO=$((TOGO - 1))
 done
 if [  $TOGO -eq 0 ]; then
     echo connection to linuxcncrsh timed out

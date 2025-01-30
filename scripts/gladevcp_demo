@@ -23,7 +23,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-prog=$(basename $0)
+prog=$(basename "$0")
 
 function usage () {
   cat <<EOF
@@ -57,7 +57,7 @@ EOF
 REALTIME=$(linuxcnc_var REALTIME)
 $REALTIME status >/dev/null
 status=$?
-if [ $status = 0 ] ; then
+if [ "$status" = 0 ] ; then
   msg="$prog: Realtime is already active"
   echo "$msg"
   popup "$msg"
@@ -71,10 +71,10 @@ case $# in
   *) ARGS="$@";;
 esac
 
-if [ ! -z "$debug" ] ; then
-  echo debug=$debug
-  echo REALTIME=$REALTIME
-  echo ARGS="$ARGS"
+if [ -n "$debug" ] ; then
+  echo "debug=$debug"
+  echo "REALTIME=$REALTIME"
+  echo "ARGS=$ARGS"
 pwd
 fi
 
