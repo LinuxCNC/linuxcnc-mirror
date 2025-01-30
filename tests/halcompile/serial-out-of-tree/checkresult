@@ -1,2 +1,2 @@
 #!/bin/sh
-[ -e "`dirname "$1"`/mesa_uart.so" -o "`dirname "$1"`/mesa_uart.ko" ]
+[ -e "$(dirname "$1")/mesa_uart_test.so" ] || [ -e "$(dirname "$1")/mesa_uart_test.ko" ]
