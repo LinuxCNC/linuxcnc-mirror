@@ -1,10 +1,10 @@
 #!/bin/sh
-cd $(dirname $1)
+cd "$(dirname "$1")" || { echo "E: Could not change directory to '$(dirname "$1")'"; exit 1; }
 RETVAL=0
 for EXPECTED in *.expected ; do
-    BASE=$(basename $EXPECTED .expected)
+    BASE=$(basename "$EXPECTED" .expected)
     RESULT=$BASE.result
-    diff -u $EXPECTED $RESULT
+    diff -u "$EXPECTED" "$RESULT"
     if [ $? -ne 0 ]; then
         RETVAL=1
     fi

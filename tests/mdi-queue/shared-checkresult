@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TEST_DIR=$(dirname $1)
-cd $TEST_DIR
+TEST_DIR=$(dirname "$1")
+cd "$TEST_DIR" || { echo "E: Could not change directory to '$TEST_DIR'"; exit 1; }
 
 diff -u expected-gcode-output gcode-output

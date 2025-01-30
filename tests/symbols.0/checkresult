@@ -1,4 +1,4 @@
 #!/bin/sh
-grep -q 'test_use: dlopen: .*: undefined symbol: testuse' `dirname $1`/stderr \
-|| grep -q 'test_use.so: Undefined symbol "testuse"' `dirname $1`/stderr \
+grep -q 'test_use: dlopen: .*: undefined symbol: testuse' "$(dirname "$1")"/stderr \
+|| grep -q 'test_use.so: Undefined symbol "testuse"' "$(dirname "$1")"/stderr \
 || dmesg | grep -q 'test_use: Unknown symbol testuse'

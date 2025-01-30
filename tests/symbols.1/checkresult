@@ -1,8 +1,8 @@
 #!/bin/sh
 set -e
-tail -2 $1 | (
-    read v0
-    if [ $v0 -eq 0 ] ; then echo "Value0 should be nonzero"; exit 1; fi
-    read v1
-    if [ $v1 -ne 0 ] ; then echo "Value1 should be zero"; exit 1; fi
+tail -2 "$1" | (
+    read -r v0
+    if [ "$v0" -eq 0 ] ; then echo "Value0 should be nonzero"; exit 1; fi
+    read -r v1
+    if [ "$v1" -ne 0 ] ; then echo "Value1 should be zero"; exit 1; fi
 )

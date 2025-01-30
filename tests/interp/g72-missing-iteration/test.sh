@@ -17,7 +17,7 @@ done
 
 if kill -0 $pid > /dev/null 2>&1; then
     kill -9 $pid
-    echo "error: g71-iterations-missing.ngc program seem to be stuck, killing"
+    echo "E: g71-iterations-missing.ngc program seem to be stuck, killing"
     exit 1
 fi
 

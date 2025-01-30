@@ -15,7 +15,7 @@ linuxcnc -r linuxcncrsh-test.ini &
 # let linuxcnc come up
 TOGO=80
 while [  $TOGO -gt 0 ]; do
-    echo trying to connect to linuxcncrsh TOGO=$TOGO
+    echo "trying to connect to linuxcncrsh TOGO=$TOGO"
     if nc -z localhost 5007; then
         break
     fi
@@ -36,7 +36,7 @@ function testSet() {
     # get before value
     echo "get $1"
     # set cmd
-    echo "set $@"
+    echo "set $*"
     # get after value
     echo "get $1"
     # get error from server (or OK)
@@ -46,7 +46,7 @@ function testSet() {
 # get command with collecting possible error from linuxcncsvr
 function testGet() {
     cmd="$@"
-    echo "get $@"
+    echo "get $*"
     echo "get error"
 }
 

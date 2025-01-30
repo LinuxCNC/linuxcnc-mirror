@@ -1,2 +1,2 @@
 #!/bin/sh
-[ -e "`dirname "$1"`/relative_header.so" -o "`dirname "$1"`/relative_header.ko" ]
+[ -e "$(dirname "$1")/relative_header.so" ] || [ -e "$(dirname "$1")/relative_header.ko" ]

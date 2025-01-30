@@ -19,11 +19,11 @@ Error[14]="hm2/hm2_test\.0: IDROM IOPorts is 0 but llio num_ioport_connectors is
 result=0
 
 TEST_PATTERN=0
-while [ ! -z "${Error[$TEST_PATTERN]}" ]; do
+while [ -n "${Error[$TEST_PATTERN]}" ]; do
     export TEST_PATTERN
     halrun -f broken-load-test.hal >halrun-stdout 2>halrun-stderr
     ./check-dmesg.py "${Error[$TEST_PATTERN]}" || exit $?
-    TEST_PATTERN=$(($TEST_PATTERN+1))
+    TEST_PATTERN=$((TEST_PATTERN + 1))
 done
 
 exit $result

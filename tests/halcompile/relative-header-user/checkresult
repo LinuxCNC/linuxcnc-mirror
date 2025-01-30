@@ -1,2 +1,2 @@
 #!/bin/sh
-[ -e "`dirname "$1"`/relative_header" ]
+[ -e "$(dirname "$1")/relative_header" ]

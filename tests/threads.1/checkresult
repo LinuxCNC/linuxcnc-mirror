@@ -1,4 +1,4 @@
 #!/bin/sh -e
 # Check that the tmax for a hal function is nonzero
-CYCLES=`cat $1`
+CYCLES=$(cat "$1")
 test ! -z "$CYCLES" -a "$CYCLES" -gt 0
