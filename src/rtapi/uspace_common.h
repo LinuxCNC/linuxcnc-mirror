@@ -354,8 +354,7 @@ static int _rtapi_is_realtime = -1;
 #ifdef __linux__
 static int detect_preempt_rt() {
     struct utsname u;
-    int crit1, crit2 = 0;
-    FILE *fd;
+    int crit1 = 0;
 
     uname(&u);
     crit1 = strcasestr (u.version, "PREEMPT RT") != 0;
@@ -363,13 +362,7 @@ static int detect_preempt_rt() {
     //"PREEMPT_RT" is used in the version string instead of "PREEMPT RT" starting with kernel version 5.4
     crit1 = crit1 || (strcasestr(u.version, "PREEMPT_RT") != 0);
 
-    if ((fd = fopen("/sys/kernel/realtime","r")) != NULL) {
-        int flag;
-        crit2 = ((fscanf(fd, "%d", &flag) == 1) && (flag == 1));
-        fclose(fd);
-    }
-
-    return crit1 && crit2;
+    return crit1;
 }
 #else
 static int detect_preempt_rt() {
