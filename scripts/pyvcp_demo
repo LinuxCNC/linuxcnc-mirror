@@ -22,7 +22,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-prog=$(basename $0)
+prog=$(basename "$0")
 
 function usage () {
   cat <<EOF
@@ -52,7 +52,7 @@ EOF
 REALTIME=$(linuxcnc_var REALTIME)
 $REALTIME status >/dev/null
 status=$?
-if [ $status = 0 ] ; then
+if [ "$status" = 0 ] ; then
   msg="$prog: Realtime is already active"
   echo "$msg"
   popup "$msg"
@@ -74,16 +74,18 @@ case $# in
     *) usage;;
 esac
 
-if [ ! -z "$debug" ] ; then
-  echo debug=$debug
-  echo REALTIME=$REALTIME
-  echo XMLFILE=$XMLFILE
-  echo HALFILE=$HALFILE
-  echo COMPNAME=$COMPNAME
+if [ -n "$debug" ] ; then
+  echo "debug=$debug"
+  echo "REALTIME=$REALTIME"
+  echo "XMLFILE=$XMLFILE"
+  echo "HALFILE=$HALFILE"
+  echo "COMPNAME=$COMPNAME"
 fi
 
-cd $(dirname "$XMLFILE") ;# to allow relative includes
-pyvcp -c $COMPNAME $XMLFILE &
+# to allow relative includes
+cd "$(dirname "$XMLFILE")" || { echo "E: Could not change directory to '$(dirname "$XMLFILE")'"; exit 1; }
+
+pyvcp -c "$COMPNAME" "$XMLFILE" &
 pyvcpjob=$!
 ct=0
 # wait for pins to be created before creating signals
@@ -91,7 +93,7 @@ while true ; do
    halcmd show|grep "${COMPNAME}.*ready" >/dev/null 2>&1
    status=$?
    sleep 1
-   if [ $status == 0 ] ; then
+   if [ "$status" = 0 ] ; then
       #echo "ready after ct=$ct"
       break
    fi
@@ -99,24 +101,24 @@ while true ; do
       echo "$0: hal-pyvcp startup failed"
       exit 1
    fi
-   ct=$(($ct+1))
+   ct=$((ct + 1))
 done
 
-cd $(dirname "$HALFILE") ;# so HALFILE can source relative files
+# so HALFILE can source relative files
+cd "$(dirname "$HALFILE")" || { echo "E: Could not change directory to '$(dirname "$HALFILE")'"; exit 1; }
 
 halmsg=/tmp/pyvcp_demo_halcmd.err
->|$halmsg
-halcmd -f $HALFILE >$halmsg 2>&1
+halcmd -f "$HALFILE" > "$halmsg" 2>&1
 halstatus=$?
-if [ $halstatus != 0 ] ; then
+if [ "$halstatus" != 0 ] ; then
   IFS=$'\n' # split lines
   newmsg=
   # put extra blank line between lines of output
-  for line in $(cat $halmsg) ; do
-newmsg="$newmsg
+  while read -r line; do
+    newmsg="$newmsg
 $line
 "
-  done
+  done < "$halmsg"
   popup "$newmsg"
   kill $pyvcpjob
   halrun -U

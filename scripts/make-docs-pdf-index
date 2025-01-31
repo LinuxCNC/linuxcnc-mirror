@@ -9,19 +9,23 @@ set -e
 # --show-toplevel` because when building from dsc we don't have a
 # git repo.
 TOPLEVEL=${PWD}/..
-cd ${TOPLEVEL}/docs
+cd "${TOPLEVEL}"/docs
 
-TITLE="LinuxCNC PDF docs ($(cat ${TOPLEVEL}/VERSION))"
+TITLE="LinuxCNC PDF docs ($(cat "${TOPLEVEL}"/VERSION))"
 
 rm -f index.html
 
-echo "<html>" >> index.html
-echo "<head><title>${TITLE}</title></head>" >> index.html
-echo "<body><h1>${TITLE}</h1><p>" >> index.html
+{
+    echo "<html>"
+    echo "<head><title>${TITLE}</title></head>"
+    echo "<body><h1>${TITLE}</h1><p>"
+} >> index.html
 
-for F in $(ls -1 *.pdf | sort); do
+for F in $(ls -1 ./*.pdf | sort); do
     echo "    <a href=\"${F}\">$F</a><br>" >> index.html
 done
 
-echo "</body>" >> index.html
-echo "</html>" >> index.html
+{
+    echo "</body>"
+    echo "</html>"
+} >> index.html

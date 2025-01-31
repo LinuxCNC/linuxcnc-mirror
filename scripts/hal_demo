@@ -18,7 +18,7 @@
 #    
 # Copyright (c) 2004-2009 All rights reserved.
 #*******************************************************************/
-if [ ! $1 ] ; then
+if [ -z "$1" ] ; then
     echo "Usage:  scripts/hal_demo <demo_name>"
     echo "Run from the emc2 directory only"
     # print the list of demos
@@ -28,7 +28,7 @@ fi
 #
 # the first demo isn't a real demo - it simply lists all the demos
 #
-if [ $1 = list ] ; then
+if [ "$1" = "list" ] ; then
     echo "Available demos are:"
     echo "  list - prints this list"
     echo "  load - loads hal core modules"
@@ -44,10 +44,10 @@ fi
 #
 # here is the "load" command
 #
-if [ $1 = load ] ; then
+if [ "$1" = "load" ] ; then
     # load the rtos and rtapi
     if ! scripts/realtime start ; then
-        exit -1
+        exit 1
     fi
     # done
     echo "RTAPI core loaded"
@@ -56,12 +56,12 @@ fi
 #
 # here is the "unload" command
 #
-if [ $1 = unload ] ; then
+if [ "$1" = "unload" ] ; then
     # unload any left-over modules
     bin/halcmd unloadrt all
     # unload the rtos and rtapi
     if ! scripts/realtime stop ; then
-        exit -1
+        exit 1
     fi
     # done
     echo "RTAPI core unloaded"
@@ -71,17 +71,19 @@ fi
 # We're almost ready for the real demos, first we must
 # make sure the rtapi core is loaded
 #
-HAL_LIB_STR=`/sbin/lsmod | awk '{print $1}' | grep -x hal_lib `
-if [ ! "$HAL_LIB_STR" ] ; then
+HAL_LIB_STR=$(/sbin/lsmod | awk '{print $1}' | grep -x hal_lib)
+if [ -z "$HAL_LIB_STR" ] ; then
     echo "All of the demos require the RTAPI and HAL_LIB modules"
     echo "to be loaded.  Use 'hal_demo load' to load them."
-    exit -1
+    exit 1
 fi
 #
 # The first demo: "parport1" simply tests the parallel port
 # this one is a step by step, tutorial/intro to HAL concepts
 #
-if [ $1 = parport1 ] ; then
+# Don't care about read mangling backslashes, nothing read is used
+# shellcheck disable=SC2162
+if [ "$1" = "parport1" ] ; then
     echo "(Comments that are part of the demo are in parenthesis.)"
     echo "(This demo echos its commands to the screen so you can"
     echo " see what each step does.  Echoed commands start with '$')"
@@ -206,7 +208,9 @@ fi
 # and halmeter.
 # this one is also a step by step tutorial
 #
-if [ $1 = siggen ] ; then
+# Don't care about read mangling backslashes, nothing read is used
+# shellcheck disable=SC2162
+if [ "$1" = "siggen" ] ; then
     echo "(Comments that are part of the demo are in parenthesis.)"
     echo "(This demo echos its commands to the screen so you can"
     echo " see what each step does.  Echoed commands start with '$')"
@@ -288,7 +292,9 @@ fi
 # using siggen as a signal source.
 # this one is also a step by step tutorial
 #
-if [ $1 = scope ] ; then
+# Don't care about read mangling backslashes, nothing read is used
+# shellcheck disable=SC2162
+if [ "$1" = "scope" ] ; then
     echo "The first part of this demo is identical to the siggen"
     echo "demo.  Hit enter to get started"
     read
@@ -400,5 +406,5 @@ fi
 #
 echo "Sorry, there is no demo called '$1'"
 scripts/hal_demo
-exit -1
+exit 1
 

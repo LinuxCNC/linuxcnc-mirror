@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd $(dirname $::argv0)
+cd "$(dirname "$0")" || { echo "E: Could not change directory to '$(dirname "$0")'"; exit 1; }
 
 gladevcp -u ./meter_scale.py ./meter_scale.ui &
 

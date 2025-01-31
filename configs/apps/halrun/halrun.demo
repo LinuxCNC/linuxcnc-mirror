@@ -1,11 +1,12 @@
 #!/bin/bash
 
-prog=$(basename $0)
+prog=$(basename "$0")
 thisfile=$(readlink -f "$0")
 thisdir=$(dirname "$thisfile")
 HALFILE="$thisdir"/help.hal
 
-cd ;# so user can use halcmd 'save' to create a file
+# Don't care if cd succeeds. Just so user can use halcmd 'save' to create a file in $HOME
+cd || true
 
 function popup () {
   msg="$*"
@@ -21,9 +22,9 @@ EOF
 } ;# popup
 
 
-[ X"$TERM" = Xdumb ] && TERM=xterm
-[ -x "$(which $COLORTERM)" ] && TERM=$COLORTERM
-[ -z $TERM ] && TERM=xterm
+[ "$TERM" = "dumb" ] && TERM=xterm
+[ -x "$(which "$COLORTERM")" ] && TERM=$COLORTERM
+[ -z "$TERM" ] && TERM=xterm
 
 # wip: xterm is well-behaved, some other terminals are not
 # for now: force to xterm
@@ -33,11 +34,11 @@ REALTIME=$(linuxcnc_var REALTIME)
 # make sure TERM uses the expected halrun (rip or install)
 HALRUN=$(which halrun)
 
-if [ ! -z "$debug" ] ; then
-  echo COLORTERM=$COLORTERM
-  echo TERM=$TERM
-  echo HALRUN=$HALRUN
-  echo REALTIME=$REALTIME
+if [ -n "$debug" ] ; then
+  echo "COLORTERM=$COLORTERM"
+  echo "TERM=$TERM"
+  echo "HALRUN=$HALRUN"
+  echo "REALTIME=$REALTIME"
 fi
 
 if $REALTIME status >/dev/null ; then
@@ -51,7 +52,7 @@ fi
 # terminate any other halrun instance:
 $HALRUN -U >/dev/null 2>&1
 
-if [ X"$TERM" = Xxterm ] ; then
+if [ "$TERM" = "xterm" ] ; then
   $TERM -geometry 80x40 \
         -sb \
         -fg black -bg ivory2 \
