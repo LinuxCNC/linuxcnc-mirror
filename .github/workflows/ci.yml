@@ -170,7 +170,8 @@ jobs:
         eatmydata passwd -d testrunner
         eatmydata adduser testrunner sudo
         chmod 0777 $(find tests/ -type d) # make test dirs world-writable for the testrunner
-        su -c "eatmydata ./scripts/runtests -p ./tests" testrunner
+        mv tests "tests with blanks in filename"
+        su -c 'eatmydata ./scripts/runtests -p "./tests with blanks in filename"' testrunner
 
   package-indep:
     runs-on: ubuntu-24.04
