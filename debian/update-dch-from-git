@@ -1,23 +1,22 @@
 #!/bin/bash
 
-if [ ! -d debian -o ! -d src ]; then
+if [ ! -d debian ] || [ ! -d src ]; then
     echo "this script must be run from the root of the source tree (the directory with debian and src in it)"
     exit 1
 fi
 
-
 source scripts/githelper.sh
-githelper $1
+githelper "$1"
 
-GIT_VERSION=$(scripts/get-version-from-git $GIT_BRANCH)
+GIT_VERSION=$(scripts/get-version-from-git "$GIT_BRANCH")
 if [ $? -ne 0 ]; then
     echo "error determining version!"
     exit 1
 fi
 
-DEB_VERSION=`git show HEAD:debian/changelog | head -1 | sed 's/.*(\(.*\)).*/\1/'`
+DEB_VERSION=$(git show HEAD:debian/changelog | head -1 | sed 's/.*(\(.*\)).*/\1/')
 
-NEW_DEB_VERSION=$(echo $GIT_VERSION | sed -r 's/-pre/~pre/; s/-/./g')
+NEW_DEB_VERSION=$(echo "$GIT_VERSION" | sed -r 's/-pre/~pre/; s/-/./g')
 NEW_DEB_VERSION="1:${NEW_DEB_VERSION/v/}"
 
 if [ "$NEW_DEB_VERSION" = "$DEB_VERSION" ]; then
@@ -38,7 +37,7 @@ set -e
 (
 echo "linuxcnc ($NEW_DEB_VERSION) $CODENAME; urgency=low"
 echo
-git log --pretty=format:"  * %w(72,0,6)%s" $GIT_TAG..
+git log --pretty=format:"  * %w(72,0,6)%s" "${GIT_TAG}.."
 echo
 echo
 echo " -- buildbot <buildbot@example.com>  $(date -R)"

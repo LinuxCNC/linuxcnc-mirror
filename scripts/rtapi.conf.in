@@ -43,11 +43,11 @@ elif [ "@RTAI@" = "5" ] ; then \
     MODPATH_rtai_sched=@MODPATH_rtai_sched@
     MODPATH_rtai_math=@MODPATH_rtai_math@
 else
-case `uname -r` in
+case $(uname -r) in
 *-rtai*)
     MODULES="rtai_hal rtai_sched"
-    MODPATH_rtai_hal=/usr/realtime-`uname -r`/modules/rtai_hal.ko
-    MODPATH_rtai_sched=/usr/realtime-`uname -r`/modules/rtai_sched.ko
+    MODPATH_rtai_hal=/usr/realtime-$(uname -r)/modules/rtai_hal.ko
+    MODPATH_rtai_sched=/usr/realtime-$(uname -r)/modules/rtai_sched.ko
 ;;
 *)  MODULES=
 esac

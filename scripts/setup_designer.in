@@ -17,7 +17,7 @@ while true; do
     echo ' 1 = No, exit'
     echo ' 2 = Yes, for a Run In Place installation'
     echo ' 3 = Yes, for a package installation'
-    read -p $'\nSelection? ' response
+    read -r -p $'\nSelection? ' response
     case $response in
         [1]* )  echo -e '\nInstallation complete, QtVCP screens are now available.\n'
                 exit;;
@@ -38,7 +38,7 @@ sudo apt-get install -y libpython3-dev
 
 # get the correct plugin file to copy
 # for run in place LinuxCNC installation
-if [ $response -eq 2 ]; then
+if [ "$response" -eq 2 ]; then
     if [ -f ~/linuxcnc-dev/lib/python/qtvcp/plugins/qtvcp_plugin.py ]; then
         pifile=~/linuxcnc-dev/lib/python/qtvcp/plugins/qtvcp_plugin.py
     else
@@ -47,12 +47,12 @@ if [ $response -eq 2 ]; then
             echo -e '\nrun in place installation not found'
             echo 'Enter base directory name e.g. linuxcnc-2.9'
             echo 'X to exit'
-            read -p $'\nDirectory? ' basedir
+            read -r -p $'\nDirectory? ' basedir
             case $basedir in
                 [Xx]* ) clear
                         exit;;
-                    * ) if [  -f ~/$basedir/lib/python/qtvcp/plugins/qtvcp_plugin.py ]; then
-                            pifile=~/$basedir/lib/python/qtvcp/plugins/qtvcp_plugin.py
+                    * ) if [  -f ~/"$basedir"/lib/python/qtvcp/plugins/qtvcp_plugin.py ]; then
+                            pifile=~/"$basedir"/lib/python/qtvcp/plugins/qtvcp_plugin.py
                             break
                         fi
                         ;;
@@ -60,13 +60,13 @@ if [ $response -eq 2 ]; then
         done
     fi
 # for full LinuxCNC installation
-elif [ $response -eq 3 ]; then
+elif [ "$response" -eq 3 ]; then
     # check for valid plugin file
     if [ -f /usr/lib/python3/dist-packages/qtvcp/plugins/qtvcp_plugin.py ]; then
         pifile=/usr/lib/python3/dist-packages/qtvcp/plugins/qtvcp_plugin.py
     else
 #        clear
-        echo -e '\n'$pifile 'not found in /usr/lib/python3/dist-packages/qtvcp/plugins/'
+        echo -e '\n'"$pifile"' not found in /usr/lib/python3/dist-packages/qtvcp/plugins/'
         echo -e '\ncannot continue designer installation\n'
         exit
     fi
@@ -80,7 +80,7 @@ if [ -f ~/.designer/plugins/python/qtvcp_plugin.py ]; then
     sudo rm ~/.designer/plugins/python/qtvcp_plugin.py
 fi
 echo -e '\ncreate plugin link at:\n~/.designer/plugins/python/\n'
-ln -s $pifile ~/.designer/plugins/python/
+ln -s "$pifile" ~/.designer/plugins/python/
 
 sopath=/usr/lib/x86_64-linux-gnu/qt5/plugins/designer/
 p2sofile=libpyqt5_py2.so
@@ -110,6 +110,6 @@ fi
 #clear
 echo -e '\nInstallation complete, designer can be started with:'
 echo -e '\ndesigner -qt=5\n'
-if [ $response -eq 2 ]; then
+if [ "$response" -eq 2 ]; then
     echo -e 'After setting the rip-environment\n'
 fi

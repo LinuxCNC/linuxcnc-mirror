@@ -1,12 +1,12 @@
 #!/bin/bash
-SCRIPT_LOCATION=$(dirname $(readlink -f $0));
-if [ -f $SCRIPT_LOCATION/rip-environment ] && [ -z "$EMC2_HOME" ]; then
-    . $SCRIPT_LOCATION/rip-environment
+SCRIPT_LOCATION=$(dirname "$(readlink -f "$0")");
+if [ -f "$SCRIPT_LOCATION/rip-environment" ] && [ -z "$EMC2_HOME" ]; then
+    . "$SCRIPT_LOCATION/rip-environment"
 fi
 
-T=`mktemp -d`
-trap 'cd /; [ -d $T ] && rm -rf $T' SIGINT SIGTERM EXIT
-cd $T
+T=$(mktemp -d)
+trap 'cd / && [ -d "$T" ] && rm -rf "$T"' SIGINT SIGTERM EXIT
+cd "$T" || { echo "E: Cannot change directory to '$T'"; exit 1; }
 node=$(uname -n)
 machine=$(uname  -m)
 date=$(date +%d%b%Y)
@@ -23,15 +23,15 @@ parse_time () {
     *us|*µs) icalc "1000*${1%us}" ;;
     *ms) icalc "1000*1000*${1%ms}" ;;
     *s)  icalc "1000*1000*1000*${1%s}" ;;
-    *)   if [ $1 -lt 1000 ]; then icalc "1000*$1"; else icalc "$1"; fi ;;
+    *)   if [ "$1" -lt 1000 ]; then icalc "1000*$1"; else icalc "$1"; fi ;;
     esac
 }
 
 human_time () {
     if [ "$1" -eq 0 ]; then echo "-"
-    elif [ "$1" -ge 1000000000 ]; then echo "$(calc $1/1000/1000/1000)s"
-    elif [ "$1" -ge 1000000 ]; then echo "$(calc $1/1000/1000)ms"
-    elif [ "$1" -ge 1000 ]; then echo "$(calc $1/1000)µs"
+    elif [ "$1" -ge 1000000000 ]; then echo "$(calc "$1"/1000/1000/1000)s"
+    elif [ "$1" -ge 1000000 ]; then echo "$(calc "$1"/1000/1000)ms"
+    elif [ "$1" -ge 1000 ]; then echo "$(calc "$1"/1000)µs"
     else echo "$1ns"
     fi
 }
@@ -48,7 +48,7 @@ usage () {
     echo "       latency-test 50000 1000000"
     echo ""
     echo "Defaults:     base-period=${BASE}nS servo-period=${SERVO}nS"
-    echo "Equivalently: base-period=$(human_time $BASE) servo-period=$(human_time $SERVO)"
+    echo "Equivalently: base-period=$(human_time "$BASE") servo-period=$(human_time "$SERVO")"
     echo ""
     echo "Times may be specified with suffix \"s\", \"ms\", \"us\" \"µs\", or \"ns\""
     echo "Times without a suffix and less than 1000 are taken to be in us;"
@@ -70,18 +70,18 @@ esac
 
 case $# in
 0) ;;
-1) BASE=0; SERVO=$(parse_time $1) ;;
-2) BASE=$(parse_time $1); SERVO=$(parse_time $2) ;;
+1) BASE=0; SERVO=$(parse_time "$1") ;;
+2) BASE=$(parse_time "$1"); SERVO=$(parse_time "$2") ;;
 *) usage;;
 esac
 
 if [ "$BASE" -gt "$SERVO" ]; then TEMP=$BASE; BASE=$SERVO; SERVO=$TEMP; fi
 if [ "$BASE" -eq "$SERVO" ]; then BASE=0; fi
 
-BASE_HUMAN=$(human_time $BASE)
-SERVO_HUMAN=$(human_time $SERVO)
+BASE_HUMAN=$(human_time "$BASE")
+SERVO_HUMAN=$(human_time "$SERVO")
 
-if [ $BASE -eq 0 ]; then
+if [ "$BASE" -eq 0 ]; then
 cat > lat.hal <<EOF
 loadrt threads name1=slow period1=$SERVO
 loadrt timedelta count=1
@@ -143,7 +143,7 @@ While the test is running, you should "abuse" the computer. Move windows around 
 <tablerow/><label text="Servo thread ($SERVO_HUMAN):"/><s32 halpin="sl"/><s32 halpin="sj" font="Helvetica 12 bold"/><s32 halpin="st"/>
 EOF
 
-if [ $BASE -ne 0 ]; then
+if [ "$BASE" -ne 0 ]; then
 cat >> lat.xml <<EOF
 <tablerow/><label text="Base thread ($BASE_HUMAN):"/><s32 halpin="bl"/><s32 halpin="bj" font="Helvetica 12 bold"/><s32 halpin="bt"/>
 EOF
@@ -157,7 +157,7 @@ cat >> lat.xml <<EOF
 </pyvcp>
 EOF
 
-if [ $BASE -eq 0 ]; then
+if [ "$BASE" -eq 0 ]; then
     SIGNALS="halcmd gets sj"
 else
     SIGNALS="halcmd gets sj; halcmd gets bj"
@@ -165,9 +165,9 @@ fi
 
 cat > latexit.sh <<EOF
 L=\$(($SIGNALS
-    if [ -f $HOME/.latency ]; then cat $HOME/.latency; fi
+    if [ -f "$HOME"/.latency ]; then cat "$HOME"/.latency; fi
     ) | sort -n | tail -1)
-echo \$L > $HOME/.latency
+echo \$L > "$HOME"/.latency
 EOF
 
 halrun lat.hal

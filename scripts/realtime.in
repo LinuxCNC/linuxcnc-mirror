@@ -23,10 +23,12 @@ GREP=@GREP@
 PS=@PS@
 
 CheckKernel() {
+    # Shellcheck doesn't know about substitution
+    # shellcheck disable=SC2194
     case "@KERNEL_VERS@" in
     "") ;;
     *)
-	if [ `uname -r` != "@KERNEL_VERS@" ]; then
+	if [ "$(uname -r)" != "@KERNEL_VERS@" ]; then
 	    cat 1>&2 << EOF
 RTAPI requires the real-time kernel @KERNEL_VERS@ to run.  Before running
 this realtime application, reboot and choose this kernel at the boot menu.
@@ -47,7 +49,7 @@ CheckConfig(){
     prefix=@prefix@
     exec_prefix=@exec_prefix@
     sysconfdir=@sysconfdir@
-    if [ $RUN_IN_PLACE = yes ]; then
+    if [ "$RUN_IN_PLACE" = "yes" ]; then
         RTAPICONF=
         # check in the LinuxCNC scripts directory
         # $0 is the command to run this script
@@ -55,13 +57,13 @@ CheckConfig(){
         SCRIPT_DIR=${0%/*}
         # the path might be relative
         # convert it to an absolute path
-        SCRIPT_DIR=$(cd $SCRIPT_DIR ; pwd -P)
+        SCRIPT_DIR=$(realpath "$SCRIPT_DIR")
         # now look for rtapi.conf there
-        if [ -f $SCRIPT_DIR/rtapi.conf ] ; then
+        if [ -f "$SCRIPT_DIR/rtapi.conf" ] ; then
             RTAPICONF=$SCRIPT_DIR/rtapi.conf
         fi
     else
-        if [ -f $sysconfdir/linuxcnc/rtapi.conf ]; then
+        if [ -f "$sysconfdir/linuxcnc/rtapi.conf" ]; then
                 RTAPICONF=$sysconfdir/linuxcnc/rtapi.conf
         fi
     fi
@@ -75,8 +77,8 @@ CheckConfig(){
     FUSER="@FUSER@"
 
     # Import the config
-    source $RTAPICONF
-    if [ ! -e $RTLIB_DIR/.runinfo -a -e $RTLIB_DIR/emc2/.runinfo ]; then
+    source "$RTAPICONF"
+    if [ ! -e "$RTLIB_DIR/.runinfo" ] && [ -e "$RTLIB_DIR/emc2/.runinfo" ]; then
         # installed system: we don't want our modules mixed up with rtai
         RTLIB_DIR=$RTLIB_DIR/emc2
     fi
@@ -92,10 +94,10 @@ CheckConfig(){
     uspace) SHM_DEV=/dev/zero;;
     esac
     for  MOD in $MODULES ; do
-        eval MOD=\${MODPATH_$MOD}
+        eval MOD=\${MODPATH_"$MOD"}
         if [ -z "$MOD" ]; then continue; fi
-        if [ -L $MOD ]; then
-            MOD=${MOD%/*}/$(readlink $MOD)
+        if [ -L "$MOD" ]; then
+            MOD=${MOD%/*}/$(readlink "$MOD")
         fi
         MODULES_LOAD="$MODULES_LOAD $MOD"
         MOD="${MOD##*/}"
@@ -125,14 +127,14 @@ CheckStatus(){
         # check loaded/unloaded status of modules
         unset NOTLOADED
         for MOD in $MODULES_UNLOAD ; do
-            if "$LSMOD" | awk '{print $1}' | $GREP -x $MOD >/dev/null ; then
+            if "$LSMOD" | awk '{print $1}' | $GREP -x "$MOD" >/dev/null ; then
                 echo "$MOD is loaded"
             else
                 echo "$MOD is not loaded"
                 NOTLOADED=NOT
             fi
         done
-        if [ -z $NOTLOADED ]; then
+        if [ -z "$NOTLOADED" ]; then
             exit 0
         else
             exit 1
@@ -164,8 +166,8 @@ CheckMem(){
 Load(){
     CheckKernel
     for MOD in $MODULES_LOAD ; do
-	if ! [ -d /sys/module/`basename $MOD .ko` ]; then
-		$INSMOD $MOD || return $?
+	if ! [ -d "/sys/module/$(basename "$MOD" .ko)" ]; then
+		$INSMOD "$MOD" || return $?
 	fi
     done
     if [ "$DEBUG" != "" ] && [ -w /proc/rtapi/debug ] ; then
@@ -178,10 +180,10 @@ CheckLoaded(){
     # have the device ready for us in time.
     n=0
     while [ $n -lt 100 ]; do
-        [ -w $SHM_DEV ] && return 0
+        [ -w "$SHM_DEV" ] && return 0
         echo "." 1>&2
         sleep .1
-        n=$(($n+1))
+        n=$((n + 1))
     done
     echo "Can't write to $SHM_DEV - aborting" 1>&2
     exit 1
@@ -198,13 +200,13 @@ Unload(){
         local NPROCS
         while [ 5 -gt $((SECONDS-START)) ]; do
             NPROCS=$(ps -C rtapi_app -o stat= -o comm= | $GREP -v '^Z' | wc -l)
-            if [ $NPROCS -eq 0 ]; then
+            if [ "$NPROCS" -eq 0 ]; then
                 break
             fi
             sleep 0.1
         done
         NPROCS=$(ps -C rtapi_app -o stat= -o comm= | $GREP -v '^Z' | wc -l)
-        if [ $NPROCS -gt 0 ]; then
+        if [ "$NPROCS" -gt 0 ]; then
             echo "ERROR: rtapi_app failed to die" 1>&2
         fi
 
@@ -213,7 +215,7 @@ Unload(){
         ipcrm -M 0x48484c34 2>/dev/null ;# UUID_KEY
     esac
     for module in $MODULES_UNLOAD ; do
-        $RMMOD $module
+        $RMMOD "$module"
     done
 }
 
@@ -222,7 +224,7 @@ CheckUnloaded(){
     STATUS=
     for module in $MODULES_UNLOAD ; do
 	# check to see if the module is installed
-	if "$LSMOD" | awk '{print $1}' | $GREP -x $module >/dev/null ; then
+	if "$LSMOD" | awk '{print $1}' | $GREP -x "$module" >/dev/null ; then
 	    echo "ERROR: Could not unload '$module'"
 	    STATUS=error
 	fi

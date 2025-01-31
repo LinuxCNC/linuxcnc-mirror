@@ -6,9 +6,9 @@ test -z "$1" && exit 0
 test -f "$1" || exit 1
 
 includes () {
-	DIR=`dirname "$1"`
+	DIR=$(dirname "$1")
 
-	for f in `sed -ne "s|^include::\(.*\)\[\]$|$DIR/\1|p" "$1"`; do
+	for f in $(sed -ne "s|^include::\(.*\)\[\]$|$DIR/\1|p" "$1"); do
 		# components_gen.adoc will contain only generated content
 		case "$f" in
 			*/components_gen.adoc)
@@ -21,16 +21,16 @@ includes () {
 }
 
 images() {
-	DIR=`dirname "$1"`
-	sed -ne "s|^.*image:\{1,2\}\([^[]*\)\[.*\].*$|$DIR/\1|p" "$1"
+	DIR=$(dirname "$1")
+	sed -ne "s|^.*image:\{1,2\}\([^[]*\)\[.*\].*$|$DIR/\1|p" "$1" | tr '\n' ' '
 }
 
-INCLUDES=`includes "$1"`
-IMAGES=`images "$1"`
+INCLUDES=$(includes "$1" | tr '\n' ' ')
+IMAGES=$(images "$1")
 for f in $INCLUDES; do
-	IMAGES="$IMAGES `images $f`"
+	IMAGES="$IMAGES $(images "$f")"
 done
 
-echo "${1%%.txt}.dep :" $INCLUDES
-echo "${1%%.txt}.html: " $INCLUDES $IMAGES
-echo "${1%%.txt}.pdf: " $INCLUDES $IMAGES
+echo "${1%%.txt}.dep: $INCLUDES"
+echo "${1%%.txt}.html: $INCLUDES $IMAGES"
+echo "${1%%.txt}.pdf: $INCLUDES $IMAGES"
