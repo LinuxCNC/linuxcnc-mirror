@@ -13,17 +13,13 @@ unset DISPLAY
 export LC_ALL=C
 export LANGUAGES=
 
-
-case "$0" in
-	*/*) MYDIR="${0%/*}" ;;
-	*) MYDIR="`type -path $0`"; MYDIR="${MYDIR%/*}"
-esac
-MYDIR=$(cd $MYDIR; pwd);
-TOPDIR=$(cd $MYDIR/..; pwd)
+TOPDIR="$(realpath "$(dirname "$0")/..")"
 
 prefix=@prefix@
-if test @RUN_IN_PLACE@ = yes; then
-    . $TOPDIR/scripts/rip-environment >&/dev/null
+# Shellcheck does not now about substitutions
+# shellcheck disable=SC2050
+if [ "@RUN_IN_PLACE@" = yes ]; then
+    . "$TOPDIR/scripts/rip-environment" >&/dev/null
     export HEADERS=@EMC2_HOME@/include
     export LIBDIR=${TOPDIR}/lib
     export REALTIME=realtime
@@ -42,136 +38,193 @@ export PYTHON_EXTRA_LIBS="@PYTHON_EXTRA_LIBS@"
 export PYTHON_EXTRA_LDFLAGS="@PYTHON_EXTRA_LDFLAGS@"
 export PYTHON_LIBS="@PYTHON_EXTRA_LIBS@"
 
-export RUNTESTS="$(readlink -f $0)"
+RUNTESTS="$(readlink -f "$0")"
+export RUNTESTS
 
 NUM=0
 FAIL=0; FAIL_NAMES=""
 XFAIL=0
+SHMERR=0
 SKIP=0
 VERBOSE=0
 
 clean () {
-    find $* \( -name "stderr" -or -name "result" \
+    find "$*" \( -name "stderr" -or -name "result" \
 	-or -name "*.var" -or -name "*.var.bak" \) \
 	-print0 | xargs -0 rm -f
 }
 
 run_shell_script () {
-    testname=$(basename $1)
-    testdir=$(dirname $1)
+    testname=$(basename "$1")
+    testdir=$(dirname "$1")
 
-    pushd $testdir > /dev/null
+    pushd "$testdir" > /dev/null || exit 2
     if [ $VERBOSE -eq 1 ]; then
-        (bash -x $testname | tee result) 3>&1 1>&2 2>&3 | tee stderr
+        (bash -x "$testname" | tee result) 3>&1 1>&2 2>&3 | tee stderr
     else
-        bash -x $testname > result 2> stderr
+        bash -x "$testname" > result 2> stderr
     fi
     exitcode=$?
-    popd > /dev/null
-    return $exitcode
+    popd > /dev/null || exit 2
+    return "$exitcode"
 }
 
 run_executable () {
-    testname=$(basename $1)
-    testdir=$(dirname $1)
+    testname=$(basename "$1")
+    testdir=$(dirname "$1")
 
-    pushd $testdir > /dev/null
+    pushd "$testdir" > /dev/null || exit 2
     if [ $VERBOSE -eq 1 ]; then
-        (./$testname | tee result) 3>&1 1>&2 2>&3 | tee stderr
+        (./"$testname" | tee result) 3>&1 1>&2 2>&3 | tee stderr
     else
-        ./$testname > result 2> stderr
+        ./"$testname" > result 2> stderr
     fi
     exitcode=$?
-    popd > /dev/null
-    return $exitcode
+    popd > /dev/null || exit 2
+    return "$exitcode"
 }
 
 run_without_overruns () {
-    testname=$(basename $1)
-    testdir=$(dirname $1)
+    testname=$(basename "$1")
+    testdir=$(dirname "$1")
     for i in $(seq 10); do
-        if [ $i != 1 ]; then echo "--- $testdir: overrun detected in sampler, re-running test" 1>&2 ; fi
+        if [ "$i" != 1 ]; then echo "--- $testdir: overrun detected in sampler, re-running test" 1>&2 ; fi
 
-        pushd $testdir > /dev/null
+        pushd "$testdir" > /dev/null || exit 2
         if [ $VERBOSE -eq 1 ]; then
-            (halrun -f $testname | tee result) 3>&1 1>&2 2>&3 | tee stderr
+            (halrun -f "$testname" | tee result) 3>&1 1>&2 2>&3 | tee stderr
         else
-            halrun -f $testname > result 2> stderr
+            halrun -f "$testname" > result 2> stderr
         fi
         exitcode=$?
-        popd > /dev/null
+        popd > /dev/null || exit 2
 
-        if ! grep -q '^overrun$' $testdir/result; then return $exitcode; fi
+        if ! grep -q '^overrun$' "$testdir/result"; then return "$exitcode"; fi
     done
     echo "--- $testdir: $i overruns detected, giving up" 1>&2
     return 1
 }
 
 run_test() {
-    testname=$1
-    case $testname in
-        *.hal) run_without_overruns $testname ;;
-        *.sh) run_shell_script $testname ;;
-        *) run_executable $testname ;;
+    testname="$1"
+    case "$testname" in
+        *.hal) run_without_overruns "$testname" ;;
+        *.sh) run_shell_script "$testname" ;;
+        *) run_executable "$testname" ;;
     esac
 }
 
-TMPDIR=`mktemp -d /tmp/runtest.XXXXXX`
-trap "rm -rf $TMPDIR" 0 1 2 3 9 15
+SHMEM_KEY=( "0x00000064" "0x48414c32" "0x130cf406" "0x434c522b" )
+SHMEM_USE=( "Emc motion" "Hal"        "Hal scope"  "Classicladder" )
+test_shmem() {
+    # Test if there are any shared memory segments left. These will
+    # interfere with performing tests as we cannot be assured of a clean
+    # start for each test if a segment exists.
+    mapfile -t keys < <(ipcs -m | grep -Ei "^\\s*($(IFS='|'; echo "${SHMEM_KEY[*]}"))" | awk '{print $1}')
+    if [ "${#keys[@]}" -gt 0 ]; then
+        echo "There are one or more shared memory segments currently allocated."
+        echo "This indicates that there is a LinuxCNC instance running or it"
+        echo "did not cleanup before exit."
+        echo "You should run 'ipcs -m' and look for the following keys to cleanup:"
+        for i in "${!SHMEM_KEY[@]}"; do
+            for j in "${keys[@]}"; do
+                if [ "$j" = "${SHMEM_KEY[$i]}" ]; then
+                    echo "${SHMEM_KEY[$i]} - ${SHMEM_USE[$i]} key"
+                    break
+                fi
+            done
+        done
+        echo
+        echo "You should remove the key(s) with 'ipcrm -M <key>' if LinuxCNC is"
+        echo "not running and no processes are attached to the segment(s)."
+        return 1
+    else
+        return 0
+    fi
+}
+
+test_and_remove_shmem() {
+    ret=0
+    for i in "${!SHMEM_KEY[@]}"; do
+        # ipcs returns the following columns:
+        #   key shmid owner perms bytes nattch status
+        read -r -a SHM < <(ipcs -m | grep -Ei "^\\s*${SHMEM_KEY[$i]}")
+        if [ "${#SHM[@]}" -ge 6 ]; then
+            echo "*** SHMERR: Shared memory segment ${SHMEM_KEY[$i]} (${SHMEM_USE[$i]} key) was not removed. Removing..."
+            ipcrm -M "${SHMEM_KEY[$i]}"
+            # Check number of attached processes. It should be zero.
+            if [ "${SHM[5]}" -ne 0 ]; then
+                echo "*** SHMERR: Shared memory segment ${SHMEM_KEY[$i]} has at least one attached process."
+                echo "*** SHMERR: Manual intervention is required to solve the situation."
+                return 2
+            fi
+            ret=1
+        fi
+    done
+    return $ret
+}
+
+TMPDIR=$(mktemp -d /tmp/runtest.XXXXXX)
+trap 'rm -rf "$TMPDIR"' 0 1 2 3 15
 
 
 run_tests () {
-    find $* -name test.hal -or -name test.sh -or -name test \
-	| sort > $TMPDIR/alltests
+    if ! test_shmem; then
+        exit 1;
+    fi
 
-    while read testname; do
-	testdir=$(dirname $testname)
-	if [ -e $testdir/skip ]; then
-	    if ! [ -x $testdir/skip ] || ! $testdir/skip; then
+    find "$*" -name test.hal -or -name test.sh -or -name test \
+	| sort > "$TMPDIR/alltests"
+
+    while read -r testname; do
+	testdir=$(dirname "$testname")
+	if [ -e "$testdir/skip" ]; then
+	    if ! [ -x "$testdir/skip" ] || ! "$testdir/skip"; then
 		echo "Skipping disabled test: $testdir" 1>&2
-		SKIP=$(($SKIP+1))
+		SKIP=$((SKIP + 1))
 		continue
 	    fi
 	fi
-	if $NOSUDO && [ -e $testdir/control ] && \
-		grep Restrictions: $testdir/control | grep -q sudo; then
-	    if ! [ -x $testdir/skip ] || ! $testdir/skip; then
+	if $NOSUDO && [ -e "$testdir/control" ] && \
+		grep Restrictions: "$testdir/control" | grep -q sudo; then
+	    if ! [ -x "$testdir/skip" ] || ! "$testdir/skip"; then
 		echo "Skipping sudo test: $testdir" 1>&2
-		SKIP=$(($SKIP+1))
+		SKIP=$((SKIP + 1))
 		continue
 	    fi
 	fi
-	NUM=$(($NUM+1))
-	export TEST_DIR=$(readlink -f $testdir)
+	NUM=$((NUM + 1))
+	TEST_DIR=$(readlink -f "$testdir")
+	export TEST_DIR
 	echo "Running test: $testdir" 1>&2
         if test -n "$SYSTEM_BUILD"; then
             # Tell `halcompile` where to install comps
-            USER_MODULE_DIR=$(readlink -f $testdir) \
-                PATH=$(readlink -f $testdir):$PATH \
-                run_test $testname
+            USER_MODULE_DIR=$(readlink -f "$testdir") \
+                PATH=$(readlink -f "$testdir"):$PATH \
+                run_test "$testname"
         else
-            run_test $testname
+            run_test "$testname"
         fi
 	exitcode=$?
-	if [ $exitcode -ne 0 ]; then
+	if [ "$exitcode" -ne 0 ]; then
 	    reason="test run exited with $exitcode"
 	else
-	    if [ -e $testdir/checkresult ]; then
-		$testdir/checkresult $testdir/result
+	    if [ -e "$testdir/checkresult" ]; then
+		"$testdir/checkresult" "$testdir/result"
 		exitcode=$?
 		reason="checkresult exited with $exitcode"
-	    elif [ -f $testdir/expected ]; then
-		cmp -s $testdir/expected $testdir/result
+	    elif [ -f "$testdir/expected" ]; then
+		cmp -s "$testdir/expected" "$testdir/result"
 		exitcode=$?
 		reason="result differed from expected"
-		if [ $exitcode -ne 0 ]; then
-		    diff -u $testdir/expected $testdir/result > $TMPDIR/diff
-		    SIZE=$(wc -l < $TMPDIR/diff)
-		    if [ $SIZE -lt 40 ]; then
-			cat $TMPDIR/diff
+		if [ "$exitcode" -ne 0 ]; then
+		    diff -u "$testdir/expected" "$testdir/result" > "$TMPDIR/diff"
+		    SIZE=$(wc -l < "$TMPDIR/diff")
+		    if [ "$SIZE" -lt 40 ]; then
+			cat "$TMPDIR/diff"
 		    else
 			OMIT=$((SIZE-40))
-			head -40 $TMPDIR/diff
+			head -40 "$TMPDIR/diff"
 			echo "($OMIT more lines omitted)"
 		    fi
 		fi
@@ -180,44 +233,51 @@ run_tests () {
 		reason="Neither expected nor checkresult existed"
 	    fi
 	fi
-	if [ $exitcode -ne 0 ]; then
+	if [ "$exitcode" -ne 0 ]; then
 	    echo "*** $testdir: XFAIL: $reason"
             if test $PRINT = 1; then
                 echo "************** result:"
-                tail -500 $testdir/result | sed 's/^/        /'
+                tail -500 "$testdir/result" | sed 's/^/        /'
                 echo "************** stderr:"
-                tail -500 $testdir/stderr | sed 's/^/        /'
+                tail -500 "$testdir/stderr" | sed 's/^/        /'
                 echo "**************"
             fi
-	    if [ -f $testdir/xfail ]; then
-		XFAIL=$(($XFAIL+1))
+	    if [ -f "$testdir/xfail" ]; then
+		XFAIL=$((XFAIL + 1))
 		if [ $NOCLEAN -eq 0 ]; then
-		    rm -f $testdir/stderr $testdir/result \
-			$testdir/*.var $testdir/*.var.bak
+		    rm -f "$testdir/stderr" "$testdir/result" \
+			"$testdir"/*.var "$testdir"/*.var.bak
 		fi
 	    else
-		FAIL=$(($FAIL+1))
-		FAIL_NAMES="$FAIL_NAMES
-	$testdir"
+		FAIL=$((FAIL + 1))
+		FAIL_NAMES="$FAIL_NAMES"$'\n'"$testdir"
 	    fi
             if test $STOP = 1; then
 	        break
 	    fi
 	else
-	    if [ -f $testdir/xfail ]; then
+	    if [ -f "$testdir/xfail" ]; then
 		echo "*** $testdir: XPASS: Passed, but was expected to fail"
 	    else
 		if [ $NOCLEAN -eq 0 ]; then
-		    rm -f $testdir/stderr $testdir/result \
-			$testdir/*.var $testdir/*.var.bak
+		    rm -f "$testdir/stderr" "$testdir/result" \
+			"$testdir"/*.var "$testdir"/*.var.bak
 		fi
 	    fi
 	fi
-    done < $TMPDIR/alltests
+
+        if ! test_and_remove_shmem; then
+            if [ $? -eq 2 ]; then
+                # Cannot remove attached segments. Fail hard.
+                exit 1
+            fi
+            SHMERR=$((SHMERR + 1))
+        fi
+    done < "$TMPDIR/alltests"
 
     SUCC=$((NUM-FAIL-XFAIL))
-    echo "Runtest: $NUM tests run, $SUCC successful, $FAIL failed + $XFAIL expected, $SKIP skipped"
-    if [ $FAIL -ne 0 ]; then
+    echo "Runtest: $NUM tests run, $SUCC successful, $FAIL failed + $XFAIL expected, $SKIP skipped, $SHMERR shmem errors"
+    if [ "$FAIL" -ne 0 ]; then
 	echo "Failed: $FAIL_NAMES"
 	exit 1;
     else
@@ -268,10 +328,10 @@ done
 shift $((OPTIND-1))
 
 if [ $# -eq 0 ]; then
-    if [ -f test.hal -o -f test.sh ]; then
+    if [ -f test.hal ] || [ -f test.sh ]; then
         set -- .
     else
-        set -- $TOPDIR/tests
+        set -- "$TOPDIR/tests"
     fi
 fi
 
