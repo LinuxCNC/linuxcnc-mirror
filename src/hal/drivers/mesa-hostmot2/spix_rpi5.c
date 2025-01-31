@@ -124,7 +124,7 @@ typedef struct __spisave_t {
 static spisave_t spi0save;	// Settings before our setup
 static spisave_t spi1save;
 static int has_spi_module;	// Set to non-zero when the kernel modules dw_spi and dw_spi_mmio are loaded
-static int driver_enabled;	// Set to non-zero ehen rpi5_setup() is successfully called
+static int driver_enabled;	// Set to non-zero when rpi5_setup() is successfully called
 static int port_probe_mask;	// Which ports are requested
 
 static void *peripheralmem = MAP_FAILED;	// mmap'ed peripheral memory

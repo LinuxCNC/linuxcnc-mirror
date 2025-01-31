@@ -26,7 +26,7 @@
  * - https://datasheets.raspberrypi.com/rp1/rp1-peripherals.pdf
  *
  * *** Note:
- * Lots of RP1 stuff is not used by the driver and is ommitted in the
+ * Lots of RP1 stuff is not used by the driver and is omitted in the
  * defines in this header file.
  */
 
@@ -373,7 +373,7 @@ typedef struct __dw_ssi_t {
 #define DW_SSI_IMR_MSTIM_BIT	5	/* multi-master contention interrupt mask */
 #define DW_SSI_IMR_RXFIM_BIT	4	/* receive fifo full interrupt mask */
 #define DW_SSI_IMR_RXOIM_BIT	3	/* receive fifi overflow interrupt mask */
-#define DW_SSI_IMR_RXUIM_BIT	2	/* receive fifo underfow interrupt mask */
+#define DW_SSI_IMR_RXUIM_BIT	2	/* receive fifo underflow interrupt mask */
 #define DW_SSI_IMR_TXOIM_BIT	1	/* transmit fifo overflow interrupt mask */
 #define DW_SSI_IMR_TXEIM_BIT	0	/* transmit fifo empty interrupt mask */
 #define DW_SSI_IMR_MSTIM		RP1BIT(DW_SSI_IMR_MSTIM_BIT)
@@ -386,7 +386,7 @@ typedef struct __dw_ssi_t {
 #define DW_SSI_ISR_MSTIS_BIT	5	/* multi-master contention interrupt status */
 #define DW_SSI_ISR_RXFIS_BIT	4	/* receive fifo full interrupt status */
 #define DW_SSI_ISR_RXOIS_BIT	3	/* receive fifi overflow interrupt status */
-#define DW_SSI_ISR_RXUIS_BIT	2	/* receive fifo underfow interrupt status */
+#define DW_SSI_ISR_RXUIS_BIT	2	/* receive fifo underflow interrupt status */
 #define DW_SSI_ISR_TXOIS_BIT	1	/* transmit fifo overflow interrupt status */
 #define DW_SSI_ISR_TXEIS_BIT	0	/* transmit fifo empty interrupt status */
 #define DW_SSI_ISR_MSTIS		RP1BIT(DW_SSI_ISR_MSTIS_BIT)
@@ -399,7 +399,7 @@ typedef struct __dw_ssi_t {
 #define DW_SSI_RISR_MSTIR_BIT	5	/* multi-master contention interrupt raw status */
 #define DW_SSI_RISR_RXFIR_BIT	4	/* receive fifo full interrupt raw status */
 #define DW_SSI_RISR_RXOIR_BIT	3	/* receive fifi overflow interrupt raw status */
-#define DW_SSI_RISR_RXUIR_BIT	2	/* receive fifo underfow interrupt raw status */
+#define DW_SSI_RISR_RXUIR_BIT	2	/* receive fifo underflow interrupt raw status */
 #define DW_SSI_RISR_TXOIR_BIT	1	/* transmit fifo overflow interrupt raw status */
 #define DW_SSI_RISR_TXEIR_BIT	0	/* transmit fifo empty interrupt raw status */
 #define DW_SSI_RISR_MSTIR		RP1BIT(DW_SSI_RISR_MSTIR_BIT)

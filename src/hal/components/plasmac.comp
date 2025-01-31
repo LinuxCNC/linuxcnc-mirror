@@ -55,7 +55,7 @@ pin in  bit     cut_recovery                "recover from cut error";
 pin in  float   cut_volts                   "cut voltage (volts)";
 pin in  bit     cutting_start               "start a new cut, connect to spindle.0.on";
 pin in  bit     debug_print                 "if true will print state changes as a debug aid";
-pin in  bit     dry_run                     "perfom a dry run without probing";
+pin in  bit     dry_run                     "perform a dry run without probing";
 pin in  bit     external_estop              "external E-stop input";
 pin in  float   feed_override               "feed override value from GUI (connect to halui.feed-override.value)";
 pin in  float   feed_reduction              "reduce adaptive feed to this percentage (connect to motion.analog-out-03)";
