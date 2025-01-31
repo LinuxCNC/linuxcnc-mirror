@@ -526,6 +526,15 @@ void Interp::loop_to_beginning(setup_pointer settings)
     settings->sequence_number = 0;
 }
 
+// Prevent any possibility of the Posix version of basename(3) being used
+// (possibly altering the argument). Therefore, local reimplementation
+// of the *GNU version* of basename(3).
+static const char *thebasename(const char *filename)
+{
+     const char *p = strrchr(filename, '/');
+     return p ? p + 1 : filename;
+}
+
 //
 // TESTME!!! MORE THOROUGHLY !!!KL
 //
@@ -545,8 +554,9 @@ int Interp::control_back_to( block_pointer block, // pointer to block
     FILE *newFP;
     offset_map_iterator it;
     offset_pointer op;
-    logOword("Entered:%s %s", name,basename(block->o_name));
-    it = settings->offset_map.find(basename(block->o_name));
+    const char *obasename = thebasename(block->o_name);
+    logOword("Entered:%s %s", name, obasename);
+    it = settings->offset_map.find(obasename);
 
     // #1 already defined
     if (it != settings->offset_map.end()) {
@@ -609,8 +619,8 @@ int Interp::control_back_to( block_pointer block, // pointer to block
 	free(dirname);
     }
 
-    settings->skipping_o = basename(block->o_name); // start skipping
-    settings->skipping_to_sub = basename(block->o_name); // start skipping
+    settings->skipping_o = obasename; // start skipping
+    settings->skipping_to_sub = obasename; // start skipping
     settings->skipping_start = settings->sequence_number;
     return INTERP_OK;
 }

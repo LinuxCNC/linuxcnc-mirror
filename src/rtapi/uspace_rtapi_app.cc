@@ -694,7 +694,7 @@ static void configure_memory()
     res = mlockall(MCL_CURRENT | MCL_FUTURE);
     if(res < 0) perror("mlockall");
 
-#ifdef __linux__
+#ifdef __GLIBC__
     /* Turn off malloc trimming.*/
     if (!mallopt(M_TRIM_THRESHOLD, -1)) {
         rtapi_print_msg(RTAPI_MSG_WARN,
@@ -1050,8 +1050,8 @@ int Posix::task_start(int task_id, unsigned long int period_nsec)
 #endif
           CPU_ZERO(&cpuset);
           CPU_SET(rt_cpu_number, &cpuset);
-          if((ret = pthread_attr_setaffinity_np(&attr, sizeof(cpuset), &cpuset)) != 0)
-               return -ret;
+          if(0 != pthread_setaffinity_np(task->thr, sizeof(cpuset), &cpuset))
+               rtapi_print("ERROR: failed to set thread scheduling affinity (%s)", strerror(errno));
       }
   }
   if((ret = pthread_create(&task->thr, &attr, &wrapper, reinterpret_cast<void*>(task))) != 0)

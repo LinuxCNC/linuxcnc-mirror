@@ -22,6 +22,7 @@
 // system includes
 #include <stdint.h>
 #include <ostream>
+#include <sys/time.h>
 
 // forward declarations
 struct libusb_device_handle;

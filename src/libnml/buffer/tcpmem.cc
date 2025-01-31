@@ -29,6 +29,7 @@ extern "C" {
 #include <arpa/inet.h>		/* inet_ntoa */
 #include <sys/socket.h>
 #include <sys/time.h>           /* struct timeval */
+#include <sys/types.h>		/* u_short */
 #include <netinet/in.h>         /* sockaddr_in */
 #include <netdb.h>
 #include <math.h>		/* fmod() */

@@ -39,8 +39,7 @@ void backtrace(int signo)
     name_buf[readlink("/proc/self/exe", name_buf, 511)]=0;
     int child_pid = fork();
     if (!child_pid) {
-	fclose(stderr);
-	stderr = freopen(filename, "a", stderr);
+	freopen(filename, "a", stderr);
         dup2(2,1); // child: redirect output to stderr
         fprintf(stdout,"stack trace for %s pid=%s signal=%d\n",name_buf,pid_buf, signo);
         execlp("gdb", "gdb", "--batch", "-n", "-ex", "thread", "-ex", "bt", name_buf, pid_buf, NULL);
