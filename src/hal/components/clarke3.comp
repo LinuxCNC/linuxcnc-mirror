@@ -30,6 +30,7 @@ author "John Kasunich";
 #define K4 (0.471404520791032)  /* sqrt(2)/3 */
 
 FUNCTION(_) {
+    (void)period;
     x = K1*a - K2*(b+c);
     y = K3*(b-c);
     h = K4*(a+b+c);

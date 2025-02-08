@@ -117,6 +117,7 @@ static int num_ports;		/* number of ports configured */
 
 static void write_port(void *arg, long period)
 {
+    (void)period;
     uint8_t v = 0;
     uint8_t oldval;
     int i;

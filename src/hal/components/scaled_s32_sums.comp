@@ -15,5 +15,6 @@ license "GPL";
 author "Chris S Morley";
 ;;
 FUNCTION(_) {
+    (void)period;
     out_s = out_f = in0 * scale0 + in1 * scale1 + in2 * scale2 + in3 * scale3;
 }

@@ -385,6 +385,7 @@ void rtapi_app_exit(void) {
 }
 
 static void write_port(void *arg, long period) {
+    (void)period;
     int i;
     port_data_t *port = (port_data_t *)arg;
 
@@ -424,6 +425,7 @@ static void write_port(void *arg, long period) {
 
 
 static void read_port(void *arg, long period) {
+    (void)period;
     int i;
     port_data_t *port = (port_data_t *)arg;
 

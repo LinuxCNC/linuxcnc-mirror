@@ -60,6 +60,7 @@ int get_count(void) {
 }
 
 EXTRA_SETUP() {
+    (void)prefix;
     rtapi_print_msg(RTAPI_MSG_INFO, "requesting I/O region 0x%x\n",
 			io[extra_arg]);
     if(!rtapi_request_region(io[extra_arg], 7, "serport")) {
@@ -99,6 +100,7 @@ EXTRA_CLEANUP() {
 #define BREAK (1<<6)
 
 FUNCTION(read) { 
+    (void)period;
     int i = rtapi_inb(MSR);
 
     pin_9_in = (i & RI) == 0;
@@ -115,6 +117,7 @@ FUNCTION(read) {
 }
 
 FUNCTION(write) {
+    (void)period;
     int i = 0, j=0;
 
     if(!pin_4_out ^ !pin_4_out_invert) i |= DTR;

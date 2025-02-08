@@ -289,10 +289,10 @@ void hm2_xy2mod_write(hostmot2_t *hm2) {
          hm2_xy2mod_instance_write(hm2, i);
     }
     if (hm2->xy2mod.num_instances > 0 && hm2->dpll_module_present) {
-        if (*hm2->xy2mod.hal->pin.dpll_rtimer_num != hm2->xy2mod.written_dpll_rtimer_num) {
+        if (*hm2->xy2mod.hal->pin.dpll_rtimer_num != (int)hm2->xy2mod.written_dpll_rtimer_num) {
             hm2_xy2mod_set_dpll_rtimer(hm2);
         }
-        if (*hm2->xy2mod.hal->pin.dpll_wtimer_num != hm2->xy2mod.written_dpll_wtimer_num) {
+        if (*hm2->xy2mod.hal->pin.dpll_wtimer_num != (int)hm2->xy2mod.written_dpll_wtimer_num) {
             hm2_xy2mod_set_dpll_wtimer(hm2);
         }
     }

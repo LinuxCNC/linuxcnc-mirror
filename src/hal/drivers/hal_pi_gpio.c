@@ -364,6 +364,8 @@ void rtapi_app_exit(void)
 
 static void write_port(void *arg, long period)
 {
+  (void)arg;
+  (void)period;
   int n;
 
   for (n = 0; n < npins; n++) {
@@ -381,6 +383,8 @@ static void write_port(void *arg, long period)
 
 static void read_port(void *arg, long period)
 {
+  (void)arg;
+  (void)period;
   int n;
 
   for (n = 0; n < npins; n++) {

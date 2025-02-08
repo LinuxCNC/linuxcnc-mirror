@@ -122,6 +122,7 @@ fail0: // It's all gone wrong
 }
 
 static void setsserial_release(struct rtapi_device *dev) {
+    (void)dev;
     // nothing to do here
 }
 
@@ -301,7 +302,7 @@ int sslbp_flash(char *fname){
     const struct rtapi_firmware *fw;
     struct rtapi_device dev;
     int r;
-    int write_sz, erase_sz;
+    unsigned write_sz, erase_sz;
     
     if (strstr("8i20", remote->name)){
         if (hm2->sserial.version < 37){
@@ -347,21 +348,20 @@ int sslbp_flash(char *fname){
     
     if (setup_start() < 0) goto fail0;
     flash_start();
-    write_sz = 1 << sslbp_read_byte(LBPFLASHWRITESIZELOC);
-    erase_sz = 1 << sslbp_read_byte(LBPFLASHERASESIZELOC);
+    write_sz = 1u << sslbp_read_byte(LBPFLASHWRITESIZELOC);
+    erase_sz = 1u << sslbp_read_byte(LBPFLASHERASESIZELOC);
     HM2_PRINT("Write Size = %x, Erase Size = %x\n", write_sz, erase_sz);
     flash_stop();
     
     //Programming Loop
     {
-        int ReservedBlock = 0;
-        int StartBlock = ReservedBlock + 1;
+        unsigned ReservedBlock = 0;
+        unsigned StartBlock = ReservedBlock + 1;
         
-        int blocknum = StartBlock;
-        int block_start;
-        int i, j, t;
+        unsigned blocknum = StartBlock;
+        unsigned i, j, t;
         while (blocknum * erase_sz < fw->size){
-            block_start = blocknum * erase_sz;
+            unsigned block_start = blocknum * erase_sz;
             for (t = 0; t < erase_sz && fw->data[block_start + t] == 0 ; t++){ }
             if (t <  erase_sz){ // found a non-zero byte
                 flash_start();

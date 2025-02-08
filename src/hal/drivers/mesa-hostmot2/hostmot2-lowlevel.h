@@ -144,8 +144,8 @@ struct hm2_lowlevel_io_struct {
     int needs_reset, needs_soft_reset;
 
     // the pin-count and names of the io port connectors on this board
-    int num_ioport_connectors;
-    int pins_per_connector;
+    unsigned num_ioport_connectors;
+    unsigned pins_per_connector;
     const char *ioport_connector_name[ANYIO_MAX_IOPORT_CONNECTORS];
 
     // If the llio driver sets this pointer to a non-NULL value, it

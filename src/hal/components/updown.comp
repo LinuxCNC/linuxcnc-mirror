@@ -17,6 +17,7 @@ author "Stephen Wille Padnos";
 ;;
 
 FUNCTION(_) {
+    (void)period;
 	hal_s32_t temp_count = count;
 	if (first) {
 		oldup=countup;

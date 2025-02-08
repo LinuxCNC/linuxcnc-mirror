@@ -47,6 +47,7 @@ author "Stuart Stevenson";
 see_also "mux2(9), mux4(9), mux16(9), mux_generic(9).";
 ;;
 FUNCTION(_) {
+    (void)period;
     if(sel0) {
         if(sel1) {
             if(sel2) out = in7;

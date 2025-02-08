@@ -54,6 +54,7 @@ static struct haldata {
 
 
 FUNCTION(fdemo) {
+   (void)period;
    // This function can be added to a thread (addf) for
    // purposes not related to the kinematics functions.
    if (fpin == 0) {
@@ -181,6 +182,8 @@ int kinematicsForward(const double *j,
                       const KINEMATICS_FORWARD_FLAGS * fflags,
                       KINEMATICS_INVERSE_FLAGS * iflags)
 {
+    (void)fflags;
+    (void)iflags;
     static bool gave_msg;
 
     // START of custom variable declaration for Forward kinematics
@@ -353,6 +356,8 @@ int kinematicsInverse(const EmcPose * pos,
                       const KINEMATICS_INVERSE_FLAGS * iflags,
                       KINEMATICS_FORWARD_FLAGS * fflags)
 {
+    (void)iflags;
+    (void)fflags;
     is_ready = 1; // Inverse is not called until homed for KINEMATICS_BOTH
 
     // START of custom variable declaration for Forward kinematics

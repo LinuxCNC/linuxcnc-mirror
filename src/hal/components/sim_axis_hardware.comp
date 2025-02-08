@@ -186,6 +186,7 @@ author "Chris S Morley";
 
 
 FUNCTION(update) {
+    (void)period;
 
 /*set home switches */
 Xhomesw_out = comp(Xhomesw_pos,Xcurrent_pos,Xhomesw_hyst);

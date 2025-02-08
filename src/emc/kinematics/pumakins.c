@@ -40,6 +40,7 @@ static int pumaKinematicsForward(const double * joint,
                                  const KINEMATICS_FORWARD_FLAGS * fflags,
                                  KINEMATICS_INVERSE_FLAGS * iflags)
 {
+   (void)fflags;
    double s1, s2, s3, s4, s5, s6;
    double c1, c2, c3, c4, c5, c6;
    double s23;
@@ -328,6 +329,7 @@ int pumaKinematicsSetup(const  int   comp_id,
                         const  char* coordinates,
                         kparms*      kp)
 {
+    (void)coordinates;
     int res=0;
 
     haldata = hal_malloc(sizeof(*haldata));

@@ -87,11 +87,13 @@ static void print_info(const int id, const D in_val, const D out_val) {
 }
 
 EXTRA_SETUP() {
+    (void)prefix;
     cidx = extra_arg; // Let us hope 'extra_arg' will forever contain component index.
     return 0;
 }
 
 FUNCTION(_) {
+    (void)period;
     if (reset || !initialized) {
         xk_last      = 0;
         Pk_last      = 1;

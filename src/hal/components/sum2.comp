@@ -11,5 +11,6 @@ license "GPL";
 author "Jeff Epler";
 ;;
 FUNCTION(_) {
+    (void)period;
     out = in0 * gain0 + in1 * gain1 + offset;
 }

@@ -34,7 +34,7 @@
 
 
 typedef struct {
-    int size;
+    size_t size;
     const unsigned char *data;  // a pointer into the "parent" struct firmware
 } bitfile_chunk_t;
 

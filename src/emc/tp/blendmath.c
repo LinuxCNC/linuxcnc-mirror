@@ -267,6 +267,7 @@ static inline double findTrimAngle(PmCartesian const * const P,
  */
 int checkTangentAngle(PmCircle const * const circ, SphericalArc const * const arc, BlendGeom3 const * const geom, BlendParameters const * const param, double cycle_time, int at_end)
 {
+    (void)geom;
     // Debug Information to diagnose tangent issues
     PmCartesian u_circ, u_arc;
     arcTangent(arc, &u_arc, at_end);
@@ -1283,6 +1284,9 @@ int blendLineArcPostProcess(BlendPoints3 * const points, BlendPoints3 const * co
         BlendParameters * const param, BlendGeom3 const * const geom,
         PmCartLine const * const line1, PmCircle const * const circ2)
 {
+    (void)points_in;
+    (void)line1;
+    (void)circ2;
 
     // Define distances from actual center to circle centers
     double d2 = negate(param->R_plan, param->convex2) + geom->radius2;
@@ -1375,6 +1379,9 @@ int blendArcLinePostProcess(BlendPoints3 * const points,
         PmCircle const * const circ1,
         PmCartLine const * const line2)
 {
+    (void)points_in;
+    (void)circ1;
+    (void)line2;
 
     // Define distance from actual arc center to circle center
     double d1 = negate(param->R_plan, param->convex1) + geom->radius1;
@@ -1462,6 +1469,9 @@ int blendArcArcPostProcess(BlendPoints3 * const points, BlendPoints3 const * con
         BlendParameters * const param, BlendGeom3 const * const geom,
         PmCircle const * const circ1, PmCircle const * const circ2)
 {
+    (void)points_in;
+    (void)circ1;
+    (void)circ2;
 
     // Create "shifted center" approximation of spiral circles
     // TODO refers to u1 instead of utan?
@@ -1598,6 +1608,7 @@ int arcFromBlendPoints3(SphericalArc * const arc, BlendPoints3 const * const poi
 
 int blendGeom3Print(BlendGeom3 const * const geom)
 {
+    (void)geom;
     tp_debug_print("u1 = %f %f %f\n",
             geom->u1.x,
             geom->u1.y,
@@ -1612,6 +1623,7 @@ int blendGeom3Print(BlendGeom3 const * const geom)
 
 int blendPoints3Print(BlendPoints3 const * const points)
 {
+    (void)points;
     tp_debug_print("arc_start = %f %f %f\n",
             points->arc_start.x,
             points->arc_start.y,
@@ -1735,6 +1747,7 @@ static int pmCircleAngleFromParam(PmCircle const * const circle,
 
 static void printSpiralArcLengthFit(SpiralArcLengthFit const * const fit)
 {
+    (void)fit;
     tp_debug_print("Spiral fit: b0 = %.12f, b1 = %.12f, length = %.12f, spiral_in = %d\n",
             fit->b0,
             fit->b1,

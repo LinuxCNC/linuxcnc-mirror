@@ -27,6 +27,7 @@ license "GPL";
 author "Eric H. Johnson";
 ;;
 FUNCTION(_) {
+  (void)period;
   if (enable) out = in * (vel / feed);
   else out = in;
 }

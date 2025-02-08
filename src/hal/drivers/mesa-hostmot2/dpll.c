@@ -221,5 +221,6 @@ void hm2_dpll_write(hostmot2_t *hm2, long period) {
     }
 }
 void hm2_dpll_cleanup(hostmot2_t *hm2) {
+    (void)hm2;
     // Should all be handled by the HAL housekeeping
 }

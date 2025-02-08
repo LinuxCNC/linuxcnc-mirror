@@ -890,6 +890,7 @@ static void read_all(void *arg, long period)
 
 static void write_all(void *arg, long period)
 {
+    (void)period;
     bus_data_t *bus;
     slot_data_t *slot;
     int slotnum, functnum, addr_ok;
@@ -1245,7 +1246,7 @@ static void write_encoders(slot_data_t *slot)
    value in 10MHz clock pulses. */
 static unsigned int ns2cp( hal_u32_t *pns, unsigned int min_ns )
 {
-    int ns, cp;
+    unsigned ns, cp;
 
     ns = *pns;
     if ( ns < min_ns ) ns = min_ns;
@@ -2295,6 +2296,7 @@ static int export_extra_dac(slot_data_t *slot, bus_data_t *bus)
 
  int export_timestamp(slot_data_t *slot, bus_data_t *bus)
 {
+    (void)bus;
     int n;
 
     /* does the board have the timestamp feature? */

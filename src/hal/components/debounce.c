@@ -185,6 +185,7 @@ void rtapi_app_exit(void)
 
 static void debounce(void *arg, long period)
 {
+    (void)period;
     debounce_group_t *group;
     debounce_t *filter;
     int n;

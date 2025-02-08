@@ -34,6 +34,7 @@ MODULE_AUTHOR("Jeff Epler");
 MODULE_DESCRIPTION("'Majority of 3' block for EMC HAL");
 
 FUNCTION(_) {
+    (void)period;
     int sum = 0;
     if (in1) sum++;
     if (in2) sum++;

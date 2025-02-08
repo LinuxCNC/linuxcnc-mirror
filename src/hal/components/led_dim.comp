@@ -53,6 +53,7 @@ variable hal_float_t last_in = 0.0;
 #define MAX(x,y) (x > y ? x : y)
 
 FUNCTION(_) {
+    (void)period;
     if (last_in != in)
     {
         hal_float_t input = MIN(MAX(in, 0.0), 1.0); // clamp to 0.0, 1.0

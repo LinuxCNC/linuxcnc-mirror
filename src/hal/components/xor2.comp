@@ -25,6 +25,7 @@ license "GPL";
 author "John Kasunich";
 ;;
 FUNCTION(_) {
+    (void)period;
     if (( in0 && !in1 ) || ( in1 && !in0 )) {
 	out = 1;
     } else {

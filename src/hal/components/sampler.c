@@ -152,6 +152,7 @@ void rtapi_app_exit(void)
 
 static void sample(void *arg, long period)
 {
+    (void)period;
     sampler_t *samp;
     pin_data_t *pptr;
     int n;

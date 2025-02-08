@@ -9,4 +9,4 @@ license "GPL";
 author "Jeff Epler";
 ;;
 
-FUNCTION(_) { if(enable) out = in_; }
+FUNCTION(_) { (void)period; if(enable) out = in_; }

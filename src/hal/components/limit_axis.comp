@@ -49,6 +49,7 @@ pin out bit error-limit-## [10:personality] = 1 "Error bit indicating that the m
 ;;
 
 FUNCTION(_){
+  (void)period;
   int i;
   // Check sticky bit
   if(sticky(current_range)){
@@ -105,7 +106,7 @@ FUNCTION(_){
       min_output = min_limit(i);
       // Found our limits, stop looking
       error_no_range = 0;
-      if (i != current_range){
+      if (i != (int)current_range){
         rtapi_print_msg(RTAPI_MSG_INFO, "limit_axis: Switching to Range %d\n", i);
         current_range = i;
       }
@@ -124,6 +125,8 @@ FUNCTION(_){
 }
 
 EXTRA_SETUP(){
+    (void)prefix;
+    (void)extra_arg;
     if (personality > 10) personality = 10;
     if (personality < 2) personality = 2;
     return 0;

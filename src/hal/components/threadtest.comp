@@ -7,5 +7,5 @@ author "Jeff Epler";
 
 ;;
 
-FUNCTION(increment) { count++; }
-FUNCTION(reset) { count=0; }
+FUNCTION(increment) { (void)period; count++; }
+FUNCTION(reset) { (void)period; count=0; }

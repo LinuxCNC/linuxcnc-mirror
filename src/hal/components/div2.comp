@@ -44,6 +44,7 @@ function _;
 static bool error_msg = 0;
 
 FUNCTION(_) {
+    (void)period;
     double dividend = in0;
     double divisor = in1;
     if ( deadband < 1e-12 ) deadband = 1e-12;

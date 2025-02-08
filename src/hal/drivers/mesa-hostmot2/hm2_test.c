@@ -83,16 +83,23 @@ static int hm2_test_read(hm2_lowlevel_io_t *this, rtapi_u32 addr, void *buffer, 
 
 
 static int hm2_test_write(hm2_lowlevel_io_t *this, rtapi_u32 addr, const void *buffer, int size) {
+    (void)this;
+    (void)addr;
+    (void)buffer;
+    (void)size;
     return 1;  // success
 }
 
 
 static int hm2_test_program_fpga(hm2_lowlevel_io_t *this, const bitfile_t *bitfile) {
+    (void)this;
+    (void)bitfile;
     return 0;
 }
 
 
 static int hm2_test_reset(hm2_lowlevel_io_t *this) {
+    (void)this;
     return 0;
 }
 

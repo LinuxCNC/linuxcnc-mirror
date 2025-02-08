@@ -140,6 +140,7 @@ void rtapi_app_exit(void)
 
 static void update_supply(void *arg, long l)
 {
+    (void)l;
     hal_supply_t *supply;
 
     /* point to the data */

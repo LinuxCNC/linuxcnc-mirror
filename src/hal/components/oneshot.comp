@@ -49,6 +49,8 @@ typedef struct {
 } internal;
 
 EXTRA_SETUP(){
+    (void)prefix;
+    (void)extra_arg;
     data.timer = 0.0;
     data.old_in = 0;
     return 0;

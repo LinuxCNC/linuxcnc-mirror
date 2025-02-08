@@ -22,6 +22,7 @@ license "GPL";
 author "John Kasunich";
 ;;
 FUNCTION(_) {
+    (void)period;
     int tmp = 0;
 
     if ( !in ) goto nomatch;

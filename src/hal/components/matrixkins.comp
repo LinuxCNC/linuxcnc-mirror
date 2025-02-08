@@ -248,6 +248,8 @@ int kinematicsForward(const double *j,
                       const KINEMATICS_FORWARD_FLAGS * fflags,
                       KINEMATICS_INVERSE_FLAGS * iflags)
 {
+    (void)fflags;
+    (void)iflags;
     // For forward kinematics (joint to axis position) we
     // need the inverse of the 3x3 matrix.
     //
@@ -299,6 +301,8 @@ int kinematicsInverse(const EmcPose * pos,
                       const KINEMATICS_INVERSE_FLAGS * iflags,
                       KINEMATICS_FORWARD_FLAGS * fflags)
 {
+    (void)iflags;
+    (void)fflags;
     double a = haldata->C_xx;
     double b = haldata->C_xy;
     double c = haldata->C_xz;

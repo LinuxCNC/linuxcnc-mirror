@@ -330,7 +330,8 @@ static void make_pulses(void *arg, long period)
 
 static void update(void *arg, long period)
 {
-	static long oldperiodns=-1;
+    (void)period;
+    static long oldperiodns=-1;
 
     pwmgen_t *pwmgen;
     int n, high_periods;

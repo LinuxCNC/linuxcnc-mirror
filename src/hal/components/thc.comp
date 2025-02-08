@@ -92,6 +92,7 @@ function _;
 #include "rtapi_math.h"
 
 FUNCTION(_) {
+    (void)period;
     // convert encoder velocity to volts
     volts = (encoder_vel - scale_offset) * vel_scale;
     if(volts < 0){volts = 0;} // make sure volts is not negative

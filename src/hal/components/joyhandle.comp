@@ -50,6 +50,7 @@ author "Paul Willutzki";
 #include <rtapi_math.h>
 
 FUNCTION(_) {
+    (void)period;
 double p,a,b,alin,clin,xm,ym,xinv,yinv;
 
 if (power < 1.0) power =1.0;

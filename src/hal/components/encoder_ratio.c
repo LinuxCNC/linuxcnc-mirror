@@ -276,6 +276,7 @@ void rtapi_app_exit(void)
 
 static void sample(void *arg, long period)
 {
+    (void)period;
     encoder_pair_t *pair;
     int n;
     unsigned char state;
@@ -333,6 +334,7 @@ static void sample(void *arg, long period)
 
 static void update(void *arg, long period)
 {
+    (void)period;
     encoder_pair_t *pair;
     int n;
 
@@ -359,6 +361,7 @@ static void update(void *arg, long period)
 
 static int export_encoder_pair(int num, encoder_pair_t * addr, char* prefix)
 {
+    (void)num;
     int retval, msg;
 
     /* This function exports a lot of stuff, which results in a lot of

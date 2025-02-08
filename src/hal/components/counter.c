@@ -179,6 +179,7 @@ void rtapi_app_exit(void)
 
 static void update(void *arg, long period)
 {
+    (void)period;
     counter_t *cntr;
     int n;
 

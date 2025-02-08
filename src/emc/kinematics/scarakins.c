@@ -77,6 +77,7 @@ int scaraKinematicsForward(const double * joint,
                       const KINEMATICS_FORWARD_FLAGS * fflags,
                       KINEMATICS_INVERSE_FLAGS * iflags)
 {
+    (void)fflags;
     double a0, a1, a3;
     double x, y, z, c;
 
@@ -181,6 +182,7 @@ static int scaraKinematicsSetup(const  int   comp_id,
                                 const  char* coordinates,
                                 kparms*      kp)
 {
+    (void)coordinates;
     int res=0;
 
     haldata = hal_malloc(sizeof(*haldata));

@@ -206,6 +206,7 @@ static void handle_kinematicsSwitch(void);
   */
 void emcmotController(void *arg, long period)
 {
+    (void)arg;
     static int do_once = 1;
     if (do_once) {
         pcmd_p[0] = &(emcmotStatus->carte_pos_cmd.tran.x);
@@ -236,7 +237,7 @@ void emcmotController(void *arg, long period)
     /* calculate servo period as a double - period is in integer nsec */
     servo_period = period * 0.000000001;
 
-    if(period != last_period) {
+    if(period != (long)last_period) {
         emcmotSetCycleTime(period);
         last_period = period;
     }

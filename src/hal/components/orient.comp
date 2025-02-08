@@ -68,6 +68,7 @@ license "GPL";
 #include <rtapi_math.h>
 
 FUNCTION(_) {
+    (void)period;
 
     double target_angle;
     double latched_position;

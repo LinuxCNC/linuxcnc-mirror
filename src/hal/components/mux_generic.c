@@ -271,7 +271,8 @@ int rtapi_app_main(void){
 
 void write_fp(void *arg, long period) {
     mux_inst_t *inst = arg;
-    int i = 0, s = 0;
+    int i = 0;
+    unsigned s = 0;
     if (inst->num_bits > 0) {
         while (i < inst->num_bits) {
             s += (*inst->sel_bit[i] != 0) << i;
@@ -291,7 +292,7 @@ void write_fp(void *arg, long period) {
     inst->selection = s;
     inst->timer = 0;
 
-    if (s >= inst->size)
+    if ((int)s >= inst->size)
         s = inst->size - 1;
 
     switch (inst->in_type * 8 + inst->out_type) {
@@ -334,7 +335,8 @@ void write_fp(void *arg, long period) {
 
 void write_nofp(void *arg, long period) {
     mux_inst_t *inst = arg;
-    int i = 0, s = 0;
+    int i = 0;
+    unsigned s = 0;
     if (inst->num_bits > 0) {
         while (i < inst->num_bits) {
             s += (*inst->sel_bit[i] != 0) << i;
@@ -354,7 +356,7 @@ void write_nofp(void *arg, long period) {
     inst->selection = s;
     inst->timer = 0;
 
-    if (s >= inst->size)
+    if ((int)s >= inst->size)
         s = inst->size - 1;
     switch (inst->in_type * 8 + inst->out_type) {
     case 011: //HAL_BIT => HAL_BIT

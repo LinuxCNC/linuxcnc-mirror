@@ -47,7 +47,7 @@ typedef struct {
 
 typedef struct {
     lcd_page_t *pages;
-    int num_pages;
+    unsigned num_pages;
     hal_u32_t *page_num;
     hal_u32_t last_page;
     hal_u32_t *out;
@@ -255,6 +255,7 @@ int rtapi_app_main(void){
 }
 
 void write(void *arg, long period){
+    (void)period;
     lcd_t *lcd;
     int i;
     

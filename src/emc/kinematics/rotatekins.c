@@ -20,6 +20,8 @@ int kinematicsForward(const double *joints,
 		      const KINEMATICS_FORWARD_FLAGS * fflags,
 		      KINEMATICS_INVERSE_FLAGS * iflags)
 {
+    (void)fflags;
+    (void)iflags;
     double c_rad = -joints[5]*M_PI/180;
     pos->tran.x = joints[0] * cos(c_rad) - joints[1] * sin(c_rad);
     pos->tran.y = joints[0] * sin(c_rad) + joints[1] * cos(c_rad);
@@ -39,6 +41,8 @@ int kinematicsInverse(const EmcPose * pos,
 		      const KINEMATICS_INVERSE_FLAGS * iflags,
 		      KINEMATICS_FORWARD_FLAGS * fflags)
 {
+    (void)iflags;
+    (void)fflags;
     double c_rad = pos->c*M_PI/180;
     joints[0] = pos->tran.x * cos(c_rad) - pos->tran.y * sin(c_rad);
     joints[1] = pos->tran.x * sin(c_rad) + pos->tran.y * cos(c_rad);

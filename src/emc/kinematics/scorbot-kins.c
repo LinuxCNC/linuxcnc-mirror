@@ -79,6 +79,8 @@ int kinematicsForward(
     const KINEMATICS_FORWARD_FLAGS *fflags,
     KINEMATICS_INVERSE_FLAGS *iflags
 ) {
+    (void)fflags;
+    (void)iflags;
     EmcPose j1_vector;  // the vector from j0 ("base") to joint 1 ("shoulder", end of link 0)
     EmcPose j2_vector;  // the vector from j1 ("shoulder") to  joint 2 ("elbow", end of link 1)
     EmcPose j3_vector;  // the vector from j2 ("elbow") to joint 3 ("wrist", end of link 2)
@@ -136,6 +138,8 @@ int kinematicsInverse(
     const KINEMATICS_INVERSE_FLAGS *iflags,
     KINEMATICS_FORWARD_FLAGS *fflags
 ) {
+    (void)iflags;
+    (void)fflags;
     // EmcPose j1_cart;
     double distance_to_cp, distance_to_center;
     double r_j1, z_j1;   // (r_j1, z_j1) is the location of J1 in the RZ plane

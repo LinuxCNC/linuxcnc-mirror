@@ -18,6 +18,7 @@ author "Sebastian Kuzminsky";
 #include <rtapi_math.h>
 
 FUNCTION(_) {
+    (void)period;
 
 switch (level){
     case 0:  // idle

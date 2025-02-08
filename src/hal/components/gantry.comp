@@ -76,6 +76,7 @@ variable int   fb_joint = 0;
 variable int   latching = 0;
 ;;
 FUNCTION(read) {
+    (void)period;
     int i=1;
 
     // First (or only) joint
@@ -123,6 +124,7 @@ FUNCTION(read) {
 }
 
 FUNCTION(write) {
+    (void)period;
     int i;
     float delta;
 

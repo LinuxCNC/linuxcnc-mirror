@@ -875,7 +875,7 @@ static int hm2_eth_receive_queued_reads(hm2_lowlevel_io_t *this) {
     hm2_eth_t *board = this->private;
     int recv, i = 0;
     rtapi_u8 tmp_buffer[board->queue_buff_size];
-    long long t1, t2;
+    unsigned long long t1, t2;
     t1 = rtapi_get_time();
     
     // an error occurred in the past but the user has reset the io_error
@@ -1450,7 +1450,7 @@ static int hm2_eth_probe(hm2_eth_t *board) {
 
         board->llio.num_ioport_connectors = idrom.io_ports;
         board->llio.pins_per_connector = idrom.port_width;
-        int i;
+        unsigned i;
         for(i=0; i<board->llio.num_ioport_connectors; i++)
             board->llio.ioport_connector_name[i] = "??";
         board->llio.fpga_part_number = "??";

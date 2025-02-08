@@ -8,6 +8,7 @@ license "GPL";
 author "Stephen Wille Padnos";
 ;;
 FUNCTION(_) {
+    (void)period;
 	hal_s32_t temp_sel;
 	int i, temp_enable;
 	temp_sel = sel;

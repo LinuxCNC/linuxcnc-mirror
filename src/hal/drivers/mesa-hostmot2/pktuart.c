@@ -746,7 +746,7 @@ int hm2_pktuart_queue_get_frame_sizes(char *name, rtapi_u32 fsizes[]){
         return -EINVAL;
     }
 
-    for (j = 0; j < ((hm2->pktuart.rx_status_reg[inst] >> 16) & 0x1F); j++ ){
+    for (j = 0; j < (int)((hm2->pktuart.rx_status_reg[inst] >> 16) & 0x1F); j++ ){
         rtapi_print_msg(RTAPI_MSG_INFO, "j = %i\n", j);
         r = hm2->llio->queue_read(hm2->llio, hm2->pktuart.instance[inst].rx_fifo_count_addr,
                      &fsizes[j], sizeof(rtapi_u32));
@@ -850,9 +850,11 @@ void hm2_pktuart_print_module(hostmot2_t *hm2){
 
 void hm2_pktuart_cleanup(hostmot2_t *hm2)
 {
+    (void)hm2;
 }
 
 void hm2_pktuart_write(hostmot2_t *hm2)
 {
+    (void)hm2;
 }
 

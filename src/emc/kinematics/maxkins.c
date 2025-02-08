@@ -39,6 +39,8 @@ int kinematicsForward(const double *joints,
 		      const KINEMATICS_FORWARD_FLAGS * fflags,
 		      KINEMATICS_INVERSE_FLAGS * iflags)
 {
+    (void)fflags;
+    (void)iflags;
     // B correction
     double zb = (*(haldata->pivot_length) + joints[8]) * cos(d2r(joints[4]));
     double xb = (*(haldata->pivot_length) + joints[8]) * sin(d2r(joints[4]));
@@ -72,6 +74,8 @@ int kinematicsInverse(const EmcPose * pos,
 		      const KINEMATICS_INVERSE_FLAGS * iflags,
 		      KINEMATICS_FORWARD_FLAGS * fflags)
 {
+    (void)iflags;
+    (void)fflags;
     // B correction
     double zb = (*(haldata->pivot_length) + pos->w) * cos(d2r(pos->b));
     double xb = (*(haldata->pivot_length) + pos->w) * sin(d2r(pos->b));

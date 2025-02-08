@@ -405,6 +405,7 @@ static void update(void *arg, long period)
 
 static void capture(void *arg, long period)
 {
+    (void)period;
     counter_t *cntr;
     atomic *buf;
     int n;

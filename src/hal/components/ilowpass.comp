@@ -37,6 +37,7 @@ author "Jeff Epler";
 #include <rtapi_math.h>
 
 FUNCTION(_) {
+    (void)period;
     value += (in - value) * gain;
     out = (int)(rtapi_s64)floor((value * scale) + 0.5);
 }

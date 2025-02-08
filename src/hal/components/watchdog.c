@@ -190,6 +190,7 @@ void rtapi_app_exit(void)
 */
 static void process(void *arg, long period)
 {
+    (void)arg;
     int i, fault=0;
     // set_timeouts has to turn on the output when it detects a valid
     // transition on enable
@@ -217,6 +218,8 @@ static void process(void *arg, long period)
 
 static void set_timeouts(void *arg, long period)
 {
+    (void)arg;
+    (void)period;
     int i;
     hal_float_t temp;
     

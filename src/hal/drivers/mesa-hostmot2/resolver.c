@@ -34,6 +34,7 @@
 #include "hal/drivers/mesa-hostmot2/hostmot2.h"
 
 int hm2_resolver_get_param(int param){
+    (void)param;
     // This function will eventually return parameters from the 7i49
     // but for now, it just returns the number 6
     return 6;
@@ -326,6 +327,7 @@ fail0:
 }
 
 void hm2_resolver_process_tram_read(hostmot2_t *hm2, long period) {
+    (void)period;
     int i;
     hm2_resolver_instance_t *res;
     double scale;

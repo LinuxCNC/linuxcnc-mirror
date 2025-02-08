@@ -178,6 +178,7 @@ static void hm2_write(void *void_hm2, long period) {
 
 
 static void hm2_read_gpio(void *void_hm2, long period) {
+    (void)period;
     hostmot2_t *hm2 = void_hm2;
 
     // if there are comm problems, wait for the user to fix it
@@ -214,7 +215,7 @@ const char *hm2_hz_to_mhz(rtapi_u32 freq_hz) {
     freq_mhz = freq_hz / (1000*1000);
     freq_mhz_fractional = (freq_hz / 1000) % 1000;
     r = snprintf(mhz_str, sizeof(mhz_str), "%d.%03d", freq_mhz, freq_mhz_fractional);
-    if (r >= sizeof(mhz_str)) {
+    if (r >= (int)sizeof(mhz_str)) {
         HM2_ERR_NO_LL("too many MHz!\n");
         return "(unpresentable)";
     }
@@ -1195,6 +1196,7 @@ void hm2_print_modules(hostmot2_t *hm2) {
 
 
 static void hm2_release_device(struct rtapi_device *dev) {
+    (void)dev;
     // nothing to do here
 }
 
@@ -1261,29 +1263,27 @@ int hm2_register(hm2_lowlevel_io_t *llio, char *config_string) {
     }
 
     {
-        int port;
-
-        for (port = 0; port < llio->num_ioport_connectors; port ++) {
+        for (unsigned port = 0; port < llio->num_ioport_connectors; port ++) {
             int i;
 
             if (llio->ioport_connector_name[port] == NULL) {
-                HM2_ERR_NO_LL("llio ioport connector name %d is NULL\n", port);
+                HM2_ERR_NO_LL("llio ioport connector name %u is NULL\n", port);
                 return -EINVAL;
             }
 
             for (i = 0; i < HAL_NAME_LEN+1; i ++) {
                 if (llio->ioport_connector_name[port][i] == '\0') break;
                 if (!isprint(llio->ioport_connector_name[port][i])) {
-                    HM2_ERR_NO_LL("invalid llio ioport connector name %d passed in (contains non-printable character)\n", port);
+                    HM2_ERR_NO_LL("invalid llio ioport connector name %u passed in (contains non-printable character)\n", port);
                     return -EINVAL;
                 }
             }
             if (i == HAL_NAME_LEN+1) {
-                HM2_ERR_NO_LL("invalid llio ioport connector name %d passed in (not NULL terminated)\n", port);
+                HM2_ERR_NO_LL("invalid llio ioport connector name %u passed in (not NULL terminated)\n", port);
                 return -EINVAL;
             }
             if (i == 0) {
-                HM2_ERR_NO_LL("invalid llio ioport connector name %d passed in (zero length)\n", port);
+                HM2_ERR_NO_LL("invalid llio ioport connector name %u passed in (zero length)\n", port);
                 return -EINVAL;
             }
         }
@@ -1403,7 +1403,7 @@ int hm2_register(hm2_lowlevel_io_t *llio, char *config_string) {
         HM2_INFO("firmware %s:\n", hm2->config.firmware);
         HM2_INFO("    %s %s %s\n", bitfile.a.data, bitfile.c.data, bitfile.d.data);
         HM2_INFO("    Part Name: %s\n", bitfile.b.data);
-        HM2_INFO("    FPGA Config: %d bytes\n", bitfile.e.size);
+        HM2_INFO("    FPGA Config: %zu bytes\n", bitfile.e.size);
 
         if (llio->fpga_part_number == NULL) {
             HM2_ERR("llio did not provide an FPGA part number, cannot verify firmware part number\n");

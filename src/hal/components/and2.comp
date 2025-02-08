@@ -25,4 +25,4 @@ see_also """
 license "GPL";
 author "Jeff Epler";
 ;;
-FUNCTION(_) { out = in0 && in1; }
+FUNCTION(_) { (void)period; out = in0 && in1; }

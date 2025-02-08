@@ -143,6 +143,7 @@ static      ofunc func0,func1,func2,func3;
 #endif
 
 FUNCTION(_) {
+    (void)period;
     struct ofunc_data* dptr = &data;
 #define STATE dptr->thestate
 

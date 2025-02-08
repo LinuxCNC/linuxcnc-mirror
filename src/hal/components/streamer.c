@@ -167,6 +167,7 @@ void rtapi_app_exit(void)
 
 static void update(void *arg, long period)
 {
+    (void)period;
     streamer_t *str;
     pin_data_t *pptr;
     int n, doclk;

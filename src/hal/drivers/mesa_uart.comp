@@ -59,6 +59,7 @@ char *uart_chans[18] = {0,};
 RTAPI_MP_ARRAY_STRING(uart_chans, 16, "UART Channel names");
 
 FUNCTION(send){
+    (void)period;
 /* This function uses the hm2_uart_send function to transmit data see 
 man hm2_uart_send for more information. Data may be up to 64 bytes in size*/
     
@@ -73,6 +74,7 @@ man hm2_uart_send for more information. Data may be up to 64 bytes in size*/
 }
 
 FUNCTION(receive){
+    (void)period;
 /* This function uses the hm2_uart_send function to transmit data. 
  See man hm2_uart_send for more information. 16 bytes in the Rx buffer*/
     
@@ -85,6 +87,7 @@ FUNCTION(receive){
 }
     
 EXTRA_SETUP(){ // the names parameters are passed in 'prefix'. You just have to know that. 
+    (void)extra_arg;
     if (prefix[0] == 'm'){ // should be the 'h' of hm2_....
         rtapi_print_msg(0, "mesa_uart can not be loaded using the 'count' "
                         "parameter, see man mesa_uart for details\n");

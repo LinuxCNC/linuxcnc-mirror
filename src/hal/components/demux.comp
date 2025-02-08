@@ -26,6 +26,7 @@ function _;
 ;;
 
 FUNCTION(_){
+    (void)period;
     int i, bit;
 
     bit = sel_u32 + sel_bit(0) + (sel_bit(1) << 1) + (sel_bit(2) << 2)

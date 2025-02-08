@@ -185,6 +185,7 @@ int rtapi_app_main(void){
 }
 
 static void decode(void *v_inst, long period){
+    (void)period;
     int i;
     enum_inst_t *inst = v_inst;
     for (i = 1; i <= inst->num_pins; i++){
@@ -196,6 +197,7 @@ static void decode(void *v_inst, long period){
     }
 }
 static void encode(void *v_inst, long period){
+    (void)period;
     int i;
     enum_inst_t *inst = v_inst;
     *(inst->hal[0].en) = 0;

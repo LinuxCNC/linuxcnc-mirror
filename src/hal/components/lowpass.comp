@@ -40,6 +40,7 @@ author "Jeff Epler";
 notes "The effect of a specific \\fBgain\\fR value is dependent on the period of the function that \\fBlowpass.\\fIN\\fR is added to.";
 ;;
 FUNCTION(_) {
+    (void)period;
     if(load)
 	out = in;
     else

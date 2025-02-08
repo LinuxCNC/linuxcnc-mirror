@@ -44,6 +44,7 @@ license "GPL";
 author "Anders Wallin, David Mueller";
 ;;
 FUNCTION(_)  {
+    (void)period;
 
     if (( debounce < 1 ) || ( debounce > 10000 )) {
         debounce_set = 2; /* set a sane value */
@@ -53,7 +54,7 @@ FUNCTION(_)  {
 
     if (in && state == 0 )  { /* input has changed from debounced 0 -> 1 */
         debounce_cntr++;
-        if ( debounce_cntr >= debounce_set ) {
+        if ( debounce_cntr >= (int)debounce_set ) {
             if (!is_on) { /* turn ON if it's off */
                 on=1;
                 off=0;
@@ -66,7 +67,7 @@ FUNCTION(_)  {
         }
     } else if (!in && state == 1) { /* input has changed from debounced 1 -> 0 */
         debounce_cntr++;
-        if ( debounce_cntr >= debounce_set ) {
+        if ( debounce_cntr >= (int)debounce_set ) {
             state = 0;
             debounce_cntr = 0;
         }

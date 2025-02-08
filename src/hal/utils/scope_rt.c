@@ -145,6 +145,8 @@ void rtapi_app_exit(void)
 
 static void sample(void *arg, long period)
 {
+    (void)arg;
+    (void)period;
     int n;
 
     ctrl_shm->watchdog = 0;
@@ -391,7 +393,7 @@ static void init_rt_control_struct(void *shmem)
 
     /* first clear entire struct to all zeros */
     cp = (char *) ctrl_rt;
-    for (n = 0; n < sizeof(scope_rt_control_t); n++) {
+    for (n = 0; n < (int)sizeof(scope_rt_control_t); n++) {
 	cp[n] = 0;
     }
     /* save pointer to shared control structure */
@@ -413,7 +415,7 @@ static void init_shm_control_struct(void)
 
     /* first clear entire struct to all zeros */
     cp = (char *) ctrl_shm;
-    for (n = 0; n < sizeof(scope_shm_control_t); n++) {
+    for (n = 0; n < (int)sizeof(scope_shm_control_t); n++) {
 	cp[n] = 0;
     }
     /* round size of shared struct up to a multiple of 4 for alignment */

@@ -49,7 +49,7 @@ author "Joseph Calderon";
 #include "rtapi_math.h"
 
 static float accpoly(float *v, size_t n, float p) {
-  int i;
+  size_t i;
   float ret = 0;
   for (i = 0; i < n; i++) {
     ret += v[i] * pow(p, i);
@@ -152,6 +152,7 @@ static float read_celsius_adjusted(int32_t sensor_data) {
 }
 
 FUNCTION(bitbang_spi) {
+  (void)period;
   int nbit = (state >> 1) & 0x3f;
   int delay = (state >> 7) & 0x3ff;
   int cs = state & 0x1;

@@ -69,6 +69,7 @@ static hostmot2_t* hm2=NULL;
 
 
 FUNCTION(receive){
+	(void)period;
 #define MAX_FRAME_LENGTH 20
 #define NUM_FRAMES 20
 	rtapi_u16 max_frame_length = MAX_FRAME_LENGTH;
@@ -113,6 +114,7 @@ FUNCTION(receive){
 #endif
 
 EXTRA_SETUP(){ // the names parameters are passed in 'prefix'.
+	(void)extra_arg;
 	if (prefix[0] == 'm'){ // should be the 'm' of hm2_....
 		rtapi_print_msg(0, "mesa_pktuart_test can not be loaded using the 'count' "
 						"parameter, see man mesa_uart for details\n");

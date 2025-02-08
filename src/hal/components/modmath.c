@@ -115,6 +115,7 @@ void rtapi_app_exit(void)
 
 static void mod_dir_funct(void *arg, long period)
 {
+    (void)period;
     mod_dir_t *mod;
     int range, act, des, to_go;
 

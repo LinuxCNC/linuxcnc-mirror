@@ -9,5 +9,6 @@ see_also " invert(9), div2(9) ";
 
 ;;
 FUNCTION(_) {
+    (void)period;
     out = in0 * in1;
 }

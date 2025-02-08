@@ -49,6 +49,7 @@ int cfg[MAX_COUNT];
 RTAPI_MP_ARRAY_INT(cfg, MAX_COUNT, "array of function sizes");
 
 FUNCTION(_) {
+    (void)period;
     int i;
     
     // debounce
@@ -58,7 +59,7 @@ FUNCTION(_) {
     old_down = down;
     
     if (position < 0) position = top_position;
-    if (position > top_position) position = 0;
+    if ((unsigned)position > top_position) position = 0;
     
     for (i = 0 ; i < personality; i++){
         bit(i) = (i == position);
@@ -67,6 +68,7 @@ FUNCTION(_) {
 }
 
 EXTRA_SETUP(){
+    (void)prefix;
     personality = cfg[extra_arg];
     top_position = personality - 1;
     return 0;

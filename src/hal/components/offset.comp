@@ -31,5 +31,5 @@ license "GPL";
 author "Jeff Epler";
 ;;
 
-FUNCTION(update_feedback) { fb_out = fb_in - offset; }
-FUNCTION(update_output)   { out = in + offset; }
+FUNCTION(update_feedback) { (void)period; fb_out = fb_in - offset; }
+FUNCTION(update_output)   { (void)period; out = in + offset; }

@@ -53,6 +53,7 @@ static struct haldata {
 } *haldata;
 
 FUNCTION(fdemo) {
+    (void)period;
    // This function can be added to a thread (addf) for
    // purposes not related to the kinematics functions.
    if (fpin == 0) {
@@ -150,6 +151,8 @@ int kinematicsForward(const double *j,
                       const KINEMATICS_FORWARD_FLAGS * fflags,
                       KINEMATICS_INVERSE_FLAGS * iflags)
 {
+    (void)fflags;
+    (void)iflags;
     static bool gave_msg;
     // define forward kinematic models using case structure for
     // for switchable kinematics
@@ -188,6 +191,8 @@ int kinematicsInverse(const EmcPose * pos,
                       const KINEMATICS_INVERSE_FLAGS * iflags,
                       KINEMATICS_FORWARD_FLAGS * fflags)
 {
+    (void)iflags;
+    (void)fflags;
     is_ready = 1; // Inverse is not called until homed for KINEMATICS_BOTH
 
     // Update the kinematic joints specified by the

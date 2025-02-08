@@ -2109,7 +2109,7 @@ int hal_create_thread(const char *name, unsigned long period_nsec, int uses_fp)
 	    }
 	}
 	/* make sure period <= desired period (allow 1% roundoff error) */
-	if (curr_period > (period_nsec + (period_nsec / 100))) {
+	if (curr_period > (long)(period_nsec + (period_nsec / 100))) {
 	    rtapi_mutex_give(&(hal_data->mutex));
 	    rtapi_print_msg(RTAPI_MSG_ERR,
 		"HAL_LIB: ERROR: clock period too long: %ld\n", curr_period);
@@ -2131,7 +2131,7 @@ int hal_create_thread(const char *name, unsigned long period_nsec, int uses_fp)
 	prev_period = tptr->period;
 	prev_priority = tptr->priority;
     }
-    if ( period_nsec < hal_data->base_period) { 
+    if ( (long)period_nsec < hal_data->base_period) {
 	rtapi_mutex_give(&(hal_data->mutex));
 	rtapi_print_msg(RTAPI_MSG_ERR,
 	    "HAL_LIB: ERROR: new thread period %ld is less than clock period %ld\n",

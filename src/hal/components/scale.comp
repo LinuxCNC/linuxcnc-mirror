@@ -8,5 +8,6 @@ license "GPL";
 author "Jeff Epler";
 ;;
 FUNCTION(_) {
+    (void)period;
     out = in * gain + offset;
 }

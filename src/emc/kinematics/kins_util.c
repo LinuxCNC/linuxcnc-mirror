@@ -283,6 +283,7 @@ int identityKinematicsSetup(const int   comp_id,
                             const char* coordinates,
                             kparms*     kp)
 {
+    (void)comp_id;
     int axis_idx_for_jno[EMCMOT_MAX_JOINTS];
     int jno;
     int show=0;
@@ -330,6 +331,8 @@ int identityKinematicsForward(const double *joints,
                               const KINEMATICS_FORWARD_FLAGS * fflags,
                               KINEMATICS_INVERSE_FLAGS * iflags)
 {
+    (void)fflags;
+    (void)iflags;
     if (!identity_kinematics_initialized) {
         rtapi_print_msg(RTAPI_MSG_ERR,
             "identityKinematicsForward: not initialized\n");
@@ -346,6 +349,8 @@ int identityKinematicsInverse(const EmcPose * pos,
                               const KINEMATICS_INVERSE_FLAGS * iflags,
                               KINEMATICS_FORWARD_FLAGS * fflags)
 {
+    (void)iflags;
+    (void)fflags;
     if (!identity_kinematics_initialized) {
         rtapi_print_msg(RTAPI_MSG_ERR,
             "identityKinematicsInverse: not initialized\n");

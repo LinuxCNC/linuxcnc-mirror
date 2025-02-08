@@ -219,7 +219,7 @@ int check_set_baudrate(hostmot2_t *hm2, hm2_sserial_instance_t *inst){
         baudaddr = getlocal8(hm2, inst, SSLBPCHANNELSTARTLOC) + (c * lbpstride) + 42;
         baudrate = getlocal32(hm2, inst, baudaddr);
         HM2_PRINT("Chan %i baudrate = %i\n", c, baudrate);
-        if (baudrate != hm2->sserial.baudrate) {
+        if (baudrate != (unsigned)hm2->sserial.baudrate) {
             if (setlocal32(hm2, inst, baudaddr, hm2->sserial.baudrate) < 0) {
                 HM2_ERR("Problem setting new baudrate, power-off reset may be needed to"
                         " recover from this.\n");
@@ -326,6 +326,7 @@ void config_8i20(hostmot2_t *hm2, hm2_sserial_remote_t *chan){
 }
 
 void config_7i64(hostmot2_t *hm2, hm2_sserial_remote_t *chan){
+    (void)hm2;
     chan->num_modes=0;
     chan->num_confs = sizeof(hm2_7i64_params) / sizeof(hm2_sserial_data_t);
     chan->confs = rtapi_kzalloc(sizeof(hm2_7i64_params), RTAPI_GFP_KERNEL);
@@ -559,7 +560,7 @@ int hm2_sserial_parse_md(hostmot2_t *hm2, int md_index){
     hm2_module_descriptor_t *md = &hm2->md[md_index];
     int i, c;
     int pin = -1;
-    int port_pin, port;
+    int port;
     rtapi_u32 ddr_reg, src_reg, buff;
     int r = -EINVAL;
     int count = 0;
@@ -638,7 +639,7 @@ int hm2_sserial_parse_md(hostmot2_t *hm2, int md_index){
     for (port  = 0; port < hm2->ioport.num_instances; port ++) {
         ddr_reg = 0;
         src_reg = 0;
-        for (port_pin = 0 ; port_pin < hm2->idrom.port_width; port_pin ++){
+        for (unsigned port_pin = 0 ; port_pin < hm2->idrom.port_width; port_pin ++){
             pin++;
             if (hm2->pin[pin].sec_tag == HM2_GTAG_SMARTSERIAL
                 || hm2->pin[pin].sec_tag == HM2_GTAG_SMARTSERIALB) {
@@ -1708,9 +1709,9 @@ fail1:
         break;
     case 2:
         *inst->state2 = 1;
-        if (++inst->g_index >= inst->remotes[inst->r_index].num_globals){
+        if ((int)++inst->g_index >= inst->remotes[inst->r_index].num_globals){
             inst->g_index = 0;
-            if (++inst->r_index >= inst->num_remotes){//checked them all
+            if ((int)++inst->r_index >= inst->num_remotes){//checked them all
                 *inst->state2 = 0;
             }
         }
@@ -2032,7 +2033,7 @@ int hm2_sserial_read_pins(hm2_sserial_remote_t *chan){
                 if (*pin->boolean && ppr > 0){ // index-enable set
                     rtapi_div_s64_rem(previous, ppr, &rem1);
                     rtapi_div_s64_rem(pin->accum, ppr, &rem2);
-                    if (abs(rem1 - rem2) > ppr / 2
+                    if ((unsigned)abs(rem1 - rem2) > ppr / 2
                             || (rem1 >= 0 && rem2 < 0)
                             || (rem1 < 0 && rem2 >= 0)){
                         if (pin->accum > previous){
@@ -2089,6 +2090,7 @@ int hm2_sserial_read_pins(hm2_sserial_remote_t *chan){
 }
 
 void hm2_sserial_process_tram_read(hostmot2_t *hm2, long period){
+    (void)period;
     int i, c;
     for (i = 0 ; i < hm2->sserial.num_instances ; i++){
         hm2_sserial_instance_t *inst = &hm2->sserial.instance[i];
@@ -2256,6 +2258,7 @@ int hm2_sserial_check_remote_errors(hostmot2_t *hm2, hm2_sserial_instance_t *ins
 }
 
 void hm2_sserial_force_write(hostmot2_t *hm2){
+    (void)hm2;
     // there's nothing to do here, because hm2_sserial_prepare_tram_write takes
     // charge of recovering after communication error.
 }

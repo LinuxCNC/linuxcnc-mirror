@@ -242,6 +242,8 @@ int kinematicsForward(const double * joints,
                       const KINEMATICS_FORWARD_FLAGS * fflags,
                       KINEMATICS_INVERSE_FLAGS * iflags)
 {
+  (void)fflags;
+  (void)iflags;
 
 //  PmCartesian aw;
 //  PmCartesian InvKinStrutVect,InvKinStrutVectUnit;
@@ -260,7 +262,7 @@ int kinematicsForward(const double * joints,
 
   int iterate = 1;
   int i, j;
-  int iteration = 0;
+  unsigned iteration = 0;
 
   pentakins_read_hal_pins();
 
@@ -372,6 +374,8 @@ int kinematicsInverse(const EmcPose * pos,
                       const KINEMATICS_INVERSE_FLAGS * iflags,
                       KINEMATICS_FORWARD_FLAGS * fflags)
 {
+  (void)iflags;
+  (void)fflags;
 
   double coord[NUM_STRUTS];
 

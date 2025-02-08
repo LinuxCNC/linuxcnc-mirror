@@ -26,6 +26,7 @@ license "GPL";
 author "John Kasunich";
 ;;
 FUNCTION(_) {
+    (void)period;
     double tmp = in;
     if ( tmp >= 0.0 ) {
 	sign = 0;

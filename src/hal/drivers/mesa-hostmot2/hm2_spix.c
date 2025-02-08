@@ -527,7 +527,6 @@ ssize_t spix_read_file(const char *fname, void *buffer, size_t bufsize)
 
 static int spix_setup(void)
 {
-	int i, j;
 	char buf[256];
 	ssize_t buflen;
 	char *cptr;
@@ -536,7 +535,7 @@ static int spix_setup(void)
 
 	// Setup the clock rate settings from the arguments.
 	// The driver is responsible for actual checking min/max clock frequency.
-	for(i = 0; i < SPIX_MAX_BOARDS; i++) {
+	for(unsigned i = 0; i < SPIX_MAX_BOARDS; i++) {
 		if(spiclk_rate[i] < 1)	// If not specified
 			spiclk_rate[i] = spiclk_rate[0];	// use first
 
@@ -574,9 +573,10 @@ static int spix_setup(void)
 	// Decompose the device-tree buffer into a string-list with the pointers to
 	// each string in dtcs. Don't go beyond the buffer's size.
 	memset(dtcs, 0, sizeof(dtcs));
-	for(i = 0, cptr = buf; i < DTC_MAX && cptr; i++) {
+	cptr = buf;
+	for(unsigned i = 0; i < DTC_MAX && cptr; i++) {
 		dtcs[i] = cptr;
-		j = strlen(cptr);
+		int j = strlen(cptr);
 		if((cptr - buf) + j + 1 < buflen)
 			cptr += j + 1;
 		else
@@ -585,6 +585,7 @@ static int spix_setup(void)
 
 	// If the driver is forced, check if it actually exists
 	if(force_driver) {
+		unsigned i;
 		for(i = 0; i < NELEM(drivers); i++) {
 			if(!strcmp(force_driver, drivers[i]->name))
 				break;
@@ -596,7 +597,7 @@ static int spix_setup(void)
 	}
 
 	// Let each driver do a detect and stop when a match is found.
-	for(i = 0; i < NELEM(drivers); i++) {
+	for(unsigned i = 0; i < NELEM(drivers); i++) {
 		if(force_driver && strcmp(force_driver, drivers[i]->name))
 			continue;
 		if(!drivers[i]->detect(dtcs)) {
@@ -614,6 +615,7 @@ static int spix_setup(void)
 		return -ENODEV;
 	}
 
+	int i, j;
 	if((i = hwdriver->setup(spi_probe)) < 0) {	// Let the hardware driver do its thing
 		LL_INFO("Failed to initialize hardware driver\n");
 		return i;

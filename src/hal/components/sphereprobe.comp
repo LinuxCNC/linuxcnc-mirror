@@ -19,6 +19,7 @@ function _ nofp "update probe-out based on inputs";
 int abs(int x) { if(x < 0) return -x; else return x; }
 
 FUNCTION(_) {
+    (void)period;
     rtapi_u64 dx = abs(px-cx), dy=abs(py-cy), dz=abs(pz-cz);
     rtapi_u64 d2 = dx*dx + dy*dy;
     rtapi_u64 r2 = (rtapi_s64)r*(rtapi_s64)r;

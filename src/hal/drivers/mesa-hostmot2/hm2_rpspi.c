@@ -792,7 +792,7 @@ static uint32_t read_spiclkbase(void)
 
 	close(fd);
 
-	if(err >= sizeof(buf)-1) {
+	if(err >= (int)sizeof(buf)-1) {
 		// There are probably too many digits in the number
 		// 250000000 (250 MHz) has 9 digits and there is a newline
 		// following the number
@@ -907,7 +907,7 @@ static inline void gpio_fsel(uint32_t pin, uint32_t func)
 }
 
 /*************************************************/
-static void inline gpio_pull(unsigned pin, uint32_t pud)
+static inline void gpio_pull(unsigned pin, uint32_t pud)
 {
 	// Enable/disable pullups on the pins on request
 	reg_wr(&gpio->gppudclk0, 0);	// We are not sure about the previous state, make sure
@@ -1053,7 +1053,7 @@ static uint8_t *read_file(const char *fname, size_t maxsize, size_t minsize)
 		return NULL;
 	}
 
-	nn = sb.st_size > maxsize ? maxsize : sb.st_size;
+	nn = sb.st_size > (ssize_t)maxsize ? maxsize : (size_t)sb.st_size;
 	if(!(buf = rtapi_kmalloc(nn+1, RTAPI_GFP_KERNEL))) {
 		rtapi_print_msg(RPSPI_ERR, "hm2_rpspi: No dynamic memory\n");
 		return NULL;

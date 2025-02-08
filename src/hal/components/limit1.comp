@@ -8,6 +8,7 @@ license "GPL";
 author "Jeff Epler";
 ;;
 FUNCTION(_) {
+    (void)period;
     double tmp = in;
     if(tmp < min_) tmp = min_;
     if(tmp > max_) tmp = max_;

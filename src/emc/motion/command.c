@@ -386,6 +386,7 @@ STATIC int is_feed_type(int motion_type)
   */
 void emcmotCommandHandler_locked(void *arg, long servo_period)
 {
+    (void)arg;
     int joint_num, spindle_num;
     int n,s0,s1;
     emcmot_joint_t *joint;

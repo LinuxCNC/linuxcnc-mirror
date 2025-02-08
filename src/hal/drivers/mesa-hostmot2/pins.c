@@ -768,8 +768,7 @@ int hm2_read_pin_descriptors(hostmot2_t *hm2) {
         
         pin->port_num = i / hm2->idrom.port_width;
         
-        if ((pin->port_num < 0 ) 
-            || (pin->port_num >= hm2->llio->num_ioport_connectors)){
+        if (pin->port_num >= hm2->llio->num_ioport_connectors) {
             HM2_ERR("hm2_read_pin_descriptors: Calculated port number (%d) is "
                     "invalid\n", pin->port_pin );
             return -EINVAL;
@@ -777,7 +776,7 @@ int hm2_read_pin_descriptors(hostmot2_t *hm2) {
         
         pin->bit_num = i % hm2->idrom.port_width;
         
-        if ((pin->bit_num < 0 ) || (pin->bit_num > 31)){
+        if (pin->bit_num > 31) {
             HM2_ERR("hm2_read_pin_descriptors: Calculated bit number (%d) is "
                     "invalid\n", pin->bit_num );
             return -EINVAL;

@@ -42,6 +42,7 @@ function _;
 ;;
 
 FUNCTION(_){
+    (void)period;
     double f, x;
     x = in_;
     if (x >= x_val(personality-1)) {
@@ -63,6 +64,8 @@ FUNCTION(_){
 }
 
 EXTRA_SETUP(){
+    (void)prefix;
+    (void)extra_arg;
 	if (personality > 16) personality = 16;
 	if (personality < 2) personality = 2;
 	return 0;

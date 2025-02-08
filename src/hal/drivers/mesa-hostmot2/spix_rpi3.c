@@ -599,7 +599,7 @@ static uint32_t read_spiclkbase(void)
 		}
 	}
 
-	if(err >= sizeof(buf)-1) {
+	if(err >= (int)sizeof(buf)-1) {
 		// There are probably too many digits in the number
 		// 250000000 (250 MHz) has 9 digits and there is a newline
 		// following the number

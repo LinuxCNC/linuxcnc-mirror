@@ -29,6 +29,7 @@ author "ArcEye based on code from Sebastian Kuzminsky";
 ;;
 FUNCTION(_)
 {
+    (void)period;
     if ( in >= 0 ) {
         sign = false;
         out = in;

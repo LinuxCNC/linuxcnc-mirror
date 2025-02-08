@@ -12,6 +12,7 @@ license "GPL";
 author "Jeff Epler";
 ;;
 FUNCTION(_) { 
+  (void)period;
   double tmp = in;
   under = (tmp <= min_);
   over = (tmp >= max_);

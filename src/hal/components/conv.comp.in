@@ -10,6 +10,7 @@ author "Jeff Epler";
 ;;
 #include <rtapi_stdint.h>
 FUNCTION(_) {
+    (void)period;
 	@TYPI@ val = in;
 @CC@	if(clamp) {
 #if @MAXEN@ == 0

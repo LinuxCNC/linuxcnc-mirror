@@ -547,6 +547,7 @@ FUNCTION(_){
 }
 
 EXTRA_SETUP(){
+    (void)prefix;
     if (pockets[extra_arg] > 0) default_pockets = pockets[extra_arg];
     if (encoding[extra_arg] == NULL) {
         //it's already default_code

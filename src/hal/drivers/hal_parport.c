@@ -315,6 +315,7 @@ void rtapi_app_exit(void)
 
 static void read_port(void *arg, long period)
 {
+    (void)period;
     parport_t *port;
     int b;
     unsigned char indata, mask;
@@ -384,6 +385,7 @@ static void reset_port(void *arg, long period) {
 
 static void write_port(void *arg, long period)
 {
+    (void)period;
     parport_t *port;
     int b;
     unsigned char outdata, mask;

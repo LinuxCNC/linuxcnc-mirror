@@ -8,6 +8,7 @@ license "GPL";
 author "Jeff Epler";
 ;;
 FUNCTION(_) {
+    (void)period;
     if(reset) { max_ = min_ = in; }
     else {
         if(in > max_) max_ = in;

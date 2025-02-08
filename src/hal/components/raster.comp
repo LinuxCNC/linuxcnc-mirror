@@ -182,6 +182,7 @@ bool read_pixel_data(const hal_port_t *port, int bits_per_pixel, hal_float_t* po
 }
 
 FUNCTION(_) { 
+    (void)period;
 
     output = -1.0;
     enabled = 0;
@@ -214,7 +215,7 @@ FUNCTION(_) {
             } else if(!read_int(program_ptr, &count) || (count < 2)) {
                 state = FAULT;
                 fault_code = ERROR_INVALID_COUNT;
-            } else if(hal_port_readable(program_ptr) != ((bpp / 4) * count)) {
+            } else if((int)hal_port_readable(program_ptr) != ((bpp / 4) * count)) {
                 state = FAULT;
                 fault_code = ERROR_PROGWRONGSIZE;
             } else {

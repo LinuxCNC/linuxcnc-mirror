@@ -133,6 +133,7 @@ void HalWriteFloatOutputs(void) {
 // and HAL pins take (it is displayed in the 'section display' GUI (in microseconds). 
 
 static void hal_task(void *arg, long period) {
+	(void)arg;
 	unsigned long t0, t1,milliseconds;
 	static unsigned long leftover=0;
 	leftover += period;

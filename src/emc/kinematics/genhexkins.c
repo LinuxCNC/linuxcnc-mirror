@@ -329,6 +329,8 @@ static int genhexKinematicsForward(const double * joints,
                                    const KINEMATICS_FORWARD_FLAGS * fflags,
                                    KINEMATICS_INVERSE_FLAGS * iflags)
 {
+  (void)fflags;
+  (void)iflags;
   PmCartesian aw;
   PmCartesian InvKinStrutVect,InvKinStrutVectUnit;
   PmCartesian q_trans, RMatrix_a, RMatrix_a_cross_Strut;
@@ -345,7 +347,7 @@ static int genhexKinematicsForward(const double * joints,
 
   int iterate = 1;
   int i;
-  int iteration = 0;
+  unsigned iteration = 0;
 
   genhex_read_hal_pins();
 
@@ -491,6 +493,8 @@ static int genhexKinematicsInverse(const EmcPose * pos,
                                    const KINEMATICS_INVERSE_FLAGS * iflags,
                                    KINEMATICS_FORWARD_FLAGS * fflags)
 {
+  (void)iflags;
+  (void)fflags;
 
   PmCartesian aw, temp;
   PmCartesian InvKinStrutVect, InvKinStrutVectUnit;
@@ -541,6 +545,7 @@ int genhexKinematicsSetup(const  int   comp_id,
                           const  char* coordinates,
                           kparms*      kp)
 {
+    (void)coordinates;
     int i,res=0;
 
     haldata = hal_malloc(sizeof(struct haldata));

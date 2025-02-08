@@ -27,6 +27,7 @@ author "John Kasunich";
 #define rev2rad (6.283185308)   /* 2 * pi */
 
 FUNCTION(_) {
+    (void)period;
     double xr, yr, rads, costheta, sintheta;
 
     // rotate it

@@ -21,6 +21,7 @@ license "GPL";
 author "Chris S Morley";
 ;;
 FUNCTION(_) {
+    (void)period;
     int num = 0;
     int c, r, cur_button;
     int allup_flag = true;

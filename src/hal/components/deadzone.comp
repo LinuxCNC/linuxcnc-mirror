@@ -10,6 +10,7 @@ license "GPL";
 author "Jeff Epler";
 ;;
 FUNCTION(_) {
+    (void)period;
     double th2 = threshold / 2;
     double lo = center - th2;
     double hi = center + th2;

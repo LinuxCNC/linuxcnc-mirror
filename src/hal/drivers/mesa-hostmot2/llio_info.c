@@ -219,16 +219,15 @@ static const info_entry_t spiboards[] = {
 
 const char *set_llio_info_spi(hm2_lowlevel_io_t *llio, const hm2_idrom_t *idrom)
 {
-	int i, j;
 	char buf[sizeof(idrom->board_name)+1];
 
 	/* In the far future, when there are too many boards, use bsearch */
 	/* With few boards, linear search is faster */
-	for(i = 0; i < NELEM(spiboards); i++) {
+	for(unsigned i = 0; i < NELEM(spiboards); i++) {
 		if(!memcmp(idrom->board_name, spiboards[i].board_name, sizeof(idrom->board_name))) {
 			llio->num_ioport_connectors = spiboards[i].num_ioport_connectors;
 			llio->pins_per_connector = spiboards[i].pins_per_connector;
-			for(j = 0; j < ANYIO_MAX_IOPORT_CONNECTORS; j++)
+			for(unsigned j = 0; j < ANYIO_MAX_IOPORT_CONNECTORS; j++)
 				llio->ioport_connector_name[j] = spiboards[i].ioport_connector_name[j];
 			llio->io_connector_pin_names = spiboards[i].io_connector_pin_names;
 			llio->num_leds = spiboards[i].num_leds;
@@ -245,7 +244,7 @@ const char *set_llio_info_spi(hm2_lowlevel_io_t *llio, const hm2_idrom_t *idrom)
 
 	memcpy(buf, idrom->board_name, sizeof(idrom->board_name));
 	buf[sizeof(idrom->board_name)] = 0;
-	for(i = 0; i < sizeof(idrom->board_name); i++) {
+	for(unsigned i = 0; i < sizeof(idrom->board_name); i++) {
 		if(!isprint(buf[i]))
 			buf[i] = '?';
 	}

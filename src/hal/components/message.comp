@@ -81,6 +81,7 @@ char *messages[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 RTAPI_MP_ARRAY_STRING(messages, 16, "Displayed strings");
  
 FUNCTION(_){
+    (void)period;
     hal_bit_t show = false;    
     if(!!prev_edge != !!edge) /* edge type has changed */
     {
@@ -110,6 +111,7 @@ FUNCTION(_){
 }
  
 EXTRA_SETUP(){
+    (void)prefix;
     myidx = extra_arg;
     if(myidx<0 || myidx >15)
     {

@@ -2425,7 +2425,7 @@ FUNCTION(_) {
     stop_type_out = stop_type;
 
     /* debug print */
-    if(debug_print && state_old != state){
+    if(debug_print && state_old != (int)state){
         state_old = state;
         switch(state){
             case 0:

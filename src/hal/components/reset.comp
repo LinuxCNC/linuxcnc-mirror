@@ -63,6 +63,7 @@ author "Alexander Rössler";
 variable hal_bit_t last_trigger = false;
 ;;
 FUNCTION(_) {
+    (void)period;
     if (((rising && (trigger)) || (falling && (!trigger)))
        && (trigger != last_trigger))
     {

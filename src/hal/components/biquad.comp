@@ -98,6 +98,8 @@ typedef struct {
 
 EXTRA_SETUP()
 {
+    (void)prefix;
+    (void)extra_arg;
     data.lastEnable = 0;
 
     return(0);

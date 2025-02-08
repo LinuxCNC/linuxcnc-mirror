@@ -46,11 +46,11 @@ typedef struct {
     char name[HAL_NAME_LEN + 1];
     struct input_dev *key_dev;
     hal_u32_t index;
-    int keydown;
-    int keyup;
-    int rowshift;
-    int row;
-    int num_keys;
+    unsigned keydown;
+    unsigned keyup;
+    unsigned rowshift;
+    unsigned row;
+    unsigned num_keys;
     hal_bit_t scan;
     hal_bit_t keystroke;
 }kb_inst_t;
@@ -69,15 +69,13 @@ char *names[MAX_CHAN];
 RTAPI_MP_ARRAY_STRING(names, MAX_CHAN, "component names")
 
 void keyup(kb_inst_t *inst){
-    int r, c;
-    int keycode = *inst->hal.keycode & ~(inst->keydown | inst->keyup);
+    unsigned r, c;
+    unsigned keycode = *inst->hal.keycode & ~(inst->keydown | inst->keyup);
 
     r = keycode >> inst->rowshift;
     c = keycode & ~(0xFFFFFFFF << inst->rowshift);
     
-    if  (r < 0 
-         || c < 0
-         || r >= inst->nrows 
+    if  (   r >= inst->nrows
          || c >= inst->ncols
          || inst->hal.key[r * inst->ncols + c] == NULL){
         return;
@@ -88,15 +86,13 @@ void keyup(kb_inst_t *inst){
     *inst->hal.key[r * inst->ncols + c] = 0;
 }
 void keydown(kb_inst_t *inst){
-    int r, c;
-    int keycode = *inst->hal.keycode & ~(inst->keydown | inst->keyup);
+    unsigned r, c;
+    unsigned keycode = *inst->hal.keycode & ~(inst->keydown | inst->keyup);
     
     r = keycode >> inst->rowshift;
     c = keycode & ~(0xFFFFFFFF << inst->rowshift);
     
-    if  (r < 0 
-         || c < 0
-         || r >= inst->nrows 
+    if  (   r >= inst->nrows
          || c >= inst->ncols
          || inst->hal.key[r * inst->ncols + c] == NULL){
         return;
@@ -108,8 +104,9 @@ void keydown(kb_inst_t *inst){
     *inst->hal.key[r * inst->ncols + c] = 1;
 }
 
-    void loop(void *arg, long period){
-    int c;
+void loop(void *arg, long period){
+    (void)period;
+    unsigned c;
     hal_u32_t scan = 0;
     kb_inst_t *inst = arg;
     
@@ -196,7 +193,7 @@ int rtapi_app_main(void){
     
     for (i = 0; i < kb->num_insts; i++){
         int a = 0;
-        int c, r;
+        unsigned c, r;
         kb_inst_t *inst = &kb->insts[i];
 
         inst->index = i;
@@ -235,7 +232,7 @@ int rtapi_app_main(void){
             return -1;
         }
         
-        for (inst->rowshift = 1; inst->ncols > (1 << inst->rowshift); inst->rowshift++);
+        for (inst->rowshift = 1; inst->ncols > (1u << inst->rowshift); inst->rowshift++);
         for (inst->keydown = 0xC0, inst->keyup = 0x80
              ; (inst->nrows << inst->rowshift) > inst->keydown
              ; inst->keydown <<= 1, inst->keyup <<= 1);

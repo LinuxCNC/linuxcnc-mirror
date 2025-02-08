@@ -317,6 +317,7 @@ static void make_pulses(void *arg, long period)
 
 static void update_speed(void *arg, long period)
 {
+    (void)period;
     sim_enc_t *sim_enc;
     int n;
     double rev_sec, freq;

@@ -26,6 +26,7 @@ license "GPL";
 author "Sebastian Kuzminsky";
 ;;
 FUNCTION(_) {
+    (void)period;
     if ( in >= 0 ) {
 	sign = false;
 	out = in;

@@ -33,6 +33,7 @@ license "GPL";
 author "Jeff Epler";
 ;;
 FUNCTION(_) {
+    (void)period;
     static int acc;
     if ( enable ) {
         acc++;

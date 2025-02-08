@@ -17,6 +17,7 @@ license "GPL";
 author "Jeff Epler";
 ;;
 FUNCTION(_) {
+    (void)period;
     double tmp = in1 - in0;
     double halfhyst = 0.5 * hyst;
 

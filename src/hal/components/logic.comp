@@ -81,6 +81,7 @@ license "GPL";
 author "Jeff Epler";
 ;;
 FUNCTION(_) {
+    (void)period;
     int i, a=1, o=0, x=0;
     for(i=0; i < (personality & 0xff); i++) {
         if(in(i)) { o = 1; x = !x; }

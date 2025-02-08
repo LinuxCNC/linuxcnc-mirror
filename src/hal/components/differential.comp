@@ -36,6 +36,7 @@ author "Sebastian Kuzminsky";
 ;;
 
 FUNCTION(_) {
+    (void)period;
     motor0_cmd = roll_cmd + pitch_cmd;
     motor1_cmd = roll_cmd - pitch_cmd;
 

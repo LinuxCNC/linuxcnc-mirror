@@ -327,6 +327,7 @@ return TRUE;
 
 void ClassicLadder_FreeAll(char CleanAndRemoveTmpDir)
 {
+	(void)CleanAndRemoveTmpDir;
 #ifdef GTK_INTERFACE
 	if (EditArithmExpr)
 		free(EditArithmExpr);

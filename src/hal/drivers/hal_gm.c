@@ -421,7 +421,8 @@ rtapi_pci_device_id gm_pci_tbl[] = {
 
 static int
 gm_pci_probe(struct rtapi_pci_dev *dev, const struct rtapi_pci_device_id *id)
-{	
+{
+        (void)id;
         int			error=0;
 	card			*pCard = NULL;
 	gm_device_t		*pDevice;
@@ -1466,10 +1467,11 @@ card_mgr(void *arg, long period)
 static void
 encoder(void *arg, long period)
 {
-    	gm_device_t		*device = (gm_device_t *)arg;
-    	card	*pCard = device->pCard;
+    (void)period;
+    gm_device_t		*device = (gm_device_t *)arg;
+    card	*pCard = device->pCard;
 
-    	int		i;
+    int		i;
 	hal_s32_t	temp1 = 0, temp2;
 	hal_float_t	vel;
 
@@ -1701,8 +1703,9 @@ stepgenCheckParameters(void *arg, long period, unsigned int channel)
 static void
 stepgenControl(void *arg, long period, unsigned int channel)
 {
-    	gm_device_t		*device = (gm_device_t *)arg;
-    	card	*pCard = device->pCard;
+    (void)period;
+    gm_device_t		*device = (gm_device_t *)arg;
+    card	*pCard = device->pCard;
 	
 	hal_s32_t stepgen_fb, stepgen_fb_int, last_count_fb_LS16_bits, last_count_fb_MS16_bits, last_count_fb;	
 	hal_float_t	ref_vel = 0, match_acc, match_time, avg_v, est_out, est_cmd, est_err, dp;
@@ -1816,6 +1819,7 @@ stepgenControl(void *arg, long period, unsigned int channel)
 static void
 RS485(void *arg, long period)
 {
+    (void)period;
 	gm_device_t		*device = (gm_device_t *)arg;
 	card	*pCard = device->pCard;
 	
@@ -2075,7 +2079,7 @@ RS485_OrderDataRead(hal_u32_t* dataIn32, hal_u32_t* dataOut8, hal_u32_t length)
 static void
 RS485_OrderDataWrite(hal_u32_t* dataIn8, hal_u32_t* dataOut32, hal_u32_t length)
 {
-	int i, j;
+	unsigned i, j;
 	/* Byte order: 
 	      RS485DataOut32[0]=0x28293031;
 	      RS485DataOut32[1]=0x24252627;

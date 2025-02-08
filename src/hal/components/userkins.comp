@@ -74,6 +74,7 @@ static struct haldata {
 // hal_float_t float (double precision)
 
 FUNCTION(fdemo) {
+   (void)period;
    // This function can be added to a thread (addf) for
    // purposes not related to the kinematics functions.
    if (fpin == 0) {
@@ -135,6 +136,8 @@ int kinematicsForward(const double *j,
                       const KINEMATICS_FORWARD_FLAGS * fflags,
                       KINEMATICS_INVERSE_FLAGS * iflags)
 {
+    (void)fflags;
+    (void)iflags;
     static bool gave_msg;
     // [KINS]JOINTS=3
     pos->tran.x = j[0]; // X coordinate
@@ -162,6 +165,8 @@ int kinematicsInverse(const EmcPose * pos,
                       const KINEMATICS_INVERSE_FLAGS * iflags,
                       KINEMATICS_FORWARD_FLAGS * fflags)
 {
+    (void)iflags;
+    (void)fflags;
     is_ready = 1; // Inverse is not called until homed for KINEMATICS_BOTH
 
     // Update the kinematic joints specified by the

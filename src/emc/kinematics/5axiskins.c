@@ -101,6 +101,8 @@ static int fiveaxis_KinematicsForward(const double *joints,
                                       const KINEMATICS_FORWARD_FLAGS * fflags,
                                       KINEMATICS_INVERSE_FLAGS * iflags)
 {
+    (void)fflags;
+    (void)iflags;
     PmCartesian r = s2r(*(haldata->pivot_length) + joints[JW],
                         joints[JC],
                         180.0 - joints[JB]);
@@ -126,6 +128,8 @@ static int fiveaxis_KinematicsInverse(const EmcPose * pos,
                                       const KINEMATICS_INVERSE_FLAGS * iflags,
                                       KINEMATICS_FORWARD_FLAGS * fflags)
 {
+    (void)iflags;
+    (void)fflags;
     PmCartesian r = s2r(*(haldata->pivot_length) + pos->w,
                         pos->c,
                         180.0 - pos->b);

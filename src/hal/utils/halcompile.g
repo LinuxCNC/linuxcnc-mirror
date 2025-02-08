@@ -1094,6 +1094,7 @@ def process(filename, mode, outfilename):
                 f.write(b)
             elif len(functions) == 1:
                 f.write("FUNCTION(%s) {\n" % functions[0][0])
+                f.write("(void)period;\n")
                 f.write("#line %d \"%s\"\n" % (lineno, filename))
                 f.write(b)
                 f.write("}\n")

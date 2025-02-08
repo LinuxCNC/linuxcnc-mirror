@@ -45,6 +45,7 @@ bool float_zero(hal_float_t a) {
 
 
 FUNCTION(_) {
+    (void)period;
     static float previous_vector_power = 0;
     static float previous_distance_to_go = 0;
         

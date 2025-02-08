@@ -9,6 +9,7 @@ author "Jeff Epler";
 see_also "mux4(9), mux8(9), mux16(9), mux_generic(9).";
 ;;
 FUNCTION(_) {
+    (void)period;
     if(sel) out = in1;
     else out = in0;
 }

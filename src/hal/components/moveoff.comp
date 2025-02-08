@@ -488,6 +488,7 @@ FUNCTION(read_inputs) {
 } //read_inputs
 
 FUNCTION(write_outputs) {
+    (void)period;
     int r;
     // move with limits on position, velocity, acceleration
     for (r = 0; r < personality; r++) {
@@ -537,6 +538,8 @@ FUNCTION(write_outputs) {
 } //write_outputs
 
 EXTRA_SETUP() {
+    (void)prefix;
+    (void)extra_arg;
     if (personality == 0) personality = 3;
     return 0;
 }

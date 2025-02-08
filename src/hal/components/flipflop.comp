@@ -15,6 +15,7 @@ author "John Kasunich";
 typedef struct { int oldclk; } flipflop_data;
 
 FUNCTION(_) {
+    (void)period;
     int c;
 
     c = clk;

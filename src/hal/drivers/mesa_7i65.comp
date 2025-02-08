@@ -158,6 +158,7 @@ static int read(void *subdata) {
 }
 
 EXTRA_SETUP(){
+    (void)prefix;
     int i, r;
     char *name = bspi_chans[extra_arg]; // This is the string which identifies board and instance
 

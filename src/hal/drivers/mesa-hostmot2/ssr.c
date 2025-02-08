@@ -94,7 +94,7 @@ int hm2_ssr_parse_md(hostmot2_t *hm2, int md_index) {
     {
         int inst;
         for (inst = 0; inst < hm2->ssr.num_instances; inst ++) {
-            int out;
+            unsigned out;
             for (
                 out = 0;
                 out < sizeof(hm2->ssr.instance[0].hal.pin.out)/sizeof(hm2->ssr.instance[0].hal.pin.out[0]);

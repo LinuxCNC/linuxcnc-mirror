@@ -57,7 +57,7 @@ rtapi_dev_set_name(struct rtapi_device *dev, const char *name, ...)
 }
 
 
-static __inline__ int rtapi_device_register(struct rtapi_device *dev) {return 0;}
+static __inline__ int rtapi_device_register(struct rtapi_device *dev) { (void)dev; return 0;}
 static __inline__ void rtapi_device_unregister(struct rtapi_device *dev) { dev->release(dev); };
 
 RTAPI_END_DECLS

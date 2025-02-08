@@ -52,6 +52,7 @@ author "Dewey Garrett based on forum post from nbremond";
 ;;
 
 FUNCTION(_) {
+    (void)period;
 
     // forward kinematics (j0==x,j1==y from motor positions):
     j0_motor_pos_fb = alpha_fb + beta_fb;

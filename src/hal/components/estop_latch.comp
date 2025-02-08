@@ -80,6 +80,7 @@ author "John Kasunich";
 typedef struct { int old_reset; } estop_data;
 
 FUNCTION(_) {
+    (void)period;
     /* check inputs */
     if ( ok_in && !fault_in) {
 	/* no fault conditions, check for reset edge */

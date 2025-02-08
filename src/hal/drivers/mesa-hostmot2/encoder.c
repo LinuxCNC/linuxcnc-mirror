@@ -1117,6 +1117,7 @@ static void hm2_encoder_instance_process_tram_read(hostmot2_t *hm2, int instance
 
 
 void hm2_encoder_process_tram_read(hostmot2_t *hm2, long l_period_ns) {
+    (void)l_period_ns;
     int i;
 
     if (hm2->encoder.num_instances <= 0) return;

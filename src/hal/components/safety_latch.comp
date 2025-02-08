@@ -76,6 +76,7 @@ author "Alexander Rössler";
 
 FUNCTION(_)
 {
+    (void)period;
     if (!enable)
     {
         error_out = error_in;

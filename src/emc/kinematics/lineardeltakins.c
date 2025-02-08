@@ -32,6 +32,8 @@ int kinematicsForward(const double * joints,
                       EmcPose * pos,
                       const KINEMATICS_FORWARD_FLAGS * fflags,
                       KINEMATICS_INVERSE_FLAGS * iflags) {
+    (void)fflags;
+    (void)iflags;
     set_geometry(*haldata->r, *haldata->l);
     return kinematics_forward(joints, pos);
 }
@@ -39,6 +41,8 @@ int kinematicsForward(const double * joints,
 int kinematicsInverse(const EmcPose *pos, double *joints,
         const KINEMATICS_INVERSE_FLAGS *iflags,
         KINEMATICS_FORWARD_FLAGS *fflags) {
+    (void)iflags;
+    (void)fflags;
     set_geometry(*haldata->r, *haldata->l);
     return kinematics_inverse(pos, joints);
 }

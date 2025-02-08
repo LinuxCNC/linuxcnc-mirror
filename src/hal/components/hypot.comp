@@ -9,6 +9,7 @@ author "Jeff Epler";
 ;;
 #include <rtapi_math.h>
 FUNCTION(_) {
+    (void)period;
     double a = in0, b = in1, c = in2;
     out = sqrt(a*a + b*b + c*c);
 }

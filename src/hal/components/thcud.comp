@@ -96,6 +96,7 @@ function _;
 #include "rtapi_math.h"
 
 FUNCTION(_) {
+    (void)period;
     if(enable){
         float min_velocity = requested_vel -(requested_vel*(velocity_tol*0.01));
         if(current_vel > 0 && current_vel >= min_velocity){vel_status = 1;}

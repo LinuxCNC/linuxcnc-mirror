@@ -354,7 +354,7 @@ static Component                component;
 int
 rtapi_app_main(void)
 {
-    int                         i;
+    unsigned                    i;
     Plc                         *pComp;
 
     // Connect to the HAL.
@@ -787,6 +787,7 @@ Plc_Refresh(void *arg, long period)
 static void
 Plc_RefreshFeed(Plc *this, long period)
 {
+    (void)period;
     BOOL                        riseCycleStart;
 
     riseCycleStart = !this->lastCycleStart && *this->pCycleStartIn;
@@ -824,6 +825,7 @@ Plc_RefreshFeed(Plc *this, long period)
 static void
 Plc_RefreshLimits(Plc *this, long period)
 {
+    (void)period;
     Limit_Refresh(&this->xLimit, *this->pLimitOverrideIn);
     Limit_Refresh(&this->yLimit, *this->pLimitOverrideIn);
 
@@ -950,6 +952,7 @@ Plc_RefreshSpindle(Plc *this, long period)
 static void
 Plc_RefreshJog(Plc *this, long period)
 {
+    (void)period;
     int                         i;
 
     // Jog scale.

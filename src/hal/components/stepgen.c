@@ -713,6 +713,7 @@ static void make_pulses(void *arg, long period)
 
 static void update_pos(void *arg, long period)
 {
+    (void)period;
     long long int accum_a, accum_b;
     stepgen_t *stepgen;
     int n;

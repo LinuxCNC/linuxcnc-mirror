@@ -128,6 +128,7 @@ int kinematicsForward(const double * joints,
                       const KINEMATICS_FORWARD_FLAGS * fflags,
                       KINEMATICS_INVERSE_FLAGS * iflags)
 {
+    (void)iflags;
 #define AD (joints[0])
 #define BD (joints[1])
 #define CD (joints[2])
@@ -184,6 +185,7 @@ int kinematicsInverse(const EmcPose * pos,
                       const KINEMATICS_INVERSE_FLAGS * iflags,
                       KINEMATICS_FORWARD_FLAGS * fflags)
 {
+    (void)iflags;
 #define AD (joints[0])
 #define BD (joints[1])
 #define CD (joints[2])

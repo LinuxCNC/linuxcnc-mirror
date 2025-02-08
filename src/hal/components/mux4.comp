@@ -30,6 +30,7 @@ author "Jeff Epler";
 see_also "mux2(9), mux8(9), mux16(9), mux_generic(9).";
 ;;
 FUNCTION(_) {
+    (void)period;
     if(sel1) {
         if(sel0) out = in3;
         else out = in2;

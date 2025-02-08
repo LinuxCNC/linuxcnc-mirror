@@ -88,6 +88,7 @@ static double interpolateAccel(CUBIC_COEFF coeff, double t)
 */
 static double interpolateJerk(CUBIC_COEFF coeff, double t)
 {
+    (void)t;
     return 6.0 * coeff.a;
 }
 

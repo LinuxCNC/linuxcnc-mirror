@@ -16,6 +16,7 @@
 static bool funct_flag = false;
 
 static void hm2_absenc_trigger(void *void_hm2, long period){
+    (void)period;
     hostmot2_t *hm2 = void_hm2;
     rtapi_u32 buff = 0xFFFFFFFF;
     if (hm2->absenc.ssi_global_start_addr){
@@ -485,6 +486,7 @@ int hm2_absenc_parse_md(hostmot2_t *hm2, int md_index) {
 }
 
 void hm2_absenc_process_tram_read(hostmot2_t *hm2, long period) {
+    (void)period;
     int i;
     static int err_count[MAX_ABSENCS];
     static int err_tag[MAX_ABSENCS];

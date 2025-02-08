@@ -515,7 +515,7 @@ FUNCTION(_) {
             phase_angle -= floor(phase_angle);
             
             if (! (ph & old_ph)){ hall_error = 1;}
-            if (pattern != old_pattern){hall_error = 0;}
+            if (pattern != (unsigned)old_pattern){hall_error = 0;}
 
             if (force_trap) break;
 
@@ -797,7 +797,7 @@ FUNCTION(_) {
             return;
 
         case 0x400: // Hall Output
-            for (i = 0; P[(output_pattern << 3) + i] != ph && i < 8 ; i++) {}
+            for (i = 0; P[(output_pattern << 3) + i] != ((unsigned)ph & 0xff) && i < 8 ; i++) {}
             hall1_out = (i & 0x04);
             hall2_out = (i & 0x02);
             hall3_out = (i & 0x01);
@@ -849,6 +849,7 @@ FUNCTION(_) {
 }
 
 EXTRA_SETUP(){
+    (void)prefix;
     int i;
     char c;
     for (i = 0; cfg[extra_arg][i] != 0 && i < NUM_TAG ; i++){

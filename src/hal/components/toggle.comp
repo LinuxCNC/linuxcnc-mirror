@@ -27,6 +27,7 @@ typedef struct {
 } toggle_data;
 
 FUNCTION(_) {
+    (void)period;
 
     if (( debounce < 1 ) || ( debounce > 10000 )) {
 	/* set a sane value, we don't want 2 million second delays */
@@ -35,7 +36,7 @@ FUNCTION(_) {
     if ( in ) {
 	/* pressed */
 	data.debounce_cntr++;
-	if ( data.debounce_cntr >= debounce ) {
+	if ( data.debounce_cntr >= (int)debounce ) {
 	    data.debounce_cntr = debounce;
 	    if ( data.debounced == 0 ) {
 		/* toggle output */

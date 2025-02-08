@@ -175,7 +175,7 @@ static int hm2_7i90_epp_clear_timeout(hm2_7i90_t *board) {
 
 // FIXME: this is bogus
 static void hm2_7i90_nanosleep(unsigned long int nanoseconds) {
-    long int max_ns_delay;
+    long unsigned int max_ns_delay;
 
     max_ns_delay = rtapi_delay_max();
 
@@ -258,7 +258,6 @@ int hm2_7i90_program_fpga(hm2_lowlevel_io_t *this, const bitfile_t *bitfile) {
     int orig_debug_epp = debug_epp;  // we turn off EPP debugging for this part...
     hm2_7i90_t *board = this->private;
     int64_t start_time, end_time;
-    int i;
     const rtapi_u8 *firmware = bitfile->e.data;
 
 
@@ -272,7 +271,7 @@ int hm2_7i90_program_fpga(hm2_lowlevel_io_t *this, const bitfile_t *bitfile) {
     // select the CPLD's data address
     hm2_7i90_epp_addr8(0, board);
 
-    for (i = 0; i < bitfile->e.size; i ++, firmware ++) {
+    for (unsigned i = 0; i < bitfile->e.size; i ++, firmware ++) {
         hm2_7i90_epp_write(bitfile_reverse_bits(*firmware), board);
     }
 
@@ -298,7 +297,7 @@ int hm2_7i90_program_fpga(hm2_lowlevel_io_t *this, const bitfile_t *bitfile) {
 
         if (duration_ns != 0) {
             THIS_INFO(
-                "%d bytes of firmware sent (%u KB/s)\n",
+                "%zu bytes of firmware sent (%u KB/s)\n",
                 bitfile->e.size,
                 (uint32_t)(((double)bitfile->e.size / ((double)duration_ns / (double)(1000 * 1000 * 1000))) / 1024)
             );

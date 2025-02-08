@@ -8,12 +8,13 @@ pin in  bit in;
 pin out bit out;
 pin in  u32 delay = 5;
 
-variable int state;
+variable unsigned state;
 function _ nofp;
 license "GPL";
 author "Dewey Garrett";
 ;;
 FUNCTION(_) {
+    (void)period;
 
     if (in) {
         /* input true, is state at threshold? */

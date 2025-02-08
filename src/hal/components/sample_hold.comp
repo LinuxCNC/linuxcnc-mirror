@@ -8,6 +8,7 @@ license "GPL";
 author "Stephen Wille Padnos";
 ;;
 FUNCTION(_) { 
+    (void)period;
 	if (!hold) {
 		out = in;
 	}

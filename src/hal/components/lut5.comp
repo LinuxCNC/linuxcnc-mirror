@@ -144,6 +144,7 @@ author "Jeff Epler";
 ;;
 
 FUNCTION(_) {
+    (void)period;
     int shift = 0;
     if(in_0) shift += 1;
     if(in_1) shift += 2;

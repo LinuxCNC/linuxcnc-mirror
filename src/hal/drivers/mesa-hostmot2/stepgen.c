@@ -38,6 +38,7 @@
 // 
 
 void hm2_stepgen_process_tram_read(hostmot2_t *hm2, long l_period_ns) {
+    (void)l_period_ns;
     int i;
     rtapi_u32 mode = 0;
     rtapi_u32 latch = 0;
@@ -543,7 +544,7 @@ void hm2_stepgen_write(hostmot2_t *hm2) {
     }
 
     if (hm2->stepgen.num_instances > 0 && hm2->dpll_module_present) {
-        if (*hm2->stepgen.hal->pin.dpll_timer_num != hm2->stepgen.written_dpll_timer_num) {
+        if (*hm2->stepgen.hal->pin.dpll_timer_num != (int)hm2->stepgen.written_dpll_timer_num) {
             hm2_stepgen_set_dpll_timer(hm2);
         }
     }

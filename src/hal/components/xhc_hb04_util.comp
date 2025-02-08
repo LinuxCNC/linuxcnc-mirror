@@ -54,6 +54,7 @@ author "Dewey Garrett";
 typedef struct { int old_start_or_pause; } xhc_data;
 
 FUNCTION(_) {
+    (void)period;
 
     if (k == 0) {
       divide_by_k_out = 1e99;

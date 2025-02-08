@@ -165,7 +165,7 @@ extern int kinematicsSwitch(int switchkins_type);
 
 #define KINS_NOT_SWITCHABLE \
 extern int kinematicsSwitchable() {return 0;} \
-extern int kinematicsSwitch(int switchkins_type) {return 0;} \
+extern int kinematicsSwitch(int switchkins_type) { (void)switchkins_type; return 0;} \
 EXPORT_SYMBOL(kinematicsSwitchable); \
 EXPORT_SYMBOL(kinematicsSwitch);
 

@@ -87,7 +87,7 @@ int hm2_bspi_parse_md(hostmot2_t *hm2, int md_index)
         hm2_bspi_instance_t *chan = &hm2->bspi.instance[i];
         chan->clock_freq = md->clock_freq;
         r = snprintf(chan->name, sizeof(chan->name), "%s.bspi.%01d", hm2->llio->name, i);
-        if (r >= sizeof(chan->name)) {r = -EINVAL ; goto fail0;}
+        if (r >= (int)sizeof(chan->name)) {r = -EINVAL ; goto fail0;}
         HM2_PRINT("created Buffered SPI function %s.\n", chan->name);
         chan->base_address = md->base_address + i * md->instance_stride;
         chan->register_stride = md->register_stride;
@@ -352,6 +352,7 @@ int hm2_bspi_set_write_function(char *name, int (*func)(void *subdata), void *su
     
 void hm2_bspi_process_tram_read(hostmot2_t *hm2, long period)
 {
+    (void)period;
     int i, r;
     int (*func)(void *subdata);
     for (i = 0 ; i < hm2->bspi.num_instances ; i++ ){
@@ -367,6 +368,7 @@ void hm2_bspi_process_tram_read(hostmot2_t *hm2, long period)
 
 void hm2_bspi_prepare_tram_write(hostmot2_t *hm2, long period)
 {
+    (void)period;
     int i, r;
     int (*func)(void *subdata);
     for (i = 0 ; i < hm2->bspi.num_instances ; i++ ){
@@ -384,10 +386,12 @@ void hm2_bspi_prepare_tram_write(hostmot2_t *hm2, long period)
 
 void hm2_bspi_cleanup(hostmot2_t *hm2)
 {
+    (void)hm2;
 }
 
 void hm2_bspi_write(hostmot2_t *hm2)
 {
+    (void)hm2;
 }
 
 

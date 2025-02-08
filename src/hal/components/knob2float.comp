@@ -38,6 +38,7 @@ typedef struct {
 } knob2float_data;
 
 FUNCTION(_) {
+    (void)period;
     long delta_counts;
     double tmp_out;
 

@@ -6,5 +6,6 @@ license "GPL";
 author "John Kasunich";
 ;;
 FUNCTION(_) {
+    (void)period;
     out = value;
 }

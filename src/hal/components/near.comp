@@ -14,6 +14,7 @@ author "Chris Radek";
 ;;
 #include "rtapi_math.h"
 FUNCTION(_) {
+    (void)period;
 	double in1 = in1_, in2 = in2_;
 	if(in1 < 0) {
 		in1 = -in1;

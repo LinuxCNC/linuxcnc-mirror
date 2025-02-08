@@ -242,7 +242,6 @@ static int hm2_pci_write(hm2_lowlevel_io_t *this, rtapi_u32 addr, const void *bu
 
 static int hm2_plx9030_program_fpga(hm2_lowlevel_io_t *this, const bitfile_t *bitfile) {
     hm2_pci_t *board = this->private;
-    int i;
     rtapi_u32 status, control;
 
     // set /WRITE low for data transfer, and turn on LED
@@ -251,7 +250,7 @@ static int hm2_plx9030_program_fpga(hm2_lowlevel_io_t *this, const bitfile_t *bi
     rtapi_outl(control, board->ctrl_base_addr + CTRL_STAT_OFFSET);
 
     // program the FPGA
-    for (i = 0; i < bitfile->e.size; i ++) {
+    for (unsigned i = 0; i < bitfile->e.size; i ++) {
         rtapi_outb(bitfile_reverse_bits(bitfile->e.data[i]), board->data_base_addr);
     }
 
@@ -362,7 +361,7 @@ static void hm2_plx9030_fixup_LASxBRD_READY(hm2_pci_t *board) {
 
 static int hm2_plx9054_program_fpga(hm2_lowlevel_io_t *this, const bitfile_t *bitfile) {
     hm2_pci_t *board = this->private;
-    int i;
+    unsigned i;
     rtapi_u32 status;
 
     // program the FPGA
@@ -428,6 +427,7 @@ static int hm2_plx9054_reset(hm2_lowlevel_io_t *this) {
 
 
 static int hm2_pci_probe(struct rtapi_pci_dev *dev, const struct rtapi_pci_device_id *id) {
+    (void)id;
     int r;
     hm2_pci_t *board;
     hm2_lowlevel_io_t *this;
