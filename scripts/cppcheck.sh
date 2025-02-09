@@ -13,9 +13,14 @@ fi
 # See if cppcheck accepts --check-level
 EXHAUSTIVE=$(cppcheck --check-level=exhaustive --version > /dev/null 2>&1 && echo "--check-level=exhaustive")
 
-CPPCHKOPT=( -j "$nproc" --force "$EXHAUSTIVE" )
+CPPCHKOPT=( -j "$nproc" --force "$EXHAUSTIVE" --inline-suppr )
 CPPCHKOPT+=( "--enable=warning,performance,portability" )
 CPPCHKOPT+=( "-I$(realpath "$(dirname "$0")/../include")" )
+
+if [ -n "$CPPCHECK_OPTS" ]; then
+    read -r -a OPTS <<< "$CPPCHECK_OPTS"
+    CPPCHKOPT+=( "${OPTS[@]}" )
+fi
 
 # Even cppcheck 2.3 (debian 11) supports c++17 (undocumented)
 CCSTD=( --std=c11 --language=c )

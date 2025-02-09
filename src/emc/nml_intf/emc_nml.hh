@@ -38,9 +38,10 @@
  */
 class EMC_OPERATOR_ERROR:public RCS_CMD_MSG {
   public:
-    EMC_OPERATOR_ERROR():RCS_CMD_MSG(EMC_OPERATOR_ERROR_TYPE,
-				     sizeof(EMC_OPERATOR_ERROR)) {
-    };
+    EMC_OPERATOR_ERROR()
+      : RCS_CMD_MSG(EMC_OPERATOR_ERROR_TYPE, sizeof(EMC_OPERATOR_ERROR)),
+        error{}
+    {};
 
     // For internal NML/CMS use only.
     void update(CMS * cms);
@@ -54,9 +55,10 @@ class EMC_OPERATOR_ERROR:public RCS_CMD_MSG {
  */
 class EMC_OPERATOR_TEXT:public RCS_CMD_MSG {
   public:
-    EMC_OPERATOR_TEXT():RCS_CMD_MSG(EMC_OPERATOR_TEXT_TYPE,
-				    sizeof(EMC_OPERATOR_TEXT)) {
-    };
+    EMC_OPERATOR_TEXT()
+      : RCS_CMD_MSG(EMC_OPERATOR_TEXT_TYPE, sizeof(EMC_OPERATOR_TEXT)),
+        text{}
+    {};
 
     // For internal NML/CMS use only.
     void update(CMS * cms);
@@ -74,9 +76,10 @@ class EMC_OPERATOR_TEXT:public RCS_CMD_MSG {
  */
 class EMC_OPERATOR_DISPLAY:public RCS_CMD_MSG {
   public:
-    EMC_OPERATOR_DISPLAY():RCS_CMD_MSG(EMC_OPERATOR_DISPLAY_TYPE,
-				       sizeof(EMC_OPERATOR_DISPLAY)) {
-    };
+    EMC_OPERATOR_DISPLAY()
+      : RCS_CMD_MSG(EMC_OPERATOR_DISPLAY_TYPE, sizeof(EMC_OPERATOR_DISPLAY)),
+        display{}
+    {};
 
     // For internal NML/CMS use only.
     void update(CMS * cms);
@@ -89,9 +92,10 @@ class EMC_OPERATOR_DISPLAY:public RCS_CMD_MSG {
 */
 class EMC_SYSTEM_CMD:public RCS_CMD_MSG {
   public:
-    EMC_SYSTEM_CMD():RCS_CMD_MSG(EMC_SYSTEM_CMD_TYPE,
-				 sizeof(EMC_SYSTEM_CMD)) {
-    };
+    EMC_SYSTEM_CMD()
+      : RCS_CMD_MSG(EMC_SYSTEM_CMD_TYPE, sizeof(EMC_SYSTEM_CMD)),
+        string{}
+    {};
 
     // For internal NML/CMS use only.
     void update(CMS * cms);
@@ -110,8 +114,10 @@ class EMC_NULL:public RCS_CMD_MSG {
 
 class EMC_SET_DEBUG:public RCS_CMD_MSG {
   public:
-    EMC_SET_DEBUG():RCS_CMD_MSG(EMC_SET_DEBUG_TYPE, sizeof(EMC_SET_DEBUG)) {
-    };
+    EMC_SET_DEBUG()
+      : RCS_CMD_MSG(EMC_SET_DEBUG_TYPE, sizeof(EMC_SET_DEBUG)),
+        debug(0)
+    {};
 
     // For internal NML/CMS use only.
     void update(CMS * cms);
@@ -125,8 +131,10 @@ class EMC_SET_DEBUG:public RCS_CMD_MSG {
  */
 class EMC_JOG_CMD_MSG:public RCS_CMD_MSG {
   public:
-    EMC_JOG_CMD_MSG(NMLTYPE t, size_t s):RCS_CMD_MSG(t, s) {
-    };
+    EMC_JOG_CMD_MSG(NMLTYPE t, size_t s)
+      : RCS_CMD_MSG(t, s),
+        joint_or_axis(0)
+    {};
 
     // For internal NML/CMS use only.
     void update(CMS * cms);
@@ -139,8 +147,10 @@ class EMC_JOG_CMD_MSG:public RCS_CMD_MSG {
 // AXIS status base class
 class EMC_AXIS_STAT_MSG:public RCS_STAT_MSG {
   public:
-    EMC_AXIS_STAT_MSG(NMLTYPE t, size_t s):RCS_STAT_MSG(t, s) {
-    };
+    EMC_AXIS_STAT_MSG(NMLTYPE t, size_t s)
+      : RCS_STAT_MSG(t, s),
+        axis(0)
+    {};
 
     // For internal NML/CMS use only.
     void update(CMS * cms);
@@ -153,6 +163,8 @@ class EMC_AXIS_STAT:public EMC_AXIS_STAT_MSG {
     EMC_AXIS_STAT();
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     double minPositionLimit;
@@ -172,8 +184,10 @@ class EMC_AXIS_STAT:public EMC_AXIS_STAT_MSG {
  */
 class EMC_JOINT_CMD_MSG:public RCS_CMD_MSG {
   public:
-    EMC_JOINT_CMD_MSG(NMLTYPE t, size_t s):RCS_CMD_MSG(t, s) {
-    };
+    EMC_JOINT_CMD_MSG(NMLTYPE t, size_t s)
+      : RCS_CMD_MSG(t, s),
+        joint(0)
+    {};
 
     // For internal NML/CMS use only.
     void update(CMS * cms);
@@ -187,12 +201,14 @@ class EMC_JOINT_CMD_MSG:public RCS_CMD_MSG {
  */
 class EMC_JOINT_SET_BACKLASH:public EMC_JOINT_CMD_MSG {
   public:
-    EMC_JOINT_SET_BACKLASH():EMC_JOINT_CMD_MSG(EMC_JOINT_SET_BACKLASH_TYPE,
-					     sizeof(EMC_JOINT_SET_BACKLASH))
-    {
-    };
+    EMC_JOINT_SET_BACKLASH()
+      : EMC_JOINT_CMD_MSG(EMC_JOINT_SET_BACKLASH_TYPE, sizeof(EMC_JOINT_SET_BACKLASH)),
+        backlash(0.0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     double backlash;
@@ -200,12 +216,14 @@ class EMC_JOINT_SET_BACKLASH:public EMC_JOINT_CMD_MSG {
 
 class EMC_JOINT_SET_MIN_POSITION_LIMIT:public EMC_JOINT_CMD_MSG {
   public:
-    EMC_JOINT_SET_MIN_POSITION_LIMIT():EMC_JOINT_CMD_MSG
-	(EMC_JOINT_SET_MIN_POSITION_LIMIT_TYPE,
-	 sizeof(EMC_JOINT_SET_MIN_POSITION_LIMIT)) {
-    };
+    EMC_JOINT_SET_MIN_POSITION_LIMIT()
+    : EMC_JOINT_CMD_MSG (EMC_JOINT_SET_MIN_POSITION_LIMIT_TYPE, sizeof(EMC_JOINT_SET_MIN_POSITION_LIMIT)),
+      limit(0.0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     double limit;
@@ -213,12 +231,14 @@ class EMC_JOINT_SET_MIN_POSITION_LIMIT:public EMC_JOINT_CMD_MSG {
 
 class EMC_JOINT_SET_MAX_POSITION_LIMIT:public EMC_JOINT_CMD_MSG {
   public:
-    EMC_JOINT_SET_MAX_POSITION_LIMIT():EMC_JOINT_CMD_MSG
-	(EMC_JOINT_SET_MAX_POSITION_LIMIT_TYPE,
-	 sizeof(EMC_JOINT_SET_MAX_POSITION_LIMIT)) {
-    };
+    EMC_JOINT_SET_MAX_POSITION_LIMIT()
+      : EMC_JOINT_CMD_MSG (EMC_JOINT_SET_MAX_POSITION_LIMIT_TYPE, sizeof(EMC_JOINT_SET_MAX_POSITION_LIMIT)),
+        limit(0.0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     double limit;
@@ -226,11 +246,14 @@ class EMC_JOINT_SET_MAX_POSITION_LIMIT:public EMC_JOINT_CMD_MSG {
 
 class EMC_JOINT_SET_FERROR:public EMC_JOINT_CMD_MSG {
   public:
-    EMC_JOINT_SET_FERROR():EMC_JOINT_CMD_MSG(EMC_JOINT_SET_FERROR_TYPE,
-					   sizeof(EMC_JOINT_SET_FERROR)) {
-    };
+    EMC_JOINT_SET_FERROR()
+      : EMC_JOINT_CMD_MSG(EMC_JOINT_SET_FERROR_TYPE, sizeof(EMC_JOINT_SET_FERROR)),
+        ferror(0.0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     double ferror;
@@ -238,11 +261,14 @@ class EMC_JOINT_SET_FERROR:public EMC_JOINT_CMD_MSG {
 
 class EMC_JOINT_SET_MIN_FERROR:public EMC_JOINT_CMD_MSG {
   public:
-    EMC_JOINT_SET_MIN_FERROR():EMC_JOINT_CMD_MSG
-	(EMC_JOINT_SET_MIN_FERROR_TYPE, sizeof(EMC_JOINT_SET_MIN_FERROR)) {
-    };
+    EMC_JOINT_SET_MIN_FERROR()
+      : EMC_JOINT_CMD_MSG (EMC_JOINT_SET_MIN_FERROR_TYPE, sizeof(EMC_JOINT_SET_MIN_FERROR)),
+        ferror(0.0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     double ferror;
@@ -250,12 +276,28 @@ class EMC_JOINT_SET_MIN_FERROR:public EMC_JOINT_CMD_MSG {
 
 class EMC_JOINT_SET_HOMING_PARAMS:public EMC_JOINT_CMD_MSG {
   public:
-    EMC_JOINT_SET_HOMING_PARAMS():EMC_JOINT_CMD_MSG
-	(EMC_JOINT_SET_HOMING_PARAMS_TYPE,
-	 sizeof(EMC_JOINT_SET_HOMING_PARAMS)) {
-    };
+    // False positive. Triggers on 'offset'
+    // cppcheck-suppress uninitMemberVar
+    EMC_JOINT_SET_HOMING_PARAMS()
+      : EMC_JOINT_CMD_MSG(EMC_JOINT_SET_HOMING_PARAMS_TYPE, sizeof(EMC_JOINT_SET_HOMING_PARAMS)),
+        home(0.0),
+        offset(0.0),
+        home_final_vel(0.0),
+        search_vel(0.0),
+        latch_vel(0.0),
+        use_index(0),
+        encoder_does_not_reset(0),
+        ignore_limits(0),
+        is_shared(0),
+        home_sequence(0),
+        volatile_home(0),
+        locking_indexer(0),
+        absolute_encoder(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     double home;
@@ -275,41 +317,51 @@ class EMC_JOINT_SET_HOMING_PARAMS:public EMC_JOINT_CMD_MSG {
 
 class EMC_JOINT_HALT:public EMC_JOINT_CMD_MSG {
   public:
-    EMC_JOINT_HALT():EMC_JOINT_CMD_MSG(EMC_JOINT_HALT_TYPE,
-				     sizeof(EMC_JOINT_HALT)) {
-    };
+    EMC_JOINT_HALT()
+      : EMC_JOINT_CMD_MSG(EMC_JOINT_HALT_TYPE, sizeof(EMC_JOINT_HALT))
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
 class EMC_JOINT_HOME:public EMC_JOINT_CMD_MSG {
   public:
-    EMC_JOINT_HOME():EMC_JOINT_CMD_MSG(EMC_JOINT_HOME_TYPE,
-				     sizeof(EMC_JOINT_HOME)) {
-    };
+    EMC_JOINT_HOME()
+      : EMC_JOINT_CMD_MSG(EMC_JOINT_HOME_TYPE, sizeof(EMC_JOINT_HOME))
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
 class EMC_JOINT_UNHOME:public EMC_JOINT_CMD_MSG {
   public:
-    EMC_JOINT_UNHOME():EMC_JOINT_CMD_MSG(EMC_JOINT_UNHOME_TYPE,
-				     sizeof(EMC_JOINT_UNHOME)) {
-    };
+    EMC_JOINT_UNHOME()
+      : EMC_JOINT_CMD_MSG(EMC_JOINT_UNHOME_TYPE, sizeof(EMC_JOINT_UNHOME))
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
 class EMC_JOG_CONT:public EMC_JOG_CMD_MSG {
   public:
-    EMC_JOG_CONT():EMC_JOG_CMD_MSG(EMC_JOG_CONT_TYPE,
-				    sizeof(EMC_JOG_CONT)) {
-    };
+    EMC_JOG_CONT()
+      : EMC_JOG_CMD_MSG(EMC_JOG_CONT_TYPE, sizeof(EMC_JOG_CONT)),
+        vel(0.0),
+        jjogmode(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     double vel;
@@ -318,11 +370,16 @@ class EMC_JOG_CONT:public EMC_JOG_CMD_MSG {
 
 class EMC_JOG_INCR:public EMC_JOG_CMD_MSG {
   public:
-    EMC_JOG_INCR():EMC_JOG_CMD_MSG(EMC_JOG_INCR_TYPE,
-					 sizeof(EMC_JOG_INCR)) {
-    };
+    EMC_JOG_INCR()
+      : EMC_JOG_CMD_MSG(EMC_JOG_INCR_TYPE, sizeof(EMC_JOG_INCR)),
+        incr(0.0),
+        vel(0.0),
+        jjogmode(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     double incr;
@@ -332,11 +389,16 @@ class EMC_JOG_INCR:public EMC_JOG_CMD_MSG {
 
 class EMC_JOG_ABS:public EMC_JOG_CMD_MSG {
   public:
-    EMC_JOG_ABS():EMC_JOG_CMD_MSG(EMC_JOG_ABS_TYPE,
-					sizeof(EMC_JOG_ABS)) {
-    };
+    EMC_JOG_ABS()
+      : EMC_JOG_CMD_MSG(EMC_JOG_ABS_TYPE, sizeof(EMC_JOG_ABS)),
+        pos(0.0),
+        vel(0.0),
+        jjogmode(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     double pos;
@@ -346,11 +408,14 @@ class EMC_JOG_ABS:public EMC_JOG_CMD_MSG {
 
 class EMC_JOG_STOP:public EMC_JOG_CMD_MSG {
   public:
-    EMC_JOG_STOP():EMC_JOG_CMD_MSG(EMC_JOG_STOP_TYPE,
-				    sizeof(EMC_JOG_STOP)) {
-    };
+    EMC_JOG_STOP()
+      : EMC_JOG_CMD_MSG(EMC_JOG_STOP_TYPE, sizeof(EMC_JOG_STOP)),
+        jjogmode(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     int jjogmode; // 1==> joint jog, 0==> axis jog
@@ -358,21 +423,27 @@ class EMC_JOG_STOP:public EMC_JOG_CMD_MSG {
 
 class EMC_JOINT_OVERRIDE_LIMITS:public EMC_JOINT_CMD_MSG {
   public:
-    EMC_JOINT_OVERRIDE_LIMITS():EMC_JOINT_CMD_MSG
-	(EMC_JOINT_OVERRIDE_LIMITS_TYPE, sizeof(EMC_JOINT_OVERRIDE_LIMITS)) {
-    };
+    EMC_JOINT_OVERRIDE_LIMITS()
+      : EMC_JOINT_CMD_MSG(EMC_JOINT_OVERRIDE_LIMITS_TYPE, sizeof(EMC_JOINT_OVERRIDE_LIMITS))
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
 class EMC_JOINT_LOAD_COMP:public EMC_JOINT_CMD_MSG {
   public:
-    EMC_JOINT_LOAD_COMP():EMC_JOINT_CMD_MSG(EMC_JOINT_LOAD_COMP_TYPE,
-					  sizeof(EMC_JOINT_LOAD_COMP)) {
-    };
+    EMC_JOINT_LOAD_COMP()
+      : EMC_JOINT_CMD_MSG(EMC_JOINT_LOAD_COMP_TYPE, sizeof(EMC_JOINT_LOAD_COMP)),
+        file{},
+        type(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     char file[LINELEN];
@@ -384,8 +455,10 @@ class EMC_JOINT_LOAD_COMP:public EMC_JOINT_CMD_MSG {
 // JOINT status base class
 class EMC_JOINT_STAT_MSG:public RCS_STAT_MSG {
   public:
-    EMC_JOINT_STAT_MSG(NMLTYPE t, size_t s):RCS_STAT_MSG(t, s) {
-    };
+    EMC_JOINT_STAT_MSG(NMLTYPE t, size_t s)
+      : RCS_STAT_MSG(t, s),
+        joint(0)
+    {};
 
     // For internal NML/CMS use only.
     void update(CMS * cms);
@@ -398,6 +471,8 @@ class EMC_JOINT_STAT:public EMC_JOINT_STAT_MSG {
     EMC_JOINT_STAT();
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     // configuration parameters
@@ -433,8 +508,10 @@ class EMC_JOINT_STAT:public EMC_JOINT_STAT_MSG {
 // EMC_TRAJ command base class
 class EMC_TRAJ_CMD_MSG:public RCS_CMD_MSG {
   public:
-    EMC_TRAJ_CMD_MSG(NMLTYPE t, size_t s): RCS_CMD_MSG(t, s),tag(){
-    };
+    EMC_TRAJ_CMD_MSG(NMLTYPE t, size_t s)
+      : RCS_CMD_MSG(t, s),
+        tag()
+    {};
 
     //NOTE this does NOT have a corresponding CMS update. This only works
     //because motion commands don't actually go through NML.
@@ -445,11 +522,14 @@ class EMC_TRAJ_CMD_MSG:public RCS_CMD_MSG {
 
 class EMC_TRAJ_SET_MODE:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_SET_MODE():EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_MODE_TYPE,
-					 sizeof(EMC_TRAJ_SET_MODE)) {
-    };
+    EMC_TRAJ_SET_MODE()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_MODE_TYPE, sizeof(EMC_TRAJ_SET_MODE)),
+        mode(EMC_TRAJ_MODE::FREE)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     EMC_TRAJ_MODE mode;
@@ -457,12 +537,15 @@ class EMC_TRAJ_SET_MODE:public EMC_TRAJ_CMD_MSG {
 
 class EMC_TRAJ_SET_VELOCITY:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_SET_VELOCITY():EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_VELOCITY_TYPE,
-					     sizeof(EMC_TRAJ_SET_VELOCITY))
-    {
-    };
+    EMC_TRAJ_SET_VELOCITY()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_VELOCITY_TYPE, sizeof(EMC_TRAJ_SET_VELOCITY)),
+        velocity(0.0),
+        ini_maxvel(0.0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     double velocity;
@@ -471,12 +554,14 @@ class EMC_TRAJ_SET_VELOCITY:public EMC_TRAJ_CMD_MSG {
 
 class EMC_TRAJ_SET_ACCELERATION:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_SET_ACCELERATION():EMC_TRAJ_CMD_MSG
-	(EMC_TRAJ_SET_ACCELERATION_TYPE,
-	 sizeof(EMC_TRAJ_SET_ACCELERATION)) {
-    };
+    EMC_TRAJ_SET_ACCELERATION()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_ACCELERATION_TYPE, sizeof(EMC_TRAJ_SET_ACCELERATION)),
+        acceleration(0.0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     double acceleration;
@@ -484,12 +569,14 @@ class EMC_TRAJ_SET_ACCELERATION:public EMC_TRAJ_CMD_MSG {
 
 class EMC_TRAJ_SET_MAX_VELOCITY:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_SET_MAX_VELOCITY():EMC_TRAJ_CMD_MSG
-	(EMC_TRAJ_SET_MAX_VELOCITY_TYPE,
-	 sizeof(EMC_TRAJ_SET_MAX_VELOCITY)) {
-    };
+    EMC_TRAJ_SET_MAX_VELOCITY()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_MAX_VELOCITY_TYPE, sizeof(EMC_TRAJ_SET_MAX_VELOCITY)),
+        velocity(0.0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     double velocity;
@@ -497,11 +584,14 @@ class EMC_TRAJ_SET_MAX_VELOCITY:public EMC_TRAJ_CMD_MSG {
 
 class EMC_TRAJ_SET_SCALE:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_SET_SCALE():EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_SCALE_TYPE,
-					  sizeof(EMC_TRAJ_SET_SCALE)) {
-    };
+    EMC_TRAJ_SET_SCALE()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_SCALE_TYPE, sizeof(EMC_TRAJ_SET_SCALE)),
+        scale(0.0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     double scale;
@@ -509,11 +599,14 @@ class EMC_TRAJ_SET_SCALE:public EMC_TRAJ_CMD_MSG {
 
 class EMC_TRAJ_SET_RAPID_SCALE:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_SET_RAPID_SCALE():EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_RAPID_SCALE_TYPE,
-					  sizeof(EMC_TRAJ_SET_RAPID_SCALE)) {
-    };
+    EMC_TRAJ_SET_RAPID_SCALE()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_RAPID_SCALE_TYPE, sizeof(EMC_TRAJ_SET_RAPID_SCALE)),
+        scale(0.0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     double scale;
@@ -521,11 +614,15 @@ class EMC_TRAJ_SET_RAPID_SCALE:public EMC_TRAJ_CMD_MSG {
 
 class EMC_TRAJ_SET_SPINDLE_SCALE:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_SET_SPINDLE_SCALE():EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_SPINDLE_SCALE_TYPE,
-					  sizeof(EMC_TRAJ_SET_SPINDLE_SCALE)) {
-    };
+    EMC_TRAJ_SET_SPINDLE_SCALE()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_SPINDLE_SCALE_TYPE, sizeof(EMC_TRAJ_SET_SPINDLE_SCALE)),
+        spindle(0),
+        scale(0.0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
     int spindle;
     double scale;
@@ -533,11 +630,14 @@ class EMC_TRAJ_SET_SPINDLE_SCALE:public EMC_TRAJ_CMD_MSG {
 
 class EMC_TRAJ_SET_FO_ENABLE:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_SET_FO_ENABLE():EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_FO_ENABLE_TYPE,
-					  sizeof(EMC_TRAJ_SET_FO_ENABLE)) {
-    };
+    EMC_TRAJ_SET_FO_ENABLE()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_FO_ENABLE_TYPE, sizeof(EMC_TRAJ_SET_FO_ENABLE)),
+        mode(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     unsigned char mode; //mode=0, override off (will work with 100% FO), mode != 0, override on, user can change FO
@@ -545,11 +645,15 @@ class EMC_TRAJ_SET_FO_ENABLE:public EMC_TRAJ_CMD_MSG {
 
 class EMC_TRAJ_SET_SO_ENABLE:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_SET_SO_ENABLE():EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_SO_ENABLE_TYPE,
-					  sizeof(EMC_TRAJ_SET_SO_ENABLE)) {
-    };
+    EMC_TRAJ_SET_SO_ENABLE()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_SO_ENABLE_TYPE, sizeof(EMC_TRAJ_SET_SO_ENABLE)),
+        spindle(0),
+        mode(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     int spindle;
@@ -558,11 +662,14 @@ class EMC_TRAJ_SET_SO_ENABLE:public EMC_TRAJ_CMD_MSG {
 
 class EMC_TRAJ_SET_FH_ENABLE:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_SET_FH_ENABLE():EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_FH_ENABLE_TYPE,
-					  sizeof(EMC_TRAJ_SET_FH_ENABLE)) {
-    };
+    EMC_TRAJ_SET_FH_ENABLE()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_FH_ENABLE_TYPE, sizeof(EMC_TRAJ_SET_FH_ENABLE)),
+        mode(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     unsigned char mode; //mode=0, override off (feedhold is disabled), mode != 0, override on, user can use feedhold
@@ -570,41 +677,50 @@ class EMC_TRAJ_SET_FH_ENABLE:public EMC_TRAJ_CMD_MSG {
 
 class EMC_TRAJ_ABORT:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_ABORT():EMC_TRAJ_CMD_MSG(EMC_TRAJ_ABORT_TYPE,
-				      sizeof(EMC_TRAJ_ABORT)) {
-    };
+    EMC_TRAJ_ABORT()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_ABORT_TYPE, sizeof(EMC_TRAJ_ABORT))
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
 class EMC_TRAJ_PAUSE:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_PAUSE():EMC_TRAJ_CMD_MSG(EMC_TRAJ_PAUSE_TYPE,
-				      sizeof(EMC_TRAJ_PAUSE)) {
-    };
+    EMC_TRAJ_PAUSE()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_PAUSE_TYPE, sizeof(EMC_TRAJ_PAUSE))
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
 class EMC_TRAJ_RESUME:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_RESUME():EMC_TRAJ_CMD_MSG(EMC_TRAJ_RESUME_TYPE,
-				       sizeof(EMC_TRAJ_RESUME)) {
-    };
+    EMC_TRAJ_RESUME()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_RESUME_TYPE, sizeof(EMC_TRAJ_RESUME))
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
 class EMC_TRAJ_DELAY:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_DELAY():EMC_TRAJ_CMD_MSG(EMC_TRAJ_DELAY_TYPE,
-				      sizeof(EMC_TRAJ_DELAY)) {
-    };
+    EMC_TRAJ_DELAY()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_DELAY_TYPE, sizeof(EMC_TRAJ_DELAY)),
+        delay(0.0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     double delay;		// delay in seconds
@@ -612,11 +728,20 @@ class EMC_TRAJ_DELAY:public EMC_TRAJ_CMD_MSG {
 
 class EMC_TRAJ_LINEAR_MOVE:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_LINEAR_MOVE():EMC_TRAJ_CMD_MSG(EMC_TRAJ_LINEAR_MOVE_TYPE,
-					    sizeof(EMC_TRAJ_LINEAR_MOVE)) {
-    };
+    EMC_TRAJ_LINEAR_MOVE()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_LINEAR_MOVE_TYPE, sizeof(EMC_TRAJ_LINEAR_MOVE)),
+        type(0),
+        end{},
+        vel(0.0),
+        ini_maxvel(0.0),
+        acc(0.0),
+        feed_mode(0),
+        indexer_jnum(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     int type;
@@ -628,12 +753,22 @@ class EMC_TRAJ_LINEAR_MOVE:public EMC_TRAJ_CMD_MSG {
 
 class EMC_TRAJ_CIRCULAR_MOVE:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_CIRCULAR_MOVE():EMC_TRAJ_CMD_MSG(EMC_TRAJ_CIRCULAR_MOVE_TYPE,
-					      sizeof
-					      (EMC_TRAJ_CIRCULAR_MOVE)) {
-    };
+    EMC_TRAJ_CIRCULAR_MOVE()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_CIRCULAR_MOVE_TYPE, sizeof(EMC_TRAJ_CIRCULAR_MOVE)),
+        end{},
+        center{},
+        normal{},
+        turn(0),
+        type(0),
+        vel(0.0),
+        ini_maxvel(0.0),
+        acc(0.0),
+        feed_mode(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     EmcPose end;
@@ -647,12 +782,15 @@ class EMC_TRAJ_CIRCULAR_MOVE:public EMC_TRAJ_CMD_MSG {
 
 class EMC_TRAJ_SET_TERM_COND:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_SET_TERM_COND():EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_TERM_COND_TYPE,
-					      sizeof
-					      (EMC_TRAJ_SET_TERM_COND)) {
-    };
+    EMC_TRAJ_SET_TERM_COND()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_TERM_COND_TYPE, sizeof(EMC_TRAJ_SET_TERM_COND)),
+        cond(false),
+        tolerance(0.0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     int cond;
@@ -661,24 +799,32 @@ class EMC_TRAJ_SET_TERM_COND:public EMC_TRAJ_CMD_MSG {
 };
 
 class EMC_TRAJ_SET_SPINDLESYNC:public EMC_TRAJ_CMD_MSG {
-    public:
-        EMC_TRAJ_SET_SPINDLESYNC():EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_SPINDLESYNC_TYPE,
-                sizeof(EMC_TRAJ_SET_SPINDLESYNC)) {
-        };
+  public:
+    EMC_TRAJ_SET_SPINDLESYNC()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_SPINDLESYNC_TYPE, sizeof(EMC_TRAJ_SET_SPINDLESYNC)),
+        spindle(0),
+        feed_per_revolution(0.0),
+        velocity_mode(false)
+    {};
 
-        void update(CMS * cms);
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
+    void update(CMS * cms);
 
-        int spindle;
-        double feed_per_revolution;
-	bool velocity_mode; 
+    int spindle;
+    double feed_per_revolution;
+    bool velocity_mode;
 };
 
 class EMC_TRAJ_SET_OFFSET:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_SET_OFFSET():EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_OFFSET_TYPE,
-					   sizeof(EMC_TRAJ_SET_OFFSET)) {
-    };
+    EMC_TRAJ_SET_OFFSET()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_OFFSET_TYPE, sizeof(EMC_TRAJ_SET_OFFSET)),
+        offset{}
+    {};
 
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     // For internal NML/CMS use only.
     void update(CMS * cms);
 
@@ -687,11 +833,15 @@ class EMC_TRAJ_SET_OFFSET:public EMC_TRAJ_CMD_MSG {
 
 class EMC_TRAJ_SET_G5X:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_SET_G5X():EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_G5X_TYPE,
-					   sizeof(EMC_TRAJ_SET_G5X)) {
-    };
+    EMC_TRAJ_SET_G5X()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_G5X_TYPE, sizeof(EMC_TRAJ_SET_G5X)),
+        g5x_index(0),
+        origin{}
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
     int g5x_index;
     EmcPose origin;
@@ -699,11 +849,14 @@ class EMC_TRAJ_SET_G5X:public EMC_TRAJ_CMD_MSG {
 
 class EMC_TRAJ_SET_G92:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_SET_G92():EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_G92_TYPE,
-					   sizeof(EMC_TRAJ_SET_G92)) {
-    };
+    EMC_TRAJ_SET_G92()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_G92_TYPE, sizeof(EMC_TRAJ_SET_G92)),
+        origin{}
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     EmcPose origin;
@@ -711,11 +864,14 @@ class EMC_TRAJ_SET_G92:public EMC_TRAJ_CMD_MSG {
 
 class EMC_TRAJ_SET_ROTATION:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_SET_ROTATION():EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_ROTATION_TYPE,
-					   sizeof(EMC_TRAJ_SET_ROTATION)) {
-    };
+    EMC_TRAJ_SET_ROTATION()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_ROTATION_TYPE, sizeof(EMC_TRAJ_SET_ROTATION)),
+        rotation(0.0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     double rotation;
@@ -723,23 +879,26 @@ class EMC_TRAJ_SET_ROTATION:public EMC_TRAJ_CMD_MSG {
 
 class EMC_TRAJ_CLEAR_PROBE_TRIPPED_FLAG:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_CLEAR_PROBE_TRIPPED_FLAG():EMC_TRAJ_CMD_MSG
-	(EMC_TRAJ_CLEAR_PROBE_TRIPPED_FLAG_TYPE,
-	 sizeof(EMC_TRAJ_CLEAR_PROBE_TRIPPED_FLAG)) {
-    };
+    EMC_TRAJ_CLEAR_PROBE_TRIPPED_FLAG()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_CLEAR_PROBE_TRIPPED_FLAG_TYPE, sizeof(EMC_TRAJ_CLEAR_PROBE_TRIPPED_FLAG))
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
 class EMC_TRAJ_SET_TELEOP_ENABLE:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_SET_TELEOP_ENABLE():EMC_TRAJ_CMD_MSG
-	(EMC_TRAJ_SET_TELEOP_ENABLE_TYPE,
-	 sizeof(EMC_TRAJ_SET_TELEOP_ENABLE)) {
-    };
+    EMC_TRAJ_SET_TELEOP_ENABLE()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_TELEOP_ENABLE_TYPE, sizeof(EMC_TRAJ_SET_TELEOP_ENABLE)),
+        enable(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     int enable;
@@ -747,11 +906,19 @@ class EMC_TRAJ_SET_TELEOP_ENABLE:public EMC_TRAJ_CMD_MSG {
 
 class EMC_TRAJ_PROBE:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_PROBE():EMC_TRAJ_CMD_MSG(EMC_TRAJ_PROBE_TYPE,
-				      sizeof(EMC_TRAJ_PROBE)) {
-    };
+    EMC_TRAJ_PROBE()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_PROBE_TYPE, sizeof(EMC_TRAJ_PROBE)),
+        pos{},
+        type(0),
+        vel(0.0),
+        ini_maxvel(0.0),
+        acc(0.0),
+        probe_type(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     EmcPose pos;
@@ -762,11 +929,18 @@ class EMC_TRAJ_PROBE:public EMC_TRAJ_CMD_MSG {
 
 class EMC_TRAJ_RIGID_TAP:public EMC_TRAJ_CMD_MSG {
   public:
-    EMC_TRAJ_RIGID_TAP():EMC_TRAJ_CMD_MSG(EMC_TRAJ_RIGID_TAP_TYPE,
-				      sizeof(EMC_TRAJ_RIGID_TAP)) {
-    };
+    EMC_TRAJ_RIGID_TAP()
+      : EMC_TRAJ_CMD_MSG(EMC_TRAJ_RIGID_TAP_TYPE, sizeof(EMC_TRAJ_RIGID_TAP)),
+        pos{},
+        vel(0.0),
+        ini_maxvel(0.0),
+        acc(0.0),
+        scale(1.0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     EmcPose pos;
@@ -776,8 +950,9 @@ class EMC_TRAJ_RIGID_TAP:public EMC_TRAJ_CMD_MSG {
 // EMC_TRAJ status base class
 class EMC_TRAJ_STAT_MSG:public RCS_STAT_MSG {
   public:
-    EMC_TRAJ_STAT_MSG(NMLTYPE t, size_t s):RCS_STAT_MSG(t, s) {
-    };
+    EMC_TRAJ_STAT_MSG(NMLTYPE t, size_t s)
+      : RCS_STAT_MSG(t, s)
+    {};
 
     // For internal NML/CMS use only.
     void update(CMS * cms);
@@ -788,6 +963,8 @@ class EMC_TRAJ_STAT:public EMC_TRAJ_STAT_MSG {
     EMC_TRAJ_STAT();
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     double linearUnits;		// units per mm
@@ -842,8 +1019,9 @@ class EMC_TRAJ_STAT:public EMC_TRAJ_STAT_MSG {
 // EMC_MOTION command base class
 class EMC_MOTION_CMD_MSG:public RCS_CMD_MSG {
   public:
-    EMC_MOTION_CMD_MSG(NMLTYPE t, size_t s):RCS_CMD_MSG(t, s) {
-    };
+    EMC_MOTION_CMD_MSG(NMLTYPE t, size_t s)
+      : RCS_CMD_MSG(t, s)
+    {};
 
     // For internal NML/CMS use only.
     void update(CMS * cms);
@@ -851,11 +1029,17 @@ class EMC_MOTION_CMD_MSG:public RCS_CMD_MSG {
 
 class EMC_MOTION_SET_AOUT:public EMC_MOTION_CMD_MSG {
   public:
-    EMC_MOTION_SET_AOUT():EMC_MOTION_CMD_MSG(EMC_MOTION_SET_AOUT_TYPE,
-					     sizeof(EMC_MOTION_SET_AOUT)) {
-    };
+    EMC_MOTION_SET_AOUT()
+      : EMC_MOTION_CMD_MSG(EMC_MOTION_SET_AOUT_TYPE, sizeof(EMC_MOTION_SET_AOUT)),
+        index(0),
+        start(0.0),
+        end(0.0),
+        now(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     unsigned char index;	// which to set
@@ -866,11 +1050,17 @@ class EMC_MOTION_SET_AOUT:public EMC_MOTION_CMD_MSG {
 
 class EMC_MOTION_SET_DOUT:public EMC_MOTION_CMD_MSG {
   public:
-    EMC_MOTION_SET_DOUT():EMC_MOTION_CMD_MSG(EMC_MOTION_SET_DOUT_TYPE,
-					     sizeof(EMC_MOTION_SET_DOUT)) {
-    };
+    EMC_MOTION_SET_DOUT()
+      : EMC_MOTION_CMD_MSG(EMC_MOTION_SET_DOUT_TYPE, sizeof(EMC_MOTION_SET_DOUT)),
+        index(0),
+        start(0.0),
+        end(0.0),
+        now(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     unsigned char index;	// which to set
@@ -881,11 +1071,14 @@ class EMC_MOTION_SET_DOUT:public EMC_MOTION_CMD_MSG {
 
 class EMC_MOTION_ADAPTIVE:public EMC_MOTION_CMD_MSG {
   public:
-    EMC_MOTION_ADAPTIVE():EMC_MOTION_CMD_MSG(EMC_MOTION_ADAPTIVE_TYPE,
-					     sizeof(EMC_MOTION_ADAPTIVE)) {
-    };
+    EMC_MOTION_ADAPTIVE()
+      : EMC_MOTION_CMD_MSG(EMC_MOTION_ADAPTIVE_TYPE, sizeof(EMC_MOTION_ADAPTIVE)),
+        status(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     unsigned char status;		// status=0 stop; status=1 start.
@@ -894,16 +1087,18 @@ class EMC_MOTION_ADAPTIVE:public EMC_MOTION_CMD_MSG {
 // EMC_MOTION status base class
 class EMC_MOTION_STAT_MSG:public RCS_STAT_MSG {
   public:
-    EMC_MOTION_STAT_MSG(NMLTYPE t, size_t s):RCS_STAT_MSG(t, s) {
-    };
+    EMC_MOTION_STAT_MSG(NMLTYPE t, size_t s)
+      : RCS_STAT_MSG(t, s)
+    {};
 };
 
 
 // EMC_SPINDLE status base class
 class EMC_SPINDLE_STAT_MSG:public RCS_STAT_MSG {
   public:
-    EMC_SPINDLE_STAT_MSG(NMLTYPE t, size_t s):RCS_STAT_MSG(t, s) {
-    };
+    EMC_SPINDLE_STAT_MSG(NMLTYPE t, size_t s)
+      : RCS_STAT_MSG(t, s)
+    {};
 
     // For internal NML/CMS use only.
     void update(CMS * cms);
@@ -914,6 +1109,8 @@ class EMC_SPINDLE_STAT:public EMC_SPINDLE_STAT_MSG {
     EMC_SPINDLE_STAT();
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     double speed;		// spindle speed in RPMs
@@ -962,30 +1159,38 @@ class EMC_MOTION_STAT:public EMC_MOTION_STAT_MSG {
 // EMC_TASK command base class
 class EMC_TASK_CMD_MSG:public RCS_CMD_MSG {
   public:
-    EMC_TASK_CMD_MSG(NMLTYPE t, size_t s):RCS_CMD_MSG(t, s) {
-    };
+    EMC_TASK_CMD_MSG(NMLTYPE t, size_t s)
+      : RCS_CMD_MSG(t, s)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
 class EMC_TASK_ABORT:public EMC_TASK_CMD_MSG {
   public:
-    EMC_TASK_ABORT():EMC_TASK_CMD_MSG(EMC_TASK_ABORT_TYPE,
-				      sizeof(EMC_TASK_ABORT)) {
-    };
+    EMC_TASK_ABORT()
+      : EMC_TASK_CMD_MSG(EMC_TASK_ABORT_TYPE, sizeof(EMC_TASK_ABORT))
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
 class EMC_TASK_SET_MODE:public EMC_TASK_CMD_MSG {
   public:
-    EMC_TASK_SET_MODE():EMC_TASK_CMD_MSG(EMC_TASK_SET_MODE_TYPE,
-					 sizeof(EMC_TASK_SET_MODE)) {
-    };
+    EMC_TASK_SET_MODE()
+      : EMC_TASK_CMD_MSG(EMC_TASK_SET_MODE_TYPE, sizeof(EMC_TASK_SET_MODE)),
+        mode(EMC_TASK_MODE::AUTO)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     EMC_TASK_MODE mode;
@@ -993,11 +1198,14 @@ class EMC_TASK_SET_MODE:public EMC_TASK_CMD_MSG {
 
 class EMC_TASK_SET_STATE:public EMC_TASK_CMD_MSG {
   public:
-    EMC_TASK_SET_STATE():EMC_TASK_CMD_MSG(EMC_TASK_SET_STATE_TYPE,
-					  sizeof(EMC_TASK_SET_STATE)) {
-    };
+    EMC_TASK_SET_STATE()
+      : EMC_TASK_CMD_MSG(EMC_TASK_SET_STATE_TYPE, sizeof(EMC_TASK_SET_STATE)),
+        state(EMC_TASK_STATE::ESTOP)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     EMC_TASK_STATE state;
@@ -1005,11 +1213,17 @@ class EMC_TASK_SET_STATE:public EMC_TASK_CMD_MSG {
 
 class EMC_TASK_PLAN_OPEN:public EMC_TASK_CMD_MSG {
   public:
-    EMC_TASK_PLAN_OPEN():EMC_TASK_CMD_MSG(EMC_TASK_PLAN_OPEN_TYPE,
-					  sizeof(EMC_TASK_PLAN_OPEN)) {
-    };
+    EMC_TASK_PLAN_OPEN()
+      : EMC_TASK_CMD_MSG(EMC_TASK_PLAN_OPEN_TYPE, sizeof(EMC_TASK_PLAN_OPEN)),
+        file{},
+        remote_filesize(0),
+        remote_buffersize(0),
+        remote_buffer{}
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     // (local) path to file
@@ -1024,11 +1238,14 @@ class EMC_TASK_PLAN_OPEN:public EMC_TASK_CMD_MSG {
 
 class EMC_TASK_PLAN_RUN:public EMC_TASK_CMD_MSG {
   public:
-    EMC_TASK_PLAN_RUN():EMC_TASK_CMD_MSG(EMC_TASK_PLAN_RUN_TYPE,
-					 sizeof(EMC_TASK_PLAN_RUN)) {
-    };
+    EMC_TASK_PLAN_RUN()
+      : EMC_TASK_CMD_MSG(EMC_TASK_PLAN_RUN_TYPE, sizeof(EMC_TASK_PLAN_RUN)),
+        line(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     int line;			// line to run from; 0 or 1 means from start,
@@ -1037,12 +1254,14 @@ class EMC_TASK_PLAN_RUN:public EMC_TASK_CMD_MSG {
 
 class EMC_TASK_PLAN_EXECUTE:public EMC_TASK_CMD_MSG {
   public:
-    EMC_TASK_PLAN_EXECUTE():EMC_TASK_CMD_MSG(EMC_TASK_PLAN_EXECUTE_TYPE,
-					     sizeof(EMC_TASK_PLAN_EXECUTE))
-    {
-    };
+    EMC_TASK_PLAN_EXECUTE()
+      : EMC_TASK_CMD_MSG(EMC_TASK_PLAN_EXECUTE_TYPE, sizeof(EMC_TASK_PLAN_EXECUTE)),
+        command{}
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     char command[LINELEN];
@@ -1050,98 +1269,115 @@ class EMC_TASK_PLAN_EXECUTE:public EMC_TASK_CMD_MSG {
 
 class EMC_TASK_PLAN_PAUSE:public EMC_TASK_CMD_MSG {
   public:
-    EMC_TASK_PLAN_PAUSE():EMC_TASK_CMD_MSG(EMC_TASK_PLAN_PAUSE_TYPE,
-					   sizeof(EMC_TASK_PLAN_PAUSE)) {
-    };
+    EMC_TASK_PLAN_PAUSE()
+      : EMC_TASK_CMD_MSG(EMC_TASK_PLAN_PAUSE_TYPE, sizeof(EMC_TASK_PLAN_PAUSE))
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
 class EMC_TASK_PLAN_REVERSE:public EMC_TASK_CMD_MSG {
   public:
-    EMC_TASK_PLAN_REVERSE():EMC_TASK_CMD_MSG(EMC_TASK_PLAN_REVERSE_TYPE,
-					   sizeof(EMC_TASK_PLAN_REVERSE)) {
-    };
+    EMC_TASK_PLAN_REVERSE()
+      : EMC_TASK_CMD_MSG(EMC_TASK_PLAN_REVERSE_TYPE, sizeof(EMC_TASK_PLAN_REVERSE))
+    {};
 
 };
 
 class EMC_TASK_PLAN_FORWARD:public EMC_TASK_CMD_MSG {
   public:
-    EMC_TASK_PLAN_FORWARD():EMC_TASK_CMD_MSG(EMC_TASK_PLAN_FORWARD_TYPE,
-					   sizeof(EMC_TASK_PLAN_FORWARD)) {
-    };
+    EMC_TASK_PLAN_FORWARD()
+      : EMC_TASK_CMD_MSG(EMC_TASK_PLAN_FORWARD_TYPE, sizeof(EMC_TASK_PLAN_FORWARD))
+    {};
 
 };
 
 
 class EMC_TASK_PLAN_STEP:public EMC_TASK_CMD_MSG {
   public:
-    EMC_TASK_PLAN_STEP():EMC_TASK_CMD_MSG(EMC_TASK_PLAN_STEP_TYPE,
-					  sizeof(EMC_TASK_PLAN_STEP)) {
-    };
+    EMC_TASK_PLAN_STEP()
+      : EMC_TASK_CMD_MSG(EMC_TASK_PLAN_STEP_TYPE, sizeof(EMC_TASK_PLAN_STEP))
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
 class EMC_TASK_PLAN_RESUME:public EMC_TASK_CMD_MSG {
   public:
-    EMC_TASK_PLAN_RESUME():EMC_TASK_CMD_MSG(EMC_TASK_PLAN_RESUME_TYPE,
-					    sizeof(EMC_TASK_PLAN_RESUME)) {
-    };
+    EMC_TASK_PLAN_RESUME()
+      : EMC_TASK_CMD_MSG(EMC_TASK_PLAN_RESUME_TYPE, sizeof(EMC_TASK_PLAN_RESUME))
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
 class EMC_TASK_PLAN_END:public EMC_TASK_CMD_MSG {
   public:
-    EMC_TASK_PLAN_END():EMC_TASK_CMD_MSG(EMC_TASK_PLAN_END_TYPE,
-					 sizeof(EMC_TASK_PLAN_END)) {
-    };
+    EMC_TASK_PLAN_END()
+      : EMC_TASK_CMD_MSG(EMC_TASK_PLAN_END_TYPE, sizeof(EMC_TASK_PLAN_END))
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
 class EMC_TASK_PLAN_CLOSE:public EMC_TASK_CMD_MSG {
   public:
-    EMC_TASK_PLAN_CLOSE():EMC_TASK_CMD_MSG(EMC_TASK_PLAN_CLOSE_TYPE,
-					   sizeof(EMC_TASK_PLAN_CLOSE)) {
-    };
+    EMC_TASK_PLAN_CLOSE()
+      : EMC_TASK_CMD_MSG(EMC_TASK_PLAN_CLOSE_TYPE, sizeof(EMC_TASK_PLAN_CLOSE))
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
 class EMC_TASK_PLAN_INIT:public EMC_TASK_CMD_MSG {
   public:
-    EMC_TASK_PLAN_INIT():EMC_TASK_CMD_MSG(EMC_TASK_PLAN_INIT_TYPE,
-					  sizeof(EMC_TASK_PLAN_INIT)) {
-    };
+    EMC_TASK_PLAN_INIT()
+      : EMC_TASK_CMD_MSG(EMC_TASK_PLAN_INIT_TYPE, sizeof(EMC_TASK_PLAN_INIT))
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
 class EMC_TASK_PLAN_SYNCH:public EMC_TASK_CMD_MSG {
   public:
-    EMC_TASK_PLAN_SYNCH():EMC_TASK_CMD_MSG(EMC_TASK_PLAN_SYNCH_TYPE,
-					   sizeof(EMC_TASK_PLAN_SYNCH)) {
-    };
+    EMC_TASK_PLAN_SYNCH()
+      : EMC_TASK_CMD_MSG(EMC_TASK_PLAN_SYNCH_TYPE, sizeof(EMC_TASK_PLAN_SYNCH))
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
 class EMC_TASK_PLAN_SET_OPTIONAL_STOP:public EMC_TASK_CMD_MSG {
   public:
-    EMC_TASK_PLAN_SET_OPTIONAL_STOP():EMC_TASK_CMD_MSG(EMC_TASK_PLAN_SET_OPTIONAL_STOP_TYPE,
-					   sizeof(EMC_TASK_PLAN_SET_OPTIONAL_STOP)) {
-    };
+    EMC_TASK_PLAN_SET_OPTIONAL_STOP()
+      : EMC_TASK_CMD_MSG(EMC_TASK_PLAN_SET_OPTIONAL_STOP_TYPE, sizeof(EMC_TASK_PLAN_SET_OPTIONAL_STOP)),
+        state(false)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
     
     bool state; //state == ON, optional stop is on (e.g. we stop on any stops)
@@ -1149,11 +1385,14 @@ class EMC_TASK_PLAN_SET_OPTIONAL_STOP:public EMC_TASK_CMD_MSG {
 
 class EMC_TASK_PLAN_SET_BLOCK_DELETE:public EMC_TASK_CMD_MSG {
   public:
-    EMC_TASK_PLAN_SET_BLOCK_DELETE():EMC_TASK_CMD_MSG(EMC_TASK_PLAN_SET_BLOCK_DELETE_TYPE,
-					   sizeof(EMC_TASK_PLAN_SET_BLOCK_DELETE)) {
-    };
+    EMC_TASK_PLAN_SET_BLOCK_DELETE()
+      : EMC_TASK_CMD_MSG(EMC_TASK_PLAN_SET_BLOCK_DELETE_TYPE, sizeof(EMC_TASK_PLAN_SET_BLOCK_DELETE)),
+        state(false)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
     
     bool state; //state == ON, block delete is on, we ignore lines starting with "/"
@@ -1161,11 +1400,13 @@ class EMC_TASK_PLAN_SET_BLOCK_DELETE:public EMC_TASK_CMD_MSG {
 
 class EMC_TASK_PLAN_OPTIONAL_STOP:public EMC_TASK_CMD_MSG {
   public:
-    EMC_TASK_PLAN_OPTIONAL_STOP():EMC_TASK_CMD_MSG(EMC_TASK_PLAN_OPTIONAL_STOP_TYPE,
-					   sizeof(EMC_TASK_PLAN_OPTIONAL_STOP)) {
-    };
+    EMC_TASK_PLAN_OPTIONAL_STOP()
+      : EMC_TASK_CMD_MSG(EMC_TASK_PLAN_OPTIONAL_STOP_TYPE, sizeof(EMC_TASK_PLAN_OPTIONAL_STOP))
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
     
 };
@@ -1174,9 +1415,10 @@ class EMC_TASK_PLAN_OPTIONAL_STOP:public EMC_TASK_CMD_MSG {
 // EMC_TASK status base class
 class EMC_TASK_STAT_MSG:public RCS_STAT_MSG {
   public:
-    EMC_TASK_STAT_MSG(NMLTYPE t, size_t s):RCS_STAT_MSG(t, s) {
-	heartbeat = 0;
-    };
+    EMC_TASK_STAT_MSG(NMLTYPE t, size_t s)
+      : RCS_STAT_MSG(t, s),
+	heartbeat(0)
+    {};
 
     // For internal NML/CMS use only.
     void update(CMS * cms);
@@ -1189,6 +1431,8 @@ class EMC_TASK_STAT:public EMC_TASK_STAT_MSG {
     EMC_TASK_STAT();
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     EMC_TASK_MODE mode;	// EMC_TASK_MODE::MANUAL, etc.
@@ -1228,72 +1472,90 @@ class EMC_TASK_STAT:public EMC_TASK_STAT_MSG {
 // EMC_TOOL command base class
 class EMC_TOOL_CMD_MSG:public RCS_CMD_MSG {
   public:
-    EMC_TOOL_CMD_MSG(NMLTYPE t, size_t s):RCS_CMD_MSG(t, s) {
-    };
+    EMC_TOOL_CMD_MSG(NMLTYPE t, size_t s)
+      : RCS_CMD_MSG(t, s)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
 class EMC_TOOL_HALT:public EMC_TOOL_CMD_MSG {
   public:
-    EMC_TOOL_HALT():EMC_TOOL_CMD_MSG(EMC_TOOL_HALT_TYPE,
-				     sizeof(EMC_TOOL_HALT)) {
-    };
+    EMC_TOOL_HALT()
+      : EMC_TOOL_CMD_MSG(EMC_TOOL_HALT_TYPE, sizeof(EMC_TOOL_HALT))
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
 class EMC_TOOL_ABORT:public EMC_TOOL_CMD_MSG {
   public:
-    EMC_TOOL_ABORT():EMC_TOOL_CMD_MSG(EMC_TOOL_ABORT_TYPE,
-				      sizeof(EMC_TOOL_ABORT)) {
-    };
+    EMC_TOOL_ABORT()
+      : EMC_TOOL_CMD_MSG(EMC_TOOL_ABORT_TYPE, sizeof(EMC_TOOL_ABORT)),
+        reason(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
     int reason;		//  convey reason for abort to iocontrol
 };
 
 class EMC_TOOL_PREPARE:public EMC_TOOL_CMD_MSG {
   public:
-    EMC_TOOL_PREPARE():EMC_TOOL_CMD_MSG(EMC_TOOL_PREPARE_TYPE,
-					sizeof(EMC_TOOL_PREPARE)) {
-    };
+    EMC_TOOL_PREPARE()
+      : EMC_TOOL_CMD_MSG(EMC_TOOL_PREPARE_TYPE, sizeof(EMC_TOOL_PREPARE)),
+        tool(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
     int tool;
 };
 
 class EMC_TOOL_LOAD:public EMC_TOOL_CMD_MSG {
   public:
-    EMC_TOOL_LOAD():EMC_TOOL_CMD_MSG(EMC_TOOL_LOAD_TYPE,
-				     sizeof(EMC_TOOL_LOAD)) {
-    };
+    EMC_TOOL_LOAD()
+      : EMC_TOOL_CMD_MSG(EMC_TOOL_LOAD_TYPE, sizeof(EMC_TOOL_LOAD))
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
 class EMC_TOOL_UNLOAD:public EMC_TOOL_CMD_MSG {
   public:
-    EMC_TOOL_UNLOAD():EMC_TOOL_CMD_MSG(EMC_TOOL_UNLOAD_TYPE,
-				       sizeof(EMC_TOOL_UNLOAD)) {
-    };
+    EMC_TOOL_UNLOAD()
+      : EMC_TOOL_CMD_MSG(EMC_TOOL_UNLOAD_TYPE, sizeof(EMC_TOOL_UNLOAD))
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
 class EMC_TOOL_LOAD_TOOL_TABLE:public EMC_TOOL_CMD_MSG {
   public:
-    EMC_TOOL_LOAD_TOOL_TABLE():EMC_TOOL_CMD_MSG
-	(EMC_TOOL_LOAD_TOOL_TABLE_TYPE, sizeof(EMC_TOOL_LOAD_TOOL_TABLE)) {
-    };
+    EMC_TOOL_LOAD_TOOL_TABLE()
+      : EMC_TOOL_CMD_MSG(EMC_TOOL_LOAD_TOOL_TABLE_TYPE, sizeof(EMC_TOOL_LOAD_TOOL_TABLE)),
+        file{}
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     char file[LINELEN];		// name of tool table, empty means default
@@ -1301,11 +1563,20 @@ class EMC_TOOL_LOAD_TOOL_TABLE:public EMC_TOOL_CMD_MSG {
 
 class EMC_TOOL_SET_OFFSET:public EMC_TOOL_CMD_MSG {
   public:
-    EMC_TOOL_SET_OFFSET():EMC_TOOL_CMD_MSG(EMC_TOOL_SET_OFFSET_TYPE,
-					   sizeof(EMC_TOOL_SET_OFFSET)) {
-    };
+    EMC_TOOL_SET_OFFSET()
+      : EMC_TOOL_CMD_MSG(EMC_TOOL_SET_OFFSET_TYPE, sizeof(EMC_TOOL_SET_OFFSET)),
+        pocket(0),
+        toolno(0),
+        offset{},
+        diameter(0.0),
+        frontangle(0.0),
+        backangle(0.0),
+        orientation(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     int pocket;
@@ -1319,11 +1590,14 @@ class EMC_TOOL_SET_OFFSET:public EMC_TOOL_CMD_MSG {
 
 class EMC_TOOL_SET_NUMBER:public EMC_TOOL_CMD_MSG {
   public:
-    EMC_TOOL_SET_NUMBER():EMC_TOOL_CMD_MSG(EMC_TOOL_SET_NUMBER_TYPE,
-					   sizeof(EMC_TOOL_SET_NUMBER)) {
-    };
+    EMC_TOOL_SET_NUMBER()
+      : EMC_TOOL_CMD_MSG(EMC_TOOL_SET_NUMBER_TYPE, sizeof(EMC_TOOL_SET_NUMBER)),
+        tool(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     int tool; //number to use for currently loaded tool
@@ -1332,8 +1606,9 @@ class EMC_TOOL_SET_NUMBER:public EMC_TOOL_CMD_MSG {
 // EMC_TOOL status base class
 class EMC_TOOL_STAT_MSG:public RCS_STAT_MSG {
   public:
-    EMC_TOOL_STAT_MSG(NMLTYPE t, size_t s):RCS_STAT_MSG(t, s) {
-    };
+    EMC_TOOL_STAT_MSG(NMLTYPE t, size_t s)
+      : RCS_STAT_MSG(t, s)
+    {};
 
     // For internal NML/CMS use only.
     void update(CMS * cms);
@@ -1345,6 +1620,8 @@ class EMC_TOOL_STAT:public EMC_TOOL_STAT_MSG {
     EMC_TOOL_STAT(const EMC_TOOL_STAT &) = delete; // No copy constructor
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
     EMC_TOOL_STAT& operator =(const EMC_TOOL_STAT &s);	// need this for [] members
 
@@ -1373,11 +1650,17 @@ class EMC_AUX_CMD_MSG:public RCS_CMD_MSG {
 
 class EMC_AUX_INPUT_WAIT:public EMC_AUX_CMD_MSG {
   public:
-    EMC_AUX_INPUT_WAIT():EMC_AUX_CMD_MSG(EMC_AUX_INPUT_WAIT_TYPE,
-					sizeof(EMC_AUX_INPUT_WAIT)) {
-    };
+    EMC_AUX_INPUT_WAIT()
+      : EMC_AUX_CMD_MSG(EMC_AUX_INPUT_WAIT_TYPE, sizeof(EMC_AUX_INPUT_WAIT)),
+        index(0),
+        input_type(0),
+        wait_type(0),
+        timeout(0.0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     int index;			// input channel to wait for
@@ -1394,6 +1677,8 @@ class EMC_AUX_STAT_MSG:public RCS_STAT_MSG {
     };
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
@@ -1402,6 +1687,8 @@ class EMC_AUX_STAT:public EMC_AUX_STAT_MSG {
     EMC_AUX_STAT();
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     int estop;			// non-zero means estopped
@@ -1412,8 +1699,10 @@ class EMC_AUX_STAT:public EMC_AUX_STAT_MSG {
 // EMC_SPINDLE command base class
 class EMC_SPINDLE_CMD_MSG:public RCS_CMD_MSG {
   public:
-    EMC_SPINDLE_CMD_MSG(NMLTYPE t, size_t s):RCS_CMD_MSG(t, s) {
-    };
+    EMC_SPINDLE_CMD_MSG(NMLTYPE t, size_t s)
+      : RCS_CMD_MSG(t, s),
+        spindle(0)
+    {};
 
     // For internal NML/CMS use only.
     void update(CMS * cms);
@@ -1423,11 +1712,17 @@ class EMC_SPINDLE_CMD_MSG:public RCS_CMD_MSG {
 
 class EMC_SPINDLE_SPEED:public EMC_SPINDLE_CMD_MSG {
   public:
-    EMC_SPINDLE_SPEED():EMC_SPINDLE_CMD_MSG(EMC_SPINDLE_SPEED_TYPE,
-					    sizeof(EMC_SPINDLE_SPEED)) {
-    };
+    EMC_SPINDLE_SPEED()
+      : EMC_SPINDLE_CMD_MSG(EMC_SPINDLE_SPEED_TYPE, sizeof(EMC_SPINDLE_SPEED)),
+        spindle(0),
+        speed(0.0),
+        factor(0.0),
+        xoffset(0.0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     int spindle;
@@ -1438,11 +1733,16 @@ class EMC_SPINDLE_SPEED:public EMC_SPINDLE_CMD_MSG {
 
 class EMC_SPINDLE_ORIENT:public EMC_SPINDLE_CMD_MSG {
   public:
-    EMC_SPINDLE_ORIENT():EMC_SPINDLE_CMD_MSG(EMC_SPINDLE_ORIENT_TYPE,
-					    sizeof(EMC_SPINDLE_ORIENT)) {
-    };
+    EMC_SPINDLE_ORIENT()
+      : EMC_SPINDLE_CMD_MSG(EMC_SPINDLE_ORIENT_TYPE, sizeof(EMC_SPINDLE_ORIENT)),
+        spindle(0),
+        orientation(0.0),
+        mode(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     int spindle;
@@ -1452,11 +1752,15 @@ class EMC_SPINDLE_ORIENT:public EMC_SPINDLE_CMD_MSG {
 
 class EMC_SPINDLE_WAIT_ORIENT_COMPLETE:public EMC_SPINDLE_CMD_MSG {
   public:
-    EMC_SPINDLE_WAIT_ORIENT_COMPLETE():EMC_SPINDLE_CMD_MSG(EMC_SPINDLE_WAIT_ORIENT_COMPLETE_TYPE,
-					    sizeof(EMC_SPINDLE_WAIT_ORIENT_COMPLETE)) {
-    };
+    EMC_SPINDLE_WAIT_ORIENT_COMPLETE()
+      : EMC_SPINDLE_CMD_MSG(EMC_SPINDLE_WAIT_ORIENT_COMPLETE_TYPE, sizeof(EMC_SPINDLE_WAIT_ORIENT_COMPLETE)),
+        spindle(0),
+        timeout(0.0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     int spindle;
@@ -1466,12 +1770,18 @@ class EMC_SPINDLE_WAIT_ORIENT_COMPLETE:public EMC_SPINDLE_CMD_MSG {
 
 class EMC_SPINDLE_ON:public EMC_SPINDLE_CMD_MSG {
   public:
-    EMC_SPINDLE_ON():EMC_SPINDLE_CMD_MSG(EMC_SPINDLE_ON_TYPE,
-					 sizeof(EMC_SPINDLE_ON)),
-	speed(0), factor(0), xoffset(0), wait_for_spindle_at_speed(1)  {
-    };
+    EMC_SPINDLE_ON()
+      : EMC_SPINDLE_CMD_MSG(EMC_SPINDLE_ON_TYPE, sizeof(EMC_SPINDLE_ON)),
+	spindle(0),
+        speed(0),
+        factor(0),
+        xoffset(0),
+        wait_for_spindle_at_speed(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     int spindle;    // the spindle to be turned on
@@ -1483,11 +1793,14 @@ class EMC_SPINDLE_ON:public EMC_SPINDLE_CMD_MSG {
 
 class EMC_SPINDLE_OFF:public EMC_SPINDLE_CMD_MSG {
   public:
-    EMC_SPINDLE_OFF():EMC_SPINDLE_CMD_MSG(EMC_SPINDLE_OFF_TYPE,
-					  sizeof(EMC_SPINDLE_OFF)) {
-    };
+    EMC_SPINDLE_OFF()
+      : EMC_SPINDLE_CMD_MSG(EMC_SPINDLE_OFF_TYPE, sizeof(EMC_SPINDLE_OFF)),
+        spindle(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     int spindle;    // the spindle to be turned off
@@ -1495,12 +1808,15 @@ class EMC_SPINDLE_OFF:public EMC_SPINDLE_CMD_MSG {
 
 class EMC_SPINDLE_INCREASE:public EMC_SPINDLE_CMD_MSG {
   public:
-    EMC_SPINDLE_INCREASE():EMC_SPINDLE_CMD_MSG(EMC_SPINDLE_INCREASE_TYPE,
-					       sizeof
-					       (EMC_SPINDLE_INCREASE)) {
-    };
+    EMC_SPINDLE_INCREASE()
+      : EMC_SPINDLE_CMD_MSG(EMC_SPINDLE_INCREASE_TYPE, sizeof(EMC_SPINDLE_INCREASE)),
+        spindle(0),
+        speed(0.0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
     int spindle;        // the spindle to be increased
     double speed;		// commanded speed in RPMs
@@ -1508,12 +1824,15 @@ class EMC_SPINDLE_INCREASE:public EMC_SPINDLE_CMD_MSG {
 
 class EMC_SPINDLE_DECREASE:public EMC_SPINDLE_CMD_MSG {
   public:
-    EMC_SPINDLE_DECREASE():EMC_SPINDLE_CMD_MSG(EMC_SPINDLE_DECREASE_TYPE,
-					       sizeof
-					       (EMC_SPINDLE_DECREASE)) {
-    };
+    EMC_SPINDLE_DECREASE()
+      : EMC_SPINDLE_CMD_MSG(EMC_SPINDLE_DECREASE_TYPE, sizeof(EMC_SPINDLE_DECREASE)),
+        spindle(0),
+        speed(0.0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     int spindle;        // the spindle to be decreased
@@ -1522,12 +1841,15 @@ class EMC_SPINDLE_DECREASE:public EMC_SPINDLE_CMD_MSG {
 
 class EMC_SPINDLE_CONSTANT:public EMC_SPINDLE_CMD_MSG {
   public:
-    EMC_SPINDLE_CONSTANT():EMC_SPINDLE_CMD_MSG(EMC_SPINDLE_CONSTANT_TYPE,
-					       sizeof
-					       (EMC_SPINDLE_CONSTANT)) {
-    };
+    EMC_SPINDLE_CONSTANT()
+      : EMC_SPINDLE_CMD_MSG(EMC_SPINDLE_CONSTANT_TYPE, sizeof(EMC_SPINDLE_CONSTANT)),
+        spindle(0),
+        speed(0.0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     int spindle;        // the spindle to be constanted?
@@ -1536,12 +1858,14 @@ class EMC_SPINDLE_CONSTANT:public EMC_SPINDLE_CMD_MSG {
 
 class EMC_SPINDLE_BRAKE_RELEASE:public EMC_SPINDLE_CMD_MSG {
   public:
-    EMC_SPINDLE_BRAKE_RELEASE():EMC_SPINDLE_CMD_MSG
-	(EMC_SPINDLE_BRAKE_RELEASE_TYPE,
-	 sizeof(EMC_SPINDLE_BRAKE_RELEASE)) {
-    };
+    EMC_SPINDLE_BRAKE_RELEASE()
+      : EMC_SPINDLE_CMD_MSG(EMC_SPINDLE_BRAKE_RELEASE_TYPE, sizeof(EMC_SPINDLE_BRAKE_RELEASE)),
+        spindle(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     int spindle;
@@ -1549,11 +1873,14 @@ class EMC_SPINDLE_BRAKE_RELEASE:public EMC_SPINDLE_CMD_MSG {
 
 class EMC_SPINDLE_BRAKE_ENGAGE:public EMC_SPINDLE_CMD_MSG {
   public:
-    EMC_SPINDLE_BRAKE_ENGAGE():EMC_SPINDLE_CMD_MSG
-	(EMC_SPINDLE_BRAKE_ENGAGE_TYPE, sizeof(EMC_SPINDLE_BRAKE_ENGAGE)) {
-    };
+    EMC_SPINDLE_BRAKE_ENGAGE()
+      : EMC_SPINDLE_CMD_MSG(EMC_SPINDLE_BRAKE_ENGAGE_TYPE, sizeof(EMC_SPINDLE_BRAKE_ENGAGE)),
+        spindle(0)
+    {};
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     int spindle;
@@ -1579,6 +1906,8 @@ class EMC_COOLANT_MIST_ON:public EMC_COOLANT_CMD_MSG {
     };
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
@@ -1590,6 +1919,8 @@ class EMC_COOLANT_MIST_OFF:public EMC_COOLANT_CMD_MSG {
     };
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
@@ -1601,6 +1932,8 @@ class EMC_COOLANT_FLOOD_ON:public EMC_COOLANT_CMD_MSG {
     };
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
@@ -1612,6 +1945,8 @@ class EMC_COOLANT_FLOOD_OFF:public EMC_COOLANT_CMD_MSG {
     };
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 };
 
@@ -1630,6 +1965,8 @@ class EMC_COOLANT_STAT:public EMC_COOLANT_STAT_MSG {
     EMC_COOLANT_STAT();
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     int mist;			// 0 off, 1 on
@@ -1647,8 +1984,15 @@ class EMC_IO_STAT_MSG:public RCS_STAT_MSG {
 
 class EMC_IO_STAT:public EMC_IO_STAT_MSG {
   public:
-    EMC_IO_STAT():EMC_IO_STAT_MSG(EMC_IO_STAT_TYPE, sizeof(EMC_IO_STAT)) {
-    };
+    EMC_IO_STAT()
+      : EMC_IO_STAT_MSG(EMC_IO_STAT_TYPE, sizeof(EMC_IO_STAT)),
+        debug(0),
+        reason(0),
+        fault(0),
+        tool(),
+        coolant(),
+        aux()
+    {};
 
     // For internal NML/CMS use only.
     void update(CMS * cms);
@@ -1692,6 +2036,8 @@ class EMC_STAT:public EMC_STAT_MSG {
     EMC_STAT();
 
     // For internal NML/CMS use only.
+    // Sub-class update() calls base-class update()
+    // cppcheck-suppress duplInheritedMember
     void update(CMS * cms);
 
     // the top-level EMC_TASK status class

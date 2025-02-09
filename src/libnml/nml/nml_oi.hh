@@ -35,8 +35,10 @@
 
 class NML_ERROR:public NMLmsg {
   public:
-    NML_ERROR():NMLmsg(NML_ERROR_TYPE, sizeof(NML_ERROR)) {
-    };
+    NML_ERROR()
+      : NMLmsg(NML_ERROR_TYPE, sizeof(NML_ERROR)),
+        error{}
+    {};
     ~NML_ERROR() {
     };
 
@@ -46,8 +48,10 @@ class NML_ERROR:public NMLmsg {
 
 class NML_TEXT:public NMLmsg {
   public:
-    NML_TEXT():NMLmsg(NML_TEXT_TYPE, sizeof(NML_TEXT)) {
-    };
+    NML_TEXT()
+      : NMLmsg(NML_TEXT_TYPE, sizeof(NML_TEXT)),
+        text{}
+    {};
     ~NML_TEXT() {
     };
 
@@ -57,8 +61,10 @@ class NML_TEXT:public NMLmsg {
 
 class NML_DISPLAY:public NMLmsg {
   public:
-    NML_DISPLAY():NMLmsg(NML_DISPLAY_TYPE, sizeof(NML_DISPLAY)) {
-    };
+    NML_DISPLAY()
+      : NMLmsg(NML_DISPLAY_TYPE, sizeof(NML_DISPLAY)),
+        display{}
+    {};
     ~NML_DISPLAY() {
     };
 

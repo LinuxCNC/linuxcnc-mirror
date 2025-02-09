@@ -1607,11 +1607,6 @@ int CMS::set_subdivision(int _subdiv)
     return (0);
 }
 
-// This constructor declared private to prevent copying.
-CMS::CMS(CMS & /*cms*/)
-{
-}
-
 int
   CMS::get_msg_count()
 {

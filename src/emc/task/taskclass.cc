@@ -130,7 +130,8 @@ struct _inittab builtin_modules[] = {
 Task::Task(EMC_IO_STAT & emcioStatus_in) :
     emcioStatus(emcioStatus_in),
     iocontrol("iocontrol.0"),
-    ini_filename(emc_inifile)
+    ini_filename(emc_inifile),
+    tool_status(0)
     {
 
     IniFile inifile;

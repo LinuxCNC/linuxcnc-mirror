@@ -541,6 +541,7 @@ FeedRotaryButton::FeedRotaryButton(const KeyCode& keyCode,
     mStepMode(stepMode),
     mIsPermitted(false),
     mStepSize(0),
+    mIsStepMode_5_10(false),
     mEventListener(listener)
 {
     (void)mEventListener;

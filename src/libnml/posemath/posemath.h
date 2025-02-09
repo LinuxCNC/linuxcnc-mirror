@@ -403,8 +403,11 @@ struct PM_LINE {
 
 struct PM_CIRCLE {
     /* ctors/dtors */
-    PM_CIRCLE() {
-    };
+    PM_CIRCLE()
+      : radius(0.0),
+        angle(0.0),
+        spiral(0.0)
+    {};
 #ifdef INCLUDE_POSEMATH_COPY_CONSTRUCTORS
     PM_CIRCLE(PM_CCONST PM_CIRCLE &);
 #endif

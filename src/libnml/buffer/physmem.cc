@@ -28,31 +28,31 @@ extern "C" {
 #include "physmem.hh"		/* class PHYSMEM_HANDLE */
 #include "rcs_print.hh"
 PHYSMEM_HANDLE::PHYSMEM_HANDLE()
+  : offset(0),
+    size(0),
+    address_code(0),
+    isvalid(1),
+    temp_buf(NULL),
+    physical_address(0),
+    local_address(NULL),
+    using_bit3(0),
+    total_bytes_moved(0.0),
+    enable_byte_counting(0)
 {
-    size = 0;
-    offset = 0;
-    temp_buf = NULL;
-    local_address = (LOCAL_ADDRESS_TYPE) NULL;
-    physical_address = 0;
-    using_bit3 = 0;
-    isvalid = 1;
-    total_bytes_moved = 0;
-    enable_byte_counting = 0;
-
 }
 
-PHYSMEM_HANDLE::PHYSMEM_HANDLE(unsigned long _physical_address,
-    long _address_code, long _size)
+PHYSMEM_HANDLE::PHYSMEM_HANDLE(unsigned long _physical_address, long _address_code, long _size)
+  : offset(0),
+    size(_size),
+    address_code(_address_code),
+    isvalid(1),
+    temp_buf(NULL),
+    physical_address(_physical_address),
+    local_address(NULL),
+    using_bit3(0),
+    total_bytes_moved(0.0),
+    enable_byte_counting(0)
 {
-    temp_buf = NULL;
-    physical_address = _physical_address;
-    size = _size;
-    address_code = _address_code;
-    local_address = (LOCAL_ADDRESS_TYPE) NULL;
-    isvalid = 1;
-    offset = 0;
-    using_bit3 = 0;
-
     if (0 == physical_address) {
 	local_address = (LOCAL_ADDRESS_TYPE) NULL;
 	return;

@@ -55,7 +55,22 @@ static inline bool not_zero(double x)
 
 /* Constructor for hard coded tests. */
 SHMEM::SHMEM(const char * /*n*/, long s, int /*nt*/, key_t k, int m)
-  : CMS(s), fast_mode(0), key(k), bsem_key(-1), shm(NULL), sem(NULL), master(m)
+  : CMS(s),
+    fast_mode(0),
+    key(k),
+    bsem_key(-1),
+    second_read(0),
+    shm(NULL),
+    sem(NULL),
+    master(m),
+    sem_delay(0.00001),
+    mao{},
+    use_os_sem(1),
+    use_os_sem_only(1),
+    mutex_type(OS_SEM_MUTEX),
+    shm_addr_offset(NULL),
+    bsem(NULL),
+    autokey_table_size(0)
 {
     /* open the shared mem buffer and create mutual exclusion semaphore */
     open();
@@ -63,9 +78,20 @@ SHMEM::SHMEM(const char * /*n*/, long s, int /*nt*/, key_t k, int m)
 
 /* Constructor for use with cms_config. */
 SHMEM::SHMEM(const char *bufline, const char *procline, int set_to_server, int set_to_master)
-  : CMS(bufline, procline, set_to_server), bsem_key(-1),
-    second_read(0), shm(NULL), sem(NULL), sem_delay(0.00001),
-    use_os_sem(1), use_os_sem_only(1), mutex_type(OS_SEM_MUTEX)
+  : CMS(bufline, procline, set_to_server),
+    fast_mode(0),
+    bsem_key(-1),
+    second_read(0),
+    shm(NULL),
+    sem(NULL),
+    sem_delay(0.00001),
+    mao{},
+    use_os_sem(1),
+    use_os_sem_only(1),
+    mutex_type(OS_SEM_MUTEX),
+    shm_addr_offset(NULL),
+    bsem(NULL),
+    autokey_table_size(0)
 {
     /* Set pointers to null so only properly opened pointers are closed. */
     char *semdelay_equation;

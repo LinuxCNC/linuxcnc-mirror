@@ -76,8 +76,8 @@ public:
 
 private:
     PythonPlugin(struct _inittab *inittab);       // nb: no public constructor
-    PythonPlugin(const PythonPlugin &) {};        // not copyable
-    PythonPlugin & operator=(const PythonPlugin&) { return *this; };  // not assignable
+    PythonPlugin(const PythonPlugin &) = delete;        // not copyable
+    PythonPlugin & operator=(const PythonPlugin&) = delete;  // not assignable
     ~PythonPlugin() {};
 
     int reload();

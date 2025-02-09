@@ -90,8 +90,9 @@ class LinkedList {
     LinkedList();
     ~LinkedList();
 
-  private:
-    LinkedList(LinkedList & list);	// Don't copy me.
+    // Don't copy me.
+    LinkedList(const LinkedList & ll) = delete;
+    LinkedList& operator=(const LinkedList & ll) = delete;
 };
 
 #endif /* LINKED_LIST_HH */

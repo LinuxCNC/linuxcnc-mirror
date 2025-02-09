@@ -67,7 +67,7 @@ static char the_command_args[LINELEN] = { 0 };	// just the args part
 
 class Canterp : public InterpBase {
 public:
-    Canterp () : f(0) {}
+    Canterp () : f(0), filename{} {}
     char *error_text(int errcode, char *buf, size_t buflen) override;
     char *stack_name(int index, char *buf, size_t buflen) override;
     char *line_text(char *buf, size_t buflen) override;

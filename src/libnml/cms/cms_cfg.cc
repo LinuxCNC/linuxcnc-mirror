@@ -69,9 +69,10 @@ extern "C" {
 #include "linklist.hh"		/* LinkedList */
 
 struct CONFIG_FILE_INFO {
-    CONFIG_FILE_INFO() {
-	lines_list = NULL;
-    };
+    CONFIG_FILE_INFO()
+      : lines_list(NULL),
+        file_name{}
+    {};
 
     ~CONFIG_FILE_INFO() {
 	if (NULL != lines_list) {

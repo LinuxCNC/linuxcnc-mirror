@@ -206,7 +206,10 @@ class NML:public virtual CMS_USER {
     CMS *cms_for_msg_string_conversions;
     int registered_with_server;
 
-      NML(NML & nml);		// Don't copy me.
+  public:
+    // Don't copy me.
+    NML(const NML & nml) = delete;
+    NML& operator=(const NML & nml) = delete;
 };
 
 extern LinkedList *NML_Main_Channel_List;

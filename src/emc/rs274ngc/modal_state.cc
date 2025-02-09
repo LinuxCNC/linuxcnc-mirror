@@ -28,6 +28,7 @@ StateTag::StateTag(): flags(0)
     memset(fields,-1,sizeof(fields));
     packed_flags = 0;
     memset(fields_float,-1,sizeof(fields_float));
+    memset(filename, 0, sizeof(filename));
 }
 
 StateTag::StateTag(struct state_tag_t const & basetag):

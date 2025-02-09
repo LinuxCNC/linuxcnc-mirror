@@ -2398,11 +2398,6 @@ NMLTYPE NML::peek_subdivision(int subdiv)
     return peek();
 }
 
-// This constructor declared private to prevent copying.
-NML::NML(NML & /*nml*/)
-{
-}
-
 NMLTYPE NML::blocking_read_extended(double timeout, double poll_interval)
 {
     if (cms == NULL) {

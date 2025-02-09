@@ -48,8 +48,9 @@ int RCS_CMD_MSG_format(NMLTYPE t, void *buf, CMS * cms)
     return (0);
 }
 
-RCS_GENERIC_CMD::RCS_GENERIC_CMD():
-RCS_CMD_MSG(RCS_GENERIC_CMD_TYPE, sizeof(RCS_GENERIC_CMD))
+RCS_GENERIC_CMD::RCS_GENERIC_CMD()
+  : RCS_CMD_MSG(RCS_GENERIC_CMD_TYPE, sizeof(RCS_GENERIC_CMD)),
+    gen_id(0)
 {
 // Just avoiding an inline function.
 }

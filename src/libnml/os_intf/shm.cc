@@ -83,8 +83,3 @@ int
 	return rcs_shm_nattch(shm);
     }
 }
-
-// This constructor declared private to prevent copying
-RCS_SHAREDMEM::RCS_SHAREDMEM(RCS_SHAREDMEM & /*shm*/)
-{
-}

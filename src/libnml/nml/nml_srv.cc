@@ -109,9 +109,9 @@ void NML_SERVER::delete_from_list()
     }
 }
 
-NML_SERVER_LOCAL_PORT::NML_SERVER_LOCAL_PORT(NML * _nml):CMS_SERVER_LOCAL_PORT((CMS
-	*)
-    NULL)
+NML_SERVER_LOCAL_PORT::NML_SERVER_LOCAL_PORT(NML * _nml)
+  : CMS_SERVER_LOCAL_PORT((CMS *)NULL),
+    batch_list_id(0)
 {
     local_channel_reused = 1;
     nml = _nml;

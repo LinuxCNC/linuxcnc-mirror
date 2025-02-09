@@ -23,11 +23,13 @@ extern "C" {
 #endif
 #include "linklist.hh"		/* class LinkedList */
 LinkedListNode::LinkedListNode(void *_data, size_t _size)
+  : data(_data),
+    size(_size),
+    id(0),
+    copied(0),
+    next(NULL),
+    last(NULL)
 {
-    data = _data;
-    size = _size;
-    next = (LinkedListNode *) NULL;
-    last = (LinkedListNode *) NULL;
 }
 
 LinkedListNode::~LinkedListNode()
@@ -35,20 +37,21 @@ LinkedListNode::~LinkedListNode()
 }
 
 LinkedList::LinkedList()
+  : head(NULL),
+    tail(NULL),
+    current_node(NULL),
+    next_node_id(0),
+    list_size(0),
+    max_list_size(0),
+    sizing_mode(NO_MAXIMUM_SIZE),
+    last_size_retrieved(0),
+    delete_data_not_copied(0),
+    last_data_retrieved(NULL),
+    last_copied_retrieved(0),
+    last_size_stored(0),
+    last_data_stored(NULL)
 {
-    head = (LinkedListNode *) NULL;
-    tail = (LinkedListNode *) NULL;
-    current_node = (LinkedListNode *) NULL;
-    extra_node = (LinkedListNode *) NULL;
-    last_data_retrieved = NULL;
-    last_size_retrieved = 0;
-    last_copied_retrieved = 0;
-    list_size = 0;
-    next_node_id = 1;
-    delete_data_not_copied = 0;
     extra_node = new LinkedListNode(NULL, 0);
-    max_list_size = 0;
-    sizing_mode = NO_MAXIMUM_SIZE;
 }
 
 LinkedList::~LinkedList()
@@ -774,9 +777,4 @@ int LinkedList::get_current_id()
 	return (-1);
     }
     return (current_node->id);
-}
-
-// Constructor defined private to prevent copying.
-LinkedList::LinkedList(LinkedList & /*list*/)
-{
 }

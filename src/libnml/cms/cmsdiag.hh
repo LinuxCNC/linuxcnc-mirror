@@ -20,6 +20,13 @@ class LinkedList;
 
 class CMS_DIAG_STATIC_PROC_INFO {
   public:
+    CMS_DIAG_STATIC_PROC_INFO()
+      : name{},
+        host_sysinfo{},
+        pid(0),
+        rcslib_ver(0.0)
+    {};
+
     char name[16];		// process name
     char host_sysinfo[32];
     long pid;			/* Process, Thread or Task Id. */
@@ -29,6 +36,22 @@ class CMS_DIAG_STATIC_PROC_INFO {
 
 class CMS_DIAG_PROC_INFO:public CMS_DIAG_STATIC_PROC_INFO {
   public:
+    CMS_DIAG_PROC_INFO()
+      : CMS_DIAG_STATIC_PROC_INFO(),
+        access_type(CMS_ZERO_ACCESS),
+        msg_id(0),
+        msg_size(0),
+        msg_type(0),
+        number_of_accesses(0),
+        number_of_new_messages(0),
+        bytes_moved(0.0),
+        bytes_moved_across_socket(0.0),
+        last_access_time(0.0),
+        first_access_time(0.0),
+        max_difference(0.0),
+        min_difference(0.0)
+    {};
+
     CMS_INTERNAL_ACCESS_TYPE access_type;	/* access type of last
 						   operation */
     long msg_id;		/* id of the message written or at time of

@@ -26,6 +26,11 @@ class RCS_SHAREDMEM {
   public:
     RCS_SHAREDMEM(key_t key, size_t size, int oflag, int mode = 0);
      ~RCS_SHAREDMEM();
+
+    // Don't copy me.
+    RCS_SHAREDMEM(const RCS_SHAREDMEM & shm) = delete;
+    RCS_SHAREDMEM& operator=(const RCS_SHAREDMEM & shm) = delete;
+
     int nattch();		/* how many processes are attached */
     int create_errno;		/* 0 or stored errno after shmget failed */
     void *addr;			/* pointer to shared memory */
@@ -35,9 +40,6 @@ class RCS_SHAREDMEM {
       shm_t * shm;
   public:
     int created;
-
-  private:
-      RCS_SHAREDMEM(RCS_SHAREDMEM & shm);	// Don't copy me.
 };
 
 #endif

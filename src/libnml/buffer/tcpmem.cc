@@ -51,22 +51,38 @@ void tcpmem_sigpipe_handler(int sig)
     tcpmem_sigpipe_count++;
 }
 
-TCPMEM::TCPMEM(const char *_bufline, const char *_procline):CMS(_bufline, _procline)
+TCPMEM::TCPMEM(const char *_bufline, const char *_procline)
+  : CMS(_bufline, _procline),
+    diag_info_buf{},
+    recvd_bytes(0),
+    serial_number(0),
+    returned_serial_number(0),
+    subscription_type(CMS_NO_SUBSCRIPTION),
+    poll_interval_millis(30000),
+    server_host_entry(NULL),
+    socket_fd(0),
+    temp_buffer{},
+    timedout_request(),
+    bytes_to_throw_away(0),
+    write_socket_fd(0),
+    read_socket_fd(0),
+    write_serial_number(0),
+    read_serial_number(0),
+    timedout_request_status(CMS_STATUS_NOT_SET),
+    timedout_request_writeid(0),
+    max_consecutive_timeouts(DEFAULT_MAX_CONSECUTIVE_TIMEOUTS),
+    waiting_for_message(0),
+    waiting_message_size(0),
+    waiting_message_id(0),
+    autoreconnect(1),
+    reconnect_needed(0),
+    sigpipe_count(0),
+    old_handler((void (*)(int))SIG_ERR),
+    subscription_count(0)
 {
-    max_consecutive_timeouts = DEFAULT_MAX_CONSECUTIVE_TIMEOUTS;
     char *max_consecutive_timeouts_string;
     max_consecutive_timeouts_string = strstr(ProcessLine, "max_timeouts=");
     polling = (NULL != strstr(proclineupper, "POLL"));
-    socket_fd = 0;
-    reconnect_needed = 0;
-    autoreconnect = 1;
-    old_handler = (void (*)(int)) SIG_ERR;
-    sigpipe_count = 0;
-    subscription_count = 0;
-    read_serial_number = 0;
-    write_serial_number = 0;
-    read_socket_fd = 0;
-    write_socket_fd = 0;
     if (NULL != max_consecutive_timeouts_string) {
 	max_consecutive_timeouts_string += strlen("max_timeouts=");
 	if (!strncmp(max_consecutive_timeouts_string, "INF", 3)) {
@@ -78,8 +94,6 @@ TCPMEM::TCPMEM(const char *_bufline, const char *_procline):CMS(_bufline, _procl
     }
 
     char *sub_info_string = NULL;
-    poll_interval_millis = 30000;
-    subscription_type = CMS_NO_SUBSCRIPTION;
     sub_info_string = strstr(ProcessLine, "sub=");
     if (NULL != sub_info_string) {
 	if (!strncmp(sub_info_string + 4, "none", 4)) {
@@ -95,7 +109,6 @@ TCPMEM::TCPMEM(const char *_bufline, const char *_procline):CMS(_bufline, _procl
     if (NULL != strstr(ProcessLine, "noreconnect")) {
 	autoreconnect = 0;
     }
-    server_host_entry = NULL;
 
     /* Set up the socket address structure. */
     memset(&server_socket_address, 0, sizeof(server_socket_address));
@@ -344,7 +357,8 @@ CMS_DIAGNOSTICS_INFO *TCPMEM::get_diagnostics_info()
 	int dpi_offset = 32;
 	CMS_DIAG_PROC_INFO cms_dpi;
 	for (int i = 0; i < dpi_count && dpi_offset < dpi_max_size; i++) {
-	    memset(&cms_dpi, 0, sizeof(CMS_DIAG_PROC_INFO));
+	    // Cleared in constructor
+	    // memset(&cms_dpi, 0, sizeof(CMS_DIAG_PROC_INFO));
 	    memcpy(cms_dpi.name, temp_buffer + dpi_offset, 16);
 	    dpi_offset += 16;
 	    memcpy(cms_dpi.host_sysinfo, temp_buffer + dpi_offset, 32);

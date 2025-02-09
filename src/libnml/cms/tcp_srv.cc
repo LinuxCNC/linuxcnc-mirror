@@ -129,33 +129,31 @@ TCPSVR_BLOCKING_READ_REQUEST::~TCPSVR_BLOCKING_READ_REQUEST()
     }
 }
 
-CMS_SERVER_REMOTE_TCP_PORT::CMS_SERVER_REMOTE_TCP_PORT(CMS_SERVER * _cms_server):
-CMS_SERVER_REMOTE_PORT(_cms_server)
+CMS_SERVER_REMOTE_TCP_PORT::CMS_SERVER_REMOTE_TCP_PORT(CMS_SERVER * _cms_server)
+  : CMS_SERVER_REMOTE_PORT(_cms_server),
+    dtimeout(20.0),
+    read_fd_set{},
+    write_fd_set{},
+    maxfdpl(0),
+    subscription_buffers(NULL),
+    connection_socket(0),
+    connection_port(0),
+    request(NULL),
+    temp_buffer{},
+    current_poll_interval_millis(30000),
+    polling_enabled(0),
+    select_timeout{.tv_sec = 30, .tv_usec = 30}
 {
-    client_ports = (LinkedList *) NULL;
-    connection_socket = 0;
-    connection_port = 0;
-    maxfdpl = 0;
-    dtimeout = 20.0;
-
     memset(&server_socket_address, 0, sizeof(server_socket_address));
     server_socket_address.sin_family = AF_INET;
     server_socket_address.sin_addr.s_addr = htonl(INADDR_ANY);
-    server_socket_address.sin_port = 0;
+    //server_socket_address.sin_port = 0;
 
     client_ports = new LinkedList;
     if (NULL == client_ports) {
 	rcs_print_error("Can not create linked list for client ports.\n");
 	return;
     }
-    polling_enabled = 0;
-    memset(&select_timeout, 0, sizeof(select_timeout));
-    select_timeout.tv_sec = 30;
-    select_timeout.tv_usec = 30;
-    subscription_buffers = NULL;
-    current_poll_interval_millis = 30000;
-    memset(&read_fd_set, 0, sizeof(read_fd_set));
-    memset(&write_fd_set, 0, sizeof(write_fd_set));
 }
 
 CMS_SERVER_REMOTE_TCP_PORT::~CMS_SERVER_REMOTE_TCP_PORT()
@@ -1778,20 +1776,22 @@ TCP_CLIENT_SUBSCRIPTION_INFO::~TCP_CLIENT_SUBSCRIPTION_INFO()
 }
 
 CLIENT_TCP_PORT::CLIENT_TCP_PORT()
+  : serial_number(0),
+    errors(0),
+    max_errors(50),
+    socket_fd(-1),
+    subscriptions(NULL),
+    tid(-1),
+    pid(-1),
+    blocking(0),
+    threadId(0),
+    blocking_read_req(NULL),
+    diag_info(NULL)
 {
-    serial_number = 0;
-    errors = 0;
-    max_errors = 50;
-    address.sin_port = 0;
+    memset(&address, 0, sizeof(address));
+    //address.sin_port = 0;
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = htonl(INADDR_ANY);
-    socket_fd = -1;
-    subscriptions = NULL;
-    tid = -1;
-    pid = -1;
-    blocking_read_req = NULL;
-    threadId = 0;
-    diag_info = NULL;
 }
 
 CLIENT_TCP_PORT::~CLIENT_TCP_PORT()

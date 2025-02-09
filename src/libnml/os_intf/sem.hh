@@ -52,6 +52,11 @@ class RCS_SEMAPHORE {
        The _state will be ignored if the process is not creating the
        semaphore. */
      ~RCS_SEMAPHORE();
+
+    // Don't copy me.
+    RCS_SEMAPHORE(const RCS_SEMAPHORE & sem) = delete;
+    RCS_SEMAPHORE& operator=(const RCS_SEMAPHORE & sem) = delete;
+
     int wait();
     /* Wait for the semaphore to be available and then take it. See the
        constructors parameters for several options affecting its behavior.
@@ -85,10 +90,6 @@ class RCS_SEMAPHORE {
     int state;
     rcs_sem_t *sem;
     unsigned int sval;
-
-  private:
-      RCS_SEMAPHORE(RCS_SEMAPHORE & sem);	// Don't copy me.
-
 };
 
 #endif

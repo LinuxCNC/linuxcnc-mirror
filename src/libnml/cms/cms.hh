@@ -182,6 +182,10 @@ class CMS {
       CMS(const char *bufline, const char *procline, int set_to_server = 0);
       virtual ~ CMS();
 
+    // Don't copy me.
+    CMS(const CMS & cms) = delete;
+    CMS& operator=(const CMS & cms) = delete;
+
     /* Simple read/write interface functions. */
     virtual CMS_STATUS clear();	/* Has the buffer been read recently? */
     virtual int check_if_read();	/* Has the buffer been read recently? 
@@ -477,10 +481,6 @@ class CMS {
     int last_id_side1;
     int use_autokey_for_connection_number;
     /* RCS_CMD_MSG, RCS_STAT_MSG stuff */
-
-  private:
-      CMS(CMS & cms);		// Don't copy me.
-
 };
 
 class CMS_HOST_ALIAS_ENTRY {

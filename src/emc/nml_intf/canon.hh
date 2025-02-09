@@ -150,7 +150,28 @@ typedef struct {
 } CanonSpindle_t;
 
 typedef struct CanonConfig_t {
-    CanonConfig_t() : rotary_unlock_for_traverse(-1) {}
+    CanonConfig_t()
+        : xy_rotation(0.0),
+          rotary_unlock_for_traverse(-1),
+          g5xOffset{},
+          g92Offset{},
+          endPoint{},
+          lengthUnits(CANON_UNITS_INCHES),
+          activePlane(CANON_PLANE::XY),
+          toolOffset{},
+          motionMode(CANON_EXACT_STOP),
+          motionTolerance(0.0),
+          naivecamTolerance(0.0),
+          feed_mode(0),
+          spindle_num(0),
+          spindle{},
+          linearFeedRate(0.0),
+          angularFeedRate(0.0),
+          optional_program_stop(false),
+          block_delete(false),
+          cartesian_move(0),
+          angular_move(0)
+    {}
 
     double xy_rotation;
     int rotary_unlock_for_traverse; // jointnumber or -1

@@ -98,16 +98,20 @@ CMS_USER_CONNECT_STRUCT::CMS_USER_CONNECT_STRUCT()
 LinkedList *cms_server_list = NULL;
 
 CMS_SERVER_LOCAL_PORT::CMS_SERVER_LOCAL_PORT(CMS * _cms)
+  : list_id(0),
+    orig_info(NULL),
+    read_reply(),
+    write_reply(),
+    namereply(),
+    get_diag_info_reply(),
+    local_channel_reused(1)
 {
-    local_channel_reused = 1;
     cms = _cms;
-    orig_info = NULL;
     if (NULL != cms) {
 	buffer_number = cms->buffer_number;
     } else {
 	buffer_number = 0;
     }
-    list_id = 0;
 };
 
 CMS_SERVER_LOCAL_PORT::~CMS_SERVER_LOCAL_PORT()
@@ -160,19 +164,20 @@ void CMS_SERVER_LOCAL_PORT::reset_diag_info()
 {
 }
 
-CMS_SERVER_REMOTE_PORT::CMS_SERVER_REMOTE_PORT(CMS_SERVER *
-    _cms_server_parent)
+CMS_SERVER_REMOTE_PORT::CMS_SERVER_REMOTE_PORT(CMS_SERVER *_cms_server_parent)
+  : port_registered(0),
+    current_user_info(NULL),
+    connected_users(NULL),
+    current_connected_user_struct(NULL),
+    cms_server_parent(_cms_server_parent),
+    min_compatible_version(0.0),
+    confirm_write(0),
+    running(0),
+    max_total_subdivisions(_cms_server_parent->max_total_subdivisions),
+    port_num(0),
+    max_clients(0),
+    current_clients(0)
 {
-    current_clients = 0;
-    max_clients = 0;
-    port_registered = 0;
-    cms_server_parent = _cms_server_parent;
-    connected_users = NULL;
-    confirm_write = 0;
-    min_compatible_version = 0.0;
-    current_user_info = NULL;
-    running = 0;
-    max_total_subdivisions = _cms_server_parent->max_total_subdivisions;
 }
 
 CMS_SERVER_REMOTE_PORT::~CMS_SERVER_REMOTE_PORT()
@@ -870,30 +875,61 @@ void CMS_SERVER::initialize_write_request_space()
 }
 
 CMS_SERVER::CMS_SERVER()
+  : request(NULL),
+    server_spawned(0),
+    server_registered(0),
+    list_id(0),
+    cir_reply(),
+    gmc_reply(),
+    gql_reply(),
+    gsa_reply(),
+    clear_reply_struct(),
+    using_passwd_file(0),
+    requests_processed(0),
+    remote_port(NULL),
+    current_pid(0), current_tid(0),
+    creator_tid(0),
+    spawner_pid(0), spawner_tid(0),
+    server_pid(0), server_tid(0),
+    maximum_cms_size(0),
+    read_req(),
+    write_req(),
+    get_keys_req(),
+    login_req(),
+    set_subscription_req(),
+    check_if_read_req(),
+    get_msg_count_req(),
+    get_queue_length_req(),
+    get_space_available_req(),
+    clear_req(),
+    set_diag_info_req(),
+    get_diag_info_req(),
+    read_reply(NULL),
+    write_reply(NULL),
+    get_keys_reply(NULL),
+    perm_get_keys_reply(),
+    login_reply(NULL),
+    perm_login_reply(),
+    set_subscription_reply(NULL),
+    perm_set_subscription_reply(),
+    check_if_read_reply(NULL),
+    get_msg_count_reply(NULL),
+    get_queue_length_reply(NULL),
+    get_space_available_reply(NULL),
+    clear_reply(NULL),
+    set_diag_info_reply(NULL),
+    get_diag_info_reply(NULL),
+    last_local_port_used(NULL),
+    diag_enabled(0),
+    set_diag_info_buf{},
+    max_total_subdivisions(1),
+    time_of_last_key_request(0.0),
+    known_users(NULL),
+    passwd_file{},
+    guest_can_read(0),
+    guest_can_write(0)
 {
-    last_local_port_used = NULL;
-    diag_enabled = 0;
-    using_passwd_file = 0;
-    current_pid = 0;
-    server_pid = 0;
-    spawner_pid = 0;
-    server_registered = 0;
-    guest_can_read = 0;
-    guest_can_write = 0;
-    server_spawned = 0;
-    list_id = 0;
-    requests_processed = 0;
-    read_reply = NULL;
-    write_reply = NULL;
-    check_if_read_reply = NULL;
-    clear_reply = NULL;
-    remote_port = NULL;
-    request = NULL;
-    write_req.data = NULL;
     cms_local_ports = new LinkedList;
-    known_users = NULL;
-    max_total_subdivisions = 1;
-    memset(passwd_file, 0, 256);
     creator_pid = getpid();
 }
 

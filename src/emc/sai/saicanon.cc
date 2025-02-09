@@ -1137,6 +1137,7 @@ StandaloneInterpInternals::StandaloneInterpInternals() :
   _feed_mode(0),
   _feed_rate(0.0),
   _flood(0),
+  _external_length_units(1.0),
   _length_unit_factor(1), /* 1 for MM 25.4 for inch */
   _length_unit_type(CANON_UNITS_MM),
   _line_number(1),
