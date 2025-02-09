@@ -677,7 +677,7 @@ int read_ini_file(char *filename)
 	}
 
 	while ((bt = iniFile.Find("BUTTON", section, nb_buttons+1)) && nb_buttons < NB_MAX_BUTTONS) {
-		if (sscanf(*bt, "%x:%s", &xhc.buttons[nb_buttons].code, xhc.buttons[nb_buttons].pin_name) !=2 ) {
+		if (sscanf(*bt, "%x:%255s", &xhc.buttons[nb_buttons].code, xhc.buttons[nb_buttons].pin_name) !=2 ) {
 			fprintf(stderr, "%s: syntax error\n", *bt);
 			return -1;
 		}

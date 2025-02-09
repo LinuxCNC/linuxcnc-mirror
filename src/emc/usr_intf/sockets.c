@@ -259,7 +259,7 @@ char* sockGetError(void)
 #else
   static char retString[256];
   long err;
-  char* tmp;
+  char* tmp = NULL;
 
   err = WSAGetLastError();
 
@@ -276,9 +276,12 @@ char* sockGetError(void)
 
     /* append the message text after the error code and ensure a terminating
        character ends the string */
+  // The 'tmp' buffer is allocated by FormatMessage().
+  // cppcheck-suppress nullPointer
   strncpy(retString + strlen(retString), tmp, 
           sizeof(retString) - strlen(retString) - 1);
   retString[sizeof(retString) - 1] = '\0';
+  LocalFree(tmp);
 
   return retString;
 #endif

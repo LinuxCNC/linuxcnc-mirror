@@ -515,7 +515,7 @@ static int handle_click(GtkWidget *widget, GdkEventButton *event, gpointer data)
     } else {
         int z = select_trace(event->x, event->y);
         int new_channel = z & 0xff;
-        int channel_part = z >> 8;
+        int channel_part = (unsigned)z >> 8;
 
         disp->selected_part = channel_part;
 

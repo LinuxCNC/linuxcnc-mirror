@@ -280,7 +280,7 @@ static int loadTraj(EmcIniFile *trajInifile)
                     continue;    // position t at index of next non-zero mark
                 }
                 // there is a mark, so read the string for a value
-                if (1 == sscanf(&homes[len], "%s", home) &&
+                if (1 == sscanf(&homes[len], "%254s", home) &&
                     1 == sscanf(home, "%lf", &d)) {
                     // got an entry, index into coordinateMark[] is 't'
                     if (t == 0)
@@ -295,12 +295,15 @@ static int loadTraj(EmcIniFile *trajInifile)
                         homePose.b = d;
                     else if (t == 5)
                         homePose.c = d;
+/*
+ * The following have no effect. The loop only counts [0..5].
                     else if (t == 6)
                         homePose.u = d;
                     else if (t == 7)
                         homePose.v = d;
                     else
                         homePose.w = d;
+*/
 
                     // position string ptr past this value
                     len += strlen(home);

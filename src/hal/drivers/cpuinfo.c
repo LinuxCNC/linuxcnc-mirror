@@ -33,7 +33,7 @@ int get_rpi_revision(void)
     FILE *fp;
     char buffer[1024];
     char *r;
-    unsigned int revision;
+    unsigned int revision = 0;
 
     if ((fp = fopen("/sys/firmware/devicetree/base/model", "r")) == NULL)
         return -1;

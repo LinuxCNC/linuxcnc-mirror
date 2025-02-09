@@ -2039,7 +2039,7 @@ void NURBS_FEED_DIVIDE(int lineno,
 		// ridefinisco Control_point per il primo SGMENTO (1) NURBS
 		// ich definiere Control_point für die ersten SGMENTO (1) NURBS neu
 		nurbs_control_points.clear();
-		NURBS_G6_CONTROL_POINT CPU;
+		NURBS_G6_CONTROL_POINT CPU = {};
 		if (j_segment == 0) {
 			for (unsigned j = 0;
 			     j < nurbs_control_points1.size(); ++j) {

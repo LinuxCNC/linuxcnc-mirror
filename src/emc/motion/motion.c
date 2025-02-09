@@ -212,9 +212,13 @@ static rtapi_msg_handler_t old_handler = NULL;
 static void emc_message_handler(msg_level_t level, const char *fmt, va_list ap)
 {
     va_list apc;
+    // False positive. Cppcheck does not seem to know the properties of va_copy()
+    // cppcheck-suppress va_list_usedBeforeStarted
     va_copy(apc, ap);
+    // cppcheck-suppress va_list_usedBeforeStarted
     if(level == RTAPI_MSG_ERR) emcmotErrorPutfv(emcmotError, fmt, apc);
     if(old_handler) old_handler(level, fmt, ap);
+    // cppcheck-suppress va_list_usedBeforeStarted
     va_end(apc);
 }
 

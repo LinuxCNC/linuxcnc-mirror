@@ -138,6 +138,8 @@ int main(int argc, const char *argv[]) {
     sleep(10);  // during which a SIGUSR2 will generate a backtrace
 
     void *foo = 0;
+    // Fully intentional
+    // cppcheck-suppress nullPointer
     memset(foo,0,47); // this segfault would warp us into the gdb window
 
     return 0;

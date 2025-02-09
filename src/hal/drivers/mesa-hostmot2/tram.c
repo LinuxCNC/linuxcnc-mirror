@@ -58,6 +58,8 @@ int hm2_register_tram_read_region(hostmot2_t *hm2, rtapi_u16 addr, rtapi_u16 siz
 
     rtapi_list_add_tail(&tram_entry->list, &hm2->tram_read_entries);
 
+    // Not a memory leak. The 'tram_entry' is part of the list.
+    // cppcheck-suppress memleak
     return 0;
 }
 
@@ -77,6 +79,8 @@ int hm2_register_tram_write_region(hostmot2_t *hm2, rtapi_u16 addr, rtapi_u16 si
 
     rtapi_list_add_tail(&tram_entry->list, &hm2->tram_write_entries);
 
+    // Not a memory leak. The 'tram_entry' is part of the list.
+    // cppcheck-suppress memleak
     return 0;
 }
 

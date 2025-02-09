@@ -315,7 +315,7 @@ int ClassicLadder_AllocAll()
 #endif
     VarWordArray = (int *) pByte;
  	   pByte += SIZE_VAR_WORD_ARRAY * sizeof(int);
-    VarFloatArray =(double *) pByte;
+    VarFloatArray =(double *)(void *)pByte;
            pByte += SIZE_VAR_FLOAT_ARRAY * sizeof(double);
     // Allocate last for alignment reasons.
     VarArray = (TYPE_FOR_BOOL_VAR *) pByte;

@@ -1367,7 +1367,7 @@ void EditElementInRung(double x,double y)
 		if (EditDatas.NumElementSelectedInToolBar==EDIT_LONG_CONNECTION)
 		{
 			int ScanX = RungX;
-			while(EditDatas.Rung.Element[ScanX][RungY].Type==ELE_FREE && ScanX<RUNG_WIDTH-1 )
+			while(ScanX<RUNG_WIDTH-1 && EditDatas.Rung.Element[ScanX][RungY].Type==ELE_FREE)
 			{
 				EditDatas.Rung.Element[ScanX++][RungY].Type = ELE_CONNECTION;
 			}

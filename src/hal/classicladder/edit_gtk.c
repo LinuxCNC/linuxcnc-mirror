@@ -390,7 +390,7 @@ void InitAllForToolbar( void )
 
 void CreateOneToolbar( GtkWidget * Box, int NumTable, char * PtrOnToolTipsText[][NBR_ELE_TOOLBAR_X_MAX] )
 {
-	StrElement ToolBarEle;
+	StrElement ToolBarEle = {};
 	int ScanToolBarX,ScanToolBarY;
 	GSList * PtrListRadiosBtn = NULL;
 	StrToolbarDatas * pToolbarDatas = &ToolbarDatas[ NumTable ];

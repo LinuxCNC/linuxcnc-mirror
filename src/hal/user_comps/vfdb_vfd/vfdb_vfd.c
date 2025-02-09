@@ -336,7 +336,7 @@ int read_ini(param_pointer p)
                 "even",'E',
                 "odd", 'O',
                 "none", 'N',
-                NULL) == KEYWORD_INVALID)
+                (void *)NULL) == KEYWORD_INVALID)
             return -1;
         p->parity = value;
     } else {

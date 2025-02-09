@@ -58,7 +58,7 @@ void Hal::freeSimulatedPin(void** pin)
     if (*pin != nullptr)
     {
         free(*pin);
-        pin = nullptr;
+        *pin = nullptr;
     }
 }
 // ----------------------------------------------------------------------
@@ -573,11 +573,6 @@ void Hal::init(const MetaButtonCodes* metaButtons, const KeyCodes& keyCodes)
     newHalBit(HAL_OUT, &(memory->out.axisCSelect), mHalCompId, "%s.halui.axis.c.select", mComponentPrefix);
 
     mIsInitialized = true;
-}
-// ----------------------------------------------------------------------
-bool Hal::isInitialized()
-{
-    return mIsInitialized;
 }
 // ----------------------------------------------------------------------
 real_t Hal::getAxisXPosition(bool absolute) const

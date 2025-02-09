@@ -586,7 +586,7 @@ int Canterp::execute(const char *line) {
     }
 
     if (!strcmp(the_command_name, "ORIENT_SPINDLE")) {
-	if (3 != sscanf(the_command_args, "%d %lf %s", &i1, &d1, s1)) {
+	if (3 != sscanf(the_command_args, "%d %lf %255s", &i1, &d1, s1)) {
 	    return INTERP_ERROR;
 	}
 	if (!strcmp(s1, "CANON_CLOCKWISE")) {

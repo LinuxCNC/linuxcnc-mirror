@@ -218,20 +218,18 @@ int rtapi_app_main(void) {
             if (pin < 300)
                 pin += 700;
 
-            if(pin < 801 || pin > 946 || (pin > 846 && pin < 901)) {
-                rtapi_print_msg(RTAPI_MSG_ERR, "%s: ERROR: invalid pin number '%d'.  Valid pins are 801-846 for P8 pins, 901-946 for P9 pins.\n", modname, pin);
-                hal_exit(comp_id);
-                return -1;
-            }
-
-            if(pin < 900) {
+            if(pin >= 801 && pin <= 846) {
                 pin -= 800;
                 bbpin = &p8_pins[pin];
                 header = 8;
-            } else {
+            } else if(pin >= 901 && pin <= 946) {
                 pin -= 900;
                 bbpin = &p9_pins[pin];
                 header = 9;
+            } else {
+                rtapi_print_msg(RTAPI_MSG_ERR, "%s: ERROR: invalid pin number '%d'.  Valid pins are 801-846 for P8 pins, 901-946 for P9 pins.\n", modname, pin);
+                hal_exit(comp_id);
+                return -1;
             }
 
             if(bbpin->claimed != 0) {
@@ -294,20 +292,18 @@ int rtapi_app_main(void) {
             if (pin < 300)
                 pin += 700;
 
-            if(pin < 801 || pin > 946 || (pin > 846 && pin < 901)) {
-                rtapi_print_msg(RTAPI_MSG_ERR, "%s: ERROR: invalid pin number '%d'.  Valid pins are 801-846 for P8 pins, 901-946 for P9 pins.\n", modname, pin);
-                hal_exit(comp_id);
-                return -1;
-            }
-
-            if(pin < 900) {
+            if(pin >= 801 && pin <= 846) {
                 pin -= 800;
                 bbpin = &p8_pins[pin];
                 header = 8;
-            } else {
+            } else if(pin >= 901 && pin <= 946) {
                 pin -= 900;
                 bbpin = &p9_pins[pin];
                 header = 9;
+            } else {
+                rtapi_print_msg(RTAPI_MSG_ERR, "%s: ERROR: invalid pin number '%d'.  Valid pins are 801-846 for P8 pins, 901-946 for P9 pins.\n", modname, pin);
+                hal_exit(comp_id);
+                return -1;
             }
 
             if(bbpin->claimed != 0) {

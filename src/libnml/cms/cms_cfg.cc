@@ -496,7 +496,7 @@ int hostname_matches_bufferline(char *bufline)
     }
     while (j < num_my_hostent_addresses && j < 16) {
 	k = 0;
-	while (buffer_hostent_ptr->h_addr_list[k] != 0 && k < 16) {
+	while (k < 16 && buffer_hostent_ptr->h_addr_list[k] != 0) {
 	    if (!memcmp
 		(my_hostent_addresses[j], buffer_hostent_ptr->h_addr_list[k],
 		    my_hostent.h_length)) {

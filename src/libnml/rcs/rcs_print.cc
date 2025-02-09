@@ -173,20 +173,22 @@ void convert_print_list_to_lines()
 		    temp_buf = (char *) malloc(strlen(string_from_list) + 1);
 		    rtapi_strlcpy(temp_buf, string_from_list, strlen(string_from_list) + 1);
 		} else {
-		    temp_buf = (char *) realloc(temp_buf, strlen(temp_buf)
-			+ strlen(string_from_list) + 1);
-		    strcat(temp_buf, string_from_list);
+		    char *ra = (char *) realloc(temp_buf, strlen(temp_buf) + strlen(string_from_list) + 1);
+		    if(ra) {
+			temp_buf = ra;
+			strcat(temp_buf, string_from_list);
+		    }
 		}
 		rcs_print_list->delete_current_node();
 	    } else {
 		if (temp_buf != NULL) {
-		    temp_buf = (char *) realloc(temp_buf, strlen(temp_buf)
-			+ strlen(string_from_list) + 1);
-		    strcat(temp_buf, string_from_list);
-		    rcs_print_list->delete_current_node();
-		    rcs_print_list->store_after_current_node(temp_buf,
-			strlen(temp_buf)
-			+ 1, 1);
+		    char *ra = (char *) realloc(temp_buf, strlen(temp_buf) + strlen(string_from_list) + 1);
+		    if(ra) {
+			temp_buf = ra;
+			strcat(temp_buf, string_from_list);
+			rcs_print_list->delete_current_node();
+			rcs_print_list->store_after_current_node(temp_buf, strlen(temp_buf) + 1, 1);
+		    }
 		    free(temp_buf);
 		    temp_buf = NULL;
 		} else if (next_line[1] != 0) {
@@ -214,9 +216,8 @@ void update_lines_table()
     }
     if (NULL != rcs_print_list) {
 	convert_print_list_to_lines();
-	rcs_lines_table = (char **) malloc(sizeof(char *)
-	    * rcs_print_list->list_size);
-	if (NULL != rcs_print_list) {
+	rcs_lines_table = (char **) malloc(sizeof(char *) * rcs_print_list->list_size);
+	if (NULL != rcs_lines_table) {
 	    char *string_from_list;
 	    string_from_list = (char *) rcs_print_list->get_head();
 	    int i = 0;
@@ -276,7 +277,7 @@ int separate_words(char **_dest, int _max, char *_src)
     }
     rtapi_strxcpy(word_buffer, _src);
     _dest[0] = strtok(word_buffer, " \n\r\t");
-    for (i = 0; NULL != _dest[i] && i < _max - 1; i++) {
+    for (i = 0; i < _max - 1 && NULL != _dest[i]; i++) {
 	_dest[i + 1] = strtok(NULL, " \n\r\t");
     }
     if (_dest[_max - 1] == NULL && i == _max - 1) {
