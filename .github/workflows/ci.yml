@@ -26,14 +26,20 @@ jobs:
       with:
         submodules: true
         fetch-depth: 0
-    - run: git fetch --recurse-submodules=no https://github.com/linuxcnc/linuxcnc +refs/tags/*:refs/tags/*
+    - run:
+        mkdir -p "subdir with blanks in name"
+        cd "subdir with blanks in name" && git fetch --recurse-submodules=no https://github.com/linuxcnc/linuxcnc +refs/tags/*:refs/tags/*
     - name: Build RIP & test
       run: |
         set -x
         sudo apt-get install -y eatmydata
-        eatmydata ./scripts/travis-install-build-deps.sh
+        # still in subdir?
+        pwd
+        #./"subdir with blanks in name"
+        ./scripts/travis-install-build-deps.sh
         sudo eatmydata apt --quiet --yes upgrade
-        cd src
+        #cd "subdir with blanks in name"
+        cd ./src
         eatmydata ./autogen.sh
         eatmydata ./configure --disable-check-runtime-deps
         eatmydata make -O -j$((1+$(nproc))) default pycheck V=1
@@ -170,7 +176,8 @@ jobs:
         eatmydata passwd -d testrunner
         eatmydata adduser testrunner sudo
         chmod 0777 $(find tests/ -type d) # make test dirs world-writable for the testrunner
-        su -c "eatmydata ./scripts/runtests -p ./tests" testrunner
+        mv tests "tests with blanks in filename"
+        su -c 'eatmydata ./scripts/runtests -p "./tests with blanks in filename"' testrunner
 
   package-indep:
     runs-on: ubuntu-24.04
