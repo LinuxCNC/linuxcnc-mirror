@@ -1,4 +1,4 @@
-; Testfile I am Lost
+; Testfile "hello world"
 ; will just give messages 
 
 O<halo_world> sub
@@ -15,8 +15,7 @@ G90
 G0 X10
 
 (MSG, Hallo Welt)
-(MSG, halo world)
-(MSG, why does this apeera as an error?)
+(MSG, hello world)
 
 G0X-10
 

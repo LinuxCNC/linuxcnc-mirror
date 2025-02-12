@@ -1,8 +1,18 @@
-ver 3.5.0
- - version for 2.10 (master) branche
- - removed internal AUTOMATIC_G43 function, it is recommended to add
+ver 3.5.0 -- LinuxCNC 2.10.0-pre0
+ - Add startup message to show new features/important hints
+ - Add LinuxCNC version to window title
+ - Add progressbar and elapsed time for running program
+ - Add G-code properties in a tab
+ - Change order of buttons in file chooser page
+ - Read angular values from INI file only if angular joints are present
+ - Add margin to combi DRO
+ - Proper order of boxes in hbox_main_info (for embedding VCPs)
+ - Increase limit of min and default spindle speed
+ - Icon changes for buttons "select file", "spindle-stop"
+ - Keep offsetpage open after editing
+ - Removed internal AUTOMATIC_G43 function, it is recommended to add
    the M6/M61 remap with the G43 command to the INI configuration.
-   Internal AUTOMATIC_G43 caused bugs in some configurations and situations.
+   Internal AUTOMATIC_G43 caused bugs in some configurations and situations. (#3113, thanks zz912)
 
 ver 3.4.9
 - Fix problems with duplicated entries in the preferences file

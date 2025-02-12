@@ -16,7 +16,7 @@ G90
 ;#2 = <Y-Pos>
 ;#3 = <Z-Pos>
 
-(DBG, Will now move machine to X = #1 , Y = #2 , Z = #3)
+(DEBUG, Will now move machine to X = #1 , Y = #2 , Z = #3)
 G0 X #1 Y #2 Z #3
 
 O<macro_3> endsub

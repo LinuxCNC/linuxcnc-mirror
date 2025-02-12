@@ -16,7 +16,7 @@ unlinkp iocontrol.0.tool-changed
 unlinkp iocontrol.0.tool-prep-number
 
 net tool-change      gmoccapy.toolchange-change   <=  iocontrol.0.tool-change 
-net tool-changed     gmoccapy.toolchange-changed  <=  iocontrol.0.tool-changed
+net tool-changed     gmoccapy.toolchange-changed  =>  iocontrol.0.tool-changed
 net tool-prep-number gmoccapy.toolchange-number   <=  iocontrol.0.tool-prep-number
 
 net tooloffset-x  gmoccapy.tooloffset-x  <=  motion.tooloffset.x

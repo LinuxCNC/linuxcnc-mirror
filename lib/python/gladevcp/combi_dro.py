@@ -139,6 +139,8 @@ class Combi_DRO(Gtk.Box):
         self.dtg = 0
         self.abs_pos = 0
         self.rel_pos = 0
+        self.margin_left = 5
+        self.margin_right = 5
 
         self.widgets = {}  # will hold all our widgets we need to style
 
@@ -170,6 +172,7 @@ class Combi_DRO(Gtk.Box):
         lbl_axisletter.get_style_context().add_class('background')
         lbl_axisletter.get_style_context().add_class('labelcolor')
         lbl_axisletter.get_style_context().add_class('size_big')
+        lbl_axisletter.set_margin_left(self.margin_left)
         hbox_up.pack_start(lbl_axisletter, False, False, 0)
         self.widgets["lbl_axisletter"] = lbl_axisletter
 
@@ -194,6 +197,7 @@ class Combi_DRO(Gtk.Box):
         main_dro.get_style_context().add_class('labelcolor')
         main_dro.get_style_context().add_class("size_big")
         main_dro.set_xalign(1.0)
+        main_dro.set_margin_right(self.margin_right)
         hbox_up.pack_start(main_dro, True, True, 0)
         self.widgets["main_dro"] = main_dro
 
@@ -206,6 +210,7 @@ class Combi_DRO(Gtk.Box):
         lbl_sys_left.get_style_context().add_class('background')
         lbl_sys_left.get_style_context().add_class('labelcolor')
         lbl_sys_left.get_style_context().add_class('size_small')
+        lbl_sys_left.set_margin_left(self.margin_left)
         hbox_down.pack_start(lbl_sys_left, True, True, 0)
         self.widgets["lbl_sys_left"] = lbl_sys_left
 
@@ -233,6 +238,7 @@ class Combi_DRO(Gtk.Box):
         dro_right.get_style_context().add_class('labelcolor')
         dro_right.get_style_context().add_class('size_small')
         dro_right.set_xalign(1.0)
+        dro_right.set_margin_right(self.margin_right)
         hbox_down.pack_start(dro_right, True, True, 0)
         self.widgets["dro_right"] = dro_right
 

@@ -1,6 +1,5 @@
 ; Testfile go to position
-; will jog the machine to a position to give
-
+; will jog the machine to a given position
 ; the image path must be relative from your config dir or absolute, "~" is allowed
 (IMAGE, ./macros/images/goto_x_y_z.png)
 
@@ -19,7 +18,7 @@ G90
 ;#2 = <Y-Pos>
 ;#3 = <Z-Pos>
 
-(DBG, Will now move machine to X = #1 , Y = #2 , Z = #3)
+(DEBUG, Will now move machine to X = #1 , Y = #2 , Z = #3)
 G0 X #1 Y #2 Z #3
 
 O<go_to_position> endsub

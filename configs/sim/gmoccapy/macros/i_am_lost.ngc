@@ -1,5 +1,5 @@
 ; Testfile I am Lost
-; will jog to machine cero and set all axis to cero
+; will jog to machine zero and set all axis to zero
 
 ; the image path must be relative from your config dir or absolute, "~" is allowed
 (IMAGE, ./macros/images/i_am_lost.png)
@@ -15,9 +15,9 @@ G49
 G80
 G90
 
-(MSG, Will now move to machine cero)
+(MSG, Will now move to machine zero)
 G53 G0 X0 Y0 Z0
-(MSG, will now set all axis to cero)
+(MSG, will now set all axis to zero)
 G10 L20 P0 X0 Y0 Z0
 (MSG, all done)
 

@@ -170,7 +170,7 @@ class Dialogs(GObject.GObject):
         dialog.destroy()
         return response == Gtk.ResponseType.YES
 
-    def show_user_message(self, caller, message, title = _("Operator Message")):
+    def show_user_message(self, caller, message, title = _("Operator Message"), checkbox = False):
         dialog = Gtk.MessageDialog(caller.widgets.window1,
                                    Gtk.DialogFlags.DESTROY_WITH_PARENT,
                                    Gtk.MessageType.INFO,
@@ -183,13 +183,22 @@ class Dialogs(GObject.GObject):
         ok_button.connect("clicked",lambda w:dialog.response(Gtk.ResponseType.OK))
         box = Gtk.HButtonBox()
         box.add(ok_button)
-        dialog.action_area.add(box)
+        
+        if checkbox:
+            cb = Gtk.CheckButton(label = _("Don't show this again"))
+            dialog.get_content_area().add(cb)
+        
+        dialog.get_action_area().add(box)
         dialog.set_border_width(5)
         dialog.show_all()
         self.emit("play_sound", "alert")
         response = dialog.run()
         dialog.destroy()
-        return response == Gtk.ResponseType.OK
+        
+        if checkbox and response == Gtk.ResponseType.OK:
+            return cb.get_active()
+        else:
+            return response == Gtk.ResponseType.OK
 
     # dialog for run from line
     def restart_dialog(self, caller):

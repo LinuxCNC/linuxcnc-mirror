@@ -1,5 +1,5 @@
-; Testfile I am Lost
-; will jog to machine cero and set all axis to cero
+; Testfile "increment"
+; will move the machine in relative coordinates
 
 O<increment> sub
 

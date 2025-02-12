@@ -258,7 +258,7 @@ G90
 ;#2 = <Y-Pos>
 ;#3 = <Z-Pos>
 
-(DBG, Will now move machine to X = #1 , Y = #2 , Z = #3)
+(DEBUG, Will now move machine to X = #1 , Y = #2 , Z = #3)
 G0 X #1 Y #2 Z #3
 
 O<go_to_position> endsub
@@ -583,17 +583,17 @@ For a three axes XYZ machine the HAL pins will react as shown in the following t
 .Functional assignment of horizontal buttons (1)
 [cols="10,10,10,10",  options="header"]
 |===
-| Pin                         | Manual Mode                                   | MDI Mode                                    | Auto Mode
-m| gmoccapy.h-button.button-0 | open homing button                            | macro_0 or nothing                          | open file
-m| gmoccapy.h-button.button-1 | open touch off stuff                          | macro_1 or nothing                          | reload program
-m| gmoccapy.h-button.button-2 |                                               | macro_2 or nothing                          | run
-m| gmoccapy.h-button.button-3 | open tool dialogs                             | macro_3 or nothing                          | stop
-m| gmoccapy.h-button.button-4 |                                               | macro_4 or nothing                          | pause
-m| gmoccapy.h-button.button-5 |                                               | macro_5 or nothing                          | step by step
-m| gmoccapy.h-button.button-6 |                                               | macro_6 or nothing                          | run from line if enabled in settings, otherwise Nothing
-m| gmoccapy.h-button.button-7 |                                               | macro_7 or nothing                          | optional blocks
-m| gmoccapy.h-button.button-8 | full-size preview                             | macro_8 or switch page to additional macros | full-size preview
-m| gmoccapy.h-button.button-9 | exit if machine is off, otherwise no reaction | open keyboard or abort if macro is running  | edit code
+| Pin                         | Manual Mode                               | MDI Mode                                    | Auto Mode
+m| gmoccapy.h-button.button-0 | open homing button                        | macro 1 (if defined)                        | open file
+m| gmoccapy.h-button.button-1 | open touch off stuff                      | macro 2 (if defined)                        | reload program
+m| gmoccapy.h-button.button-2 |                                           | macro 3 (if defined)                        | run
+m| gmoccapy.h-button.button-3 | open tool dialogs                         | macro 4 (if defined)                        | stop
+m| gmoccapy.h-button.button-4 |                                           | macro 5 (if defined)                        | pause
+m| gmoccapy.h-button.button-5 |                                           | macro 6 (if defined)                        | step by step
+m| gmoccapy.h-button.button-6 |                                           | macro 7 (if defined)                        | run from line if enabled in settings, otherwise nothing
+m| gmoccapy.h-button.button-7 |                                           | macro 8 (if defined)                        | optional blocks
+m| gmoccapy.h-button.button-8 | full-size preview                         | macro 9 or button to show additional macros | full-size preview
+m| gmoccapy.h-button.button-9 | exit if machine is off, otherwise nothing | open keyboard or abort if macro is running  | edit code
 |===
 
 [[table:b]]
@@ -1095,7 +1095,7 @@ unlinkp iocontrol.0.tool-prepared
 
 # link to GMOCCAPY toolchange, so you get the advantage of tool description on change dialog
 net tool-change gmoccapy.toolchange-change <= iocontrol.0.tool-change
-net tool-changed gmoccapy.toolchange-changed <= iocontrol.0.tool-changed
+net tool-changed gmoccapy.toolchange-changed => iocontrol.0.tool-changed
 net tool-prep-number gmoccapy.toolchange-number <= iocontrol.0.tool-prep-number
 net tool-prep-loop iocontrol.0.tool-prepare <= iocontrol.0.tool-prepared
 -------
