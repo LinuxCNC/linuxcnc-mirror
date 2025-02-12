@@ -120,3 +120,4 @@ SET_LINE x=0, y=1, z=0.5, a=0, b=0, c=0, u=0, v=0, w=0, id=5, motion_type=1, vel
 SET_LINE x=0, y=0, z=0.5, a=0, b=0, c=0, u=0, v=0, w=0, id=6, motion_type=1, vel=400, ini_maxvel=400, acc=1000, turn=-1
 SET_SPINDLESYNC sync=0.000000, flags=0x00000000
 SPINDLE_OFF
+DISABLE

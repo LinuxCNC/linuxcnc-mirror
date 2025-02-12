@@ -28,6 +28,7 @@
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
+#include <signal.h>
 
 #include "hal.h"
 #include "motion.h"
@@ -51,7 +52,7 @@ struct emcmot_config_t *emcmotConfig = 0;
 struct emcmot_internal_t *emcmotInternal = 0;
 struct emcmot_error_t *emcmotError = 0;
 
-int mot_comp_id;
+static int mot_comp_id;
 
 emcmot_joint_t joints[EMCMOT_MAX_JOINTS];
 int num_joints = EMCMOT_MAX_JOINTS;
@@ -66,12 +67,20 @@ void emcmot_config_change(void) {
     }
 }
 
+static int shmem_id;
+
+static volatile int quit;
+
+static void sighandler(int sig)
+{
+    (void)sig;
+    quit = 1;
+}
 
 static int init_comm_buffers(void) {
     int joint_num, axis_num, n;
     emcmot_joint_t *joint;
     int retval;
-    int shmem_id;
 
     rtapi_print_msg(RTAPI_MSG_INFO,
 	"MOTION: init_comm_buffers() starting...\n");
@@ -270,17 +279,39 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
-    mot_comp_id = hal_init("motion-logger");
-    motion_logger_data = hal_malloc(sizeof(*motion_logger_data));
-    int r = hal_pin_bit_new("motion-logger.reopen-log", HAL_IO, &motion_logger_data->reopen,
-            mot_comp_id);
-    if(r < 0) { errno = -r; perror("hal_pin_bit_new"); exit(1); }
+    signal(SIGINT,  sighandler); // ^C interrupt
+    signal(SIGQUIT, sighandler); // Quit from keyboard
+    signal(SIGTERM, sighandler); // Sent to terminate
+    signal(SIGHUP,  sighandler); // Terminal closed or parent died
+    signal(SIGUSR1, SIG_IGN);    // User signal 1
+    signal(SIGUSR2, SIG_IGN);    // User signal 2
+
+    if((mot_comp_id = hal_init("motion-logger")) < 0) {
+        fprintf(stderr, "motion-logger: failed to init hal.\n");
+        exit(1);
+    }
+    if(!(motion_logger_data = hal_malloc(sizeof(*motion_logger_data)))) {
+        hal_exit(mot_comp_id);
+        fprintf(stderr, "motion-logger: failed to allocate hal memory.\n");
+        exit(1);
+    }
+    int r;
+    if((r = hal_pin_bit_new("motion-logger.reopen-log", HAL_IO, &motion_logger_data->reopen, mot_comp_id)) < 0) {
+        hal_exit(mot_comp_id);
+        errno = -r;
+        perror("hal_pin_bit_new");
+        exit(1);
+    }
     *motion_logger_data->reopen = 0;
-    r = hal_ready(mot_comp_id);
-    if(r < 0) { errno = -r; perror("hal_ready"); exit(1); }
+    if((r = hal_ready(mot_comp_id)) < 0) {
+        hal_exit(mot_comp_id);
+        errno = -r;
+        perror("hal_ready");
+        exit(1);
+    }
     init_comm_buffers();
 
-    while (1) {
+    while (!quit) {
         rtapi_mutex_get(&emcmotStruct->command_mutex);
 
         if (c->commandNum == emcmotStatus->commandNumEcho) {
@@ -674,6 +705,14 @@ int main(int argc, char* argv[]) {
         rtapi_mutex_give(&emcmotStruct->command_mutex);
     }
 
+    if((r = rtapi_shmem_delete(shmem_id, mot_comp_id)) < 0) {
+        errno = -r;
+        perror("rtapi_shmem_delete");
+    }
+    if((r = hal_exit(mot_comp_id)) < 0) {
+        errno = -r;
+        perror("hal_exit");
+    }
     return 0;
 }
 

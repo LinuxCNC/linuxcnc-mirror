@@ -23,7 +23,7 @@
 #include <signal.h>
 #include "config.h"
 
-extern int done;
+extern volatile int done;
 extern int emcOperatorError(const char *fmt, ...);
 extern int emcOperatorText(const char *fmt, ...);
 

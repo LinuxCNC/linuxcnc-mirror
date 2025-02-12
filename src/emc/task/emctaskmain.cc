@@ -133,7 +133,7 @@ static int emcTaskIssueCommand(NMLmsg * cmd);
 std::unique_ptr<NMLmsg> emcTaskCommand;
 
 // signal handling code to stop main loop
-int done;
+volatile int done;
 static int emctask_shutdown(void);
 extern void backtrace(int signo);
 int _task = 1; // control preview behaviour when remapping
@@ -3296,11 +3296,6 @@ int main(int argc, char *argv[])
     // process command line args
     if (0 != emcGetArgs(argc, argv)) {
 	rcs_print_error("error in argument list\n");
-	exit(1);
-    }
-
-    if (done) {
-	emctask_shutdown();
 	exit(1);
     }
 

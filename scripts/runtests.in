@@ -114,8 +114,8 @@ run_test() {
     esac
 }
 
-SHMEM_KEY=( "0x00000064" "0x48414c32" "0x130cf406" "0x434c522b" )
-SHMEM_USE=( "Emc motion" "Hal"        "Hal scope"  "Classicladder" )
+SHMEM_KEY=( "0x00000064" "0x48414c32" "0x48484c34" "0x90280a48" "0x130cf406" "0x434c522b" )
+SHMEM_USE=( "Emc motion" "Hal"        "UUID"       "Rtapi"      "Hal scope"  "Classicladder" )
 test_shmem() {
     # Test if there are any shared memory segments left. These will
     # interfere with performing tests as we cannot be assured of a clean
