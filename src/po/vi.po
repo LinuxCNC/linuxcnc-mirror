@@ -6,17 +6,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: emc-developers@lists.sourceforge.net\n"
 "POT-Creation-Date: 2024-10-05 14:29+0200\n"
-"PO-Revision-Date: 2022-07-04 12:42+0000\n"
-"Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
+"PO-Revision-Date: 2025-02-02 17:12+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: none\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 #: src/emc/task/emctaskmain.cc:868
 #, c-format
@@ -9481,10 +9481,12 @@ msgstr "Thông tin cơ bản"
 
 #: src/emc/usr_intf/stepconf/stepconf.py:143
 #: src/emc/usr_intf/pncconf/private_data.py:48
+#, fuzzy
 msgid "Parallel Port 1"
 msgstr "Cổng song song 1"
 
 #: src/emc/usr_intf/stepconf/stepconf.py:143
+#, fuzzy
 msgid "Parallel Port 2"
 msgstr "Cổng song song 2"
 
@@ -10698,16 +10700,19 @@ msgstr "Kiể_u cổng song:"
 
 #: src/emc/usr_intf/stepconf/base.glade:429
 #: src/emc/usr_intf/pncconf/base.glade:521
+#, fuzzy
 msgid "One Parport"
 msgstr "Một cổng song song"
 
 #: src/emc/usr_intf/stepconf/base.glade:446
 #: src/emc/usr_intf/pncconf/base.glade:536
+#, fuzzy
 msgid "Two Parports"
 msgstr "Hai cổng song song"
 
 #: src/emc/usr_intf/stepconf/base.glade:464
 #: src/emc/usr_intf/pncconf/base.glade:551
+#, fuzzy
 msgid "Three Parports"
 msgstr "Ba cổng song song"
 
@@ -11452,7 +11457,8 @@ msgstr ""
 #: src/emc/usr_intf/pncconf/dialogs.glade:2106
 #: src/emc/usr_intf/pncconf/dialogs.glade:2410
 #: src/emc/usr_intf/pncconf/dialogs.glade:2499
-msgid "_:"
+msgid ""
+"_:"
 msgstr "_:"
 
 #: src/emc/usr_intf/stepconf/axisx.glade:249
@@ -17696,6 +17702,7 @@ msgid "PCI"
 msgstr "PCI"
 
 #: src/emc/usr_intf/pncconf/dialogs.glade:44
+#, fuzzy
 msgid "Parallel Port"
 msgstr "Cổng song song"
 

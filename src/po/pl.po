@@ -11,10 +11,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: LinuxCNC\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: emc-developers@lists.sourceforge.net\n"
 "POT-Creation-Date: 2024-10-05 14:29+0200\n"
-"PO-Revision-Date: 2024-06-04 14:39+0000\n"
-"Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
+"PO-Revision-Date: 2025-02-02 17:12+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/linuxcnc/linuxcnc/"
 "pl/>\n"
 "Language: pl\n"
@@ -23,15 +23,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.6-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 #: src/emc/task/emctaskmain.cc:868
-#, c-format
+#, c-format, fuzzy
 msgid ""
 "command (%s) cannot be executed until the machine is out of E-stop and "
 "turned on"
-msgstr ""
-"polecenie (%s) nie może być wykonane gdy maszyna maszyna jest wyłączona"
+msgstr "polecenie (%s) nie może być wykonane gdy maszyna maszyna jest wyłączona"
 
 #: src/emc/task/emctaskmain.cc:1005
 #, c-format
@@ -1050,7 +1049,7 @@ msgid "Queue is not empty after tool change"
 msgstr "Kolejka nie jest pusta po zmianie narzędzia"
 
 #: src/emc/rs274ngc/rs274ngc_pre.cc:1852
-#, c-format
+#, c-format, fuzzy
 msgid "Unable to open parameter file: '%s'"
 msgstr "Nie można otworzyć pliku pliku z parametrami <%s>"
 
@@ -11692,7 +11691,8 @@ msgstr "Dodatnie"
 #: src/emc/usr_intf/pncconf/dialogs.glade:2106
 #: src/emc/usr_intf/pncconf/dialogs.glade:2410
 #: src/emc/usr_intf/pncconf/dialogs.glade:2499
-msgid "_:"
+msgid ""
+"_:"
 msgstr ""
 
 #: src/emc/usr_intf/stepconf/axisx.glade:249

@@ -4,20 +4,21 @@
 # Automatically generated, 2012.
 #
 # Toni Laiho <apelegeos@gmail.com>, 2022.
+# Ricky Tigg <ricky.tigg@gmail.com>, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: EMC2 2.5.0-pre2\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: emc-developers@lists.sourceforge.net\n"
 "POT-Creation-Date: 2024-10-05 14:29+0200\n"
-"PO-Revision-Date: 2022-10-14 10:55+0000\n"
-"Last-Translator: Toni Laiho <apelegeos@gmail.com>\n"
+"PO-Revision-Date: 2025-01-16 13:00+0000\n"
+"Last-Translator: Ricky Tigg <ricky.tigg@gmail.com>\n"
 "Language-Team: none\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 #: src/emc/task/emctaskmain.cc:868
 #, c-format
@@ -101,6 +102,9 @@ msgid ""
 "center=(%c%.4f,%c%.4f) end=(%c%.4f,%c%.4f) r1=%.4f r2=%.4f abs_err=%.4g "
 "rel_err=%.4f%%"
 msgstr ""
+"Säde kaaren loppuun vaihtelee säteestä alkuun: alku=(%c%.4f,%c%.4f) "
+"keskipiste=(%c%.4f,%c%.4f) loppu=(%c%.4f, %c%.4f) r1=%.4f r2=%.4f "
+"abs_err=%.4g rel_err=%.4f %%"
 
 #: src/emc/rs274ngc/interp_check.cc:89
 msgid "G4 not allowed with G2 or G3 because they both use P"
@@ -2287,9 +2291,9 @@ msgid ""
 msgstr ""
 
 #: src/hal/utils/scope_vert.c:913
-#, fuzzy, c-format
+#, c-format
 msgid "Select Channel %d Source"
-msgstr "Valittu kanava"
+msgstr "Valitse kanavan %d lähde"
 
 #: src/hal/utils/scope_vert.c:936
 msgid "Pins"
@@ -2426,9 +2430,9 @@ msgid "kinematicsInverse failed"
 msgstr ""
 
 #: src/emc/motion/control.c:1515
-#, fuzzy, c-format
+#, c-format
 msgid "Exceeded NEGATIVE soft limit (%.5f) on joint %d\n"
-msgstr "Nivelen %d positiivinen ohjelmallinen raja ylitetty"
+msgstr "Ylitetty NEGATIIVINEN pehmeä raja (%.5f) liitoksessa %d\n"
 
 #: src/emc/motion/control.c:1518 src/emc/motion/control.c:1527
 #, fuzzy
@@ -2442,9 +2446,9 @@ msgid "Hint: switch to joint mode to jog off soft limit"
 msgstr ""
 
 #: src/emc/motion/control.c:1524
-#, fuzzy, c-format
+#, c-format
 msgid "Exceeded POSITIVE soft limit (%.5f) on joint %d\n"
-msgstr "Nivelen %d positiivinen ohjelmallinen raja ylitetty"
+msgstr "Ylittyi POSITIIVINEN pehmeä raja (%.5f) liitoksessa %d\n"
 
 #: src/emc/motion/command.c:126
 #, c-format
@@ -2472,9 +2476,9 @@ msgid "Can't jog joint %d further past min soft limit."
 msgstr "Niveltä %d ei voi ajaa ohjelmallisen minimirajan yli"
 
 #: src/emc/motion/command.c:216 src/emc/motion/command.c:221
-#, fuzzy, c-format
+#, c-format
 msgid "%s move on line %d would exceed %c's %s limit"
-msgstr "%s liike rivillä %d ylittää nivelen %d positiivisen rajan"
+msgstr "%s siirtyminen riville %d ylittäisi %c:n rajan %s"
 
 #: src/emc/motion/command.c:217
 msgid "negative"
@@ -2833,9 +2837,9 @@ msgid "unknown state '%d' during homing sequence"
 msgstr ""
 
 #: src/emc/motion/homing.c:578
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot unhome invalid joint %d (max %d)\n"
-msgstr "Käsiajo ei onnistu, niveltä %d ei ole"
+msgstr "Virheellistä liitosta %d ei voi poistaa kodista (enintään %d)"
 
 #: src/emc/motion/homing.c:585
 #, c-format
@@ -7341,9 +7345,8 @@ msgid "axis cannot accept remote command while running"
 msgstr ""
 
 #: src/emc/usr_intf/axis/scripts/axis.py:2318
-#, fuzzy
 msgid "File not Writable:"
-msgstr "Tiedosto ei ole avoinna"
+msgstr "Tiedosto ei kirjoitettava:"
 
 #: src/emc/usr_intf/axis/scripts/axis.py:2319
 msgid ""
@@ -7396,7 +7399,7 @@ msgstr ""
 #: src/emc/usr_intf/axis/scripts/axis.py:2814
 #, python-format
 msgid "Enter %s coordinate relative to %%s:"
-msgstr ""
+msgstr "Anna %s koordinaatti suhteessa %%s:"
 
 #: src/emc/usr_intf/axis/scripts/axis.py:2813
 #, python-format
@@ -11303,7 +11306,9 @@ msgstr ""
 #: src/emc/usr_intf/pncconf/dialogs.glade:2106
 #: src/emc/usr_intf/pncconf/dialogs.glade:2410
 #: src/emc/usr_intf/pncconf/dialogs.glade:2499
-msgid "_:"
+msgid ""
+"_:"
+""
 msgstr ""
 
 #: src/emc/usr_intf/stepconf/axisx.glade:249
@@ -17776,7 +17781,7 @@ msgstr ""
 
 #: src/emc/usr_intf/pncconf/dialogs.glade:2718
 msgid "motor steps per unit:"
-msgstr "moottorin askelia mittayksikkö kohden"
+msgstr "moottorin askelia mittayksikkö kohden:"
 
 #: src/emc/usr_intf/pncconf/dialogs.glade:2733
 msgid "<b>Calculated Scale</b>"

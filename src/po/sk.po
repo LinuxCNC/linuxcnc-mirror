@@ -1,11 +1,11 @@
-# Juraj Adamkovic <stroje.hcnc@gmail.com>, 2022, 2023, 2024.
+# Juraj Adamkovic <stroje.hcnc@gmail.com>, 2022, 2023, 2024, 2025.
 # Petter Reinholdtsen <pere-weblate@hungry.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: sk\n"
 "Report-Msgid-Bugs-To: emc-developers@lists.sourceforge.net\n"
 "POT-Creation-Date: 2024-10-05 14:29+0200\n"
-"PO-Revision-Date: 2024-11-15 14:40+0000\n"
+"PO-Revision-Date: 2025-01-11 19:03+0000\n"
 "Last-Translator: Juraj Adamkovic <stroje.hcnc@gmail.com>\n"
 "Language-Team: Slovak <emc-developers@lists.sourceforge.net>\n"
 "Language: sk\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Weblate 5.9-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 "X-Poedit-Language: Slovak\n"
 "X-Poedit-Country: SLOVAKIA\n"
 
@@ -3545,7 +3545,7 @@ msgstr "Čítať mapu vstupov do"
 #: src/hal/classicladder/config_gtk.c:793
 #, fuzzy, c-format
 msgid "Read Coils/inputs map to"
-msgstr "Čítanie cievky/vstupov mapovať na"
+msgstr "Čítanie cievok/vstupov mapovať na"
 
 #: src/hal/classicladder/config_gtk.c:797
 #, c-format
@@ -8124,9 +8124,8 @@ msgid "_Save G-code as..."
 msgstr "_Uložiť g-kód ako..."
 
 #: share/axis/tcl/axis.tcl:80
-#, fuzzy
 msgid "G-code _properties..."
-msgstr "Vlastnosti G-kódu"
+msgstr "Proporcie G-kódu..."
 
 #: share/axis/tcl/axis.tcl:86
 msgid "Edit _tool data..."
@@ -11711,6 +11710,7 @@ msgstr "Opačný"
 #: src/emc/usr_intf/pncconf/dialogs.glade:2499
 msgid ""
 "_:"
+""
 msgstr " "
 
 #: src/emc/usr_intf/stepconf/axisx.glade:249

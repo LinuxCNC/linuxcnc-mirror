@@ -6,13 +6,14 @@
 # Ulices <dev.n47os@aleeas.com>, 2022, 2023.
 # Roman Jesus Castañeda <rojecas@gmail.com>, 2023.
 # gallegonovato <fran-carro@hotmail.es>, 2023, 2024.
+# Jose Manuel Garcia de Torres <jmgardeto@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: emc-developers@lists.sourceforge.net\n"
 "POT-Creation-Date: 2024-10-05 14:29+0200\n"
-"PO-Revision-Date: 2024-09-17 04:27+0000\n"
-"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
+"PO-Revision-Date: 2025-01-27 21:44+0000\n"
+"Last-Translator: Jose Manuel Garcia de Torres <jmgardeto@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/linuxcnc/"
 "linuxcnc/es/>\n"
 "Language: es\n"
@@ -20,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.8-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 #: src/emc/task/emctaskmain.cc:868
 #, c-format
@@ -11785,7 +11786,8 @@ msgstr "Opuesto"
 #: src/emc/usr_intf/pncconf/dialogs.glade:2106
 #: src/emc/usr_intf/pncconf/dialogs.glade:2410
 #: src/emc/usr_intf/pncconf/dialogs.glade:2499
-msgid "_:"
+msgid ""
+"_:"
 msgstr "_:"
 
 #: src/emc/usr_intf/stepconf/axisx.glade:249
@@ -20224,6 +20226,8 @@ msgstr "Error flotante del widget Tooledit"
 #: lib/python/gladevcp/tooledit_widget.py:334
 msgid "Something wrong with the locale settings. Will not save the tool table."
 msgstr ""
+"Hay un problema con la configuración regional. No se guarda la tabla de "
+"herramientas."
 
 #: lib/python/gladevcp/tooledit_widget.py:356
 msgid ""
